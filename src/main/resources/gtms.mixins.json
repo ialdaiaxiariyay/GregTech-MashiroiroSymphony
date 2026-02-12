@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "gtms.refmap.json",
   "mixins": [
+    "BetterGTAEMixin"
   ],
   "client": [
   ]
