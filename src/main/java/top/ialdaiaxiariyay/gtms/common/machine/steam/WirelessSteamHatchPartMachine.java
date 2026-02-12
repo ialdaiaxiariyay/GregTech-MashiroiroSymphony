@@ -19,6 +19,7 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import top.ialdaiaxiariyay.bettergtae.utils.NumberUtil;
 import top.ialdaiaxiariyay.gtms.api.misc.wireless.IWirelessContainerHolder;
 import top.ialdaiaxiariyay.gtms.api.misc.wireless.WirelessContainer;
 import top.ialdaiaxiariyay.gtms.api.misc.wireless.WirelessType;
@@ -57,7 +58,6 @@ public class WirelessSteamHatchPartMachine extends FluidHatchPartMachine impleme
         }
         return null;
     }
-    // ---------------------------------------------------------------------------------
 
     private TickableSubscription updSteamFluidSubs;
 
@@ -100,10 +100,9 @@ public class WirelessSteamHatchPartMachine extends FluidHatchPartMachine impleme
 
     private String getTeamSteamDisplay() {
         WirelessContainer container = getWirelessContainer(RESOURCE_TYPE);
-        return container == null ? "§cError" : container.getStorage().toString();
+        return container == null ? "§cError" : NumberUtil.formatLong(container.getStorage().longValue());
     }
 
-    // ========== 生命周期 ==========
     @Override
     public void onLoad() {
         super.onLoad();
@@ -124,7 +123,6 @@ public class WirelessSteamHatchPartMachine extends FluidHatchPartMachine impleme
         updSteamFluidSubs = subscribeServerTick(updSteamFluidSubs, this::updateSteamTransfer);
     }
 
-    // ========== 每tick传输逻辑 ==========
     private void updateSteamTransfer() {
         if (io == IO.IN) {
             useSteamFromNetwork();

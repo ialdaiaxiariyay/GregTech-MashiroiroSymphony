@@ -14,9 +14,9 @@ public class ResourceStat {
     private BigInteger lastChangedCache = BigInteger.ZERO;
 
     @Getter
-    private @NotNull BigDecimal avgRate = BigDecimal.ZERO;  // 平均速率（单位/tick）
+    private @NotNull BigDecimal avgRate = BigDecimal.ZERO;
     @Getter
-    private final String resourceType;   // 资源类型，仅用于标识
+    private final String resourceType;
 
     public ResourceStat(String resourceType, int windowStart) {
         this.resourceType = resourceType;

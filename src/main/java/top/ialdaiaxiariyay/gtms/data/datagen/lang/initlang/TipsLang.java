@@ -8,5 +8,6 @@ public class TipsLang {
         provider.add("gtms.gui.wireless_steam","Wireless Total Steam Volume","无线蒸汽总量");
         provider.add("gtms.machine.steam.wireless_steam_in_hatch.tooltip","Steam accessible from wireless network)","能从无线网络中获取蒸汽");
         provider.add("gtms.machine.steam.wireless_steam_out_hatch.tooltip","Transmit steam into wireless network","将蒸汽输入到无线网络中");
+        provider.add("gtms.machine.wireless_resource_monitor.tooltip","Owner: %s","所有者：%s");
     }
 }

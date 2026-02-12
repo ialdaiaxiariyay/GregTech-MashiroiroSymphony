@@ -98,9 +98,9 @@ public class FormatUtil {
             return Optional.empty();
         }, Style.EMPTY);
         List<FormattedCharSequence> list = Lists.newArrayList();
-        font.getSplitter().splitLines(componentcollector.getResultOrEmpty(), maxWidth, Style.EMPTY, (text, p_94004_) -> {
+        font.getSplitter().splitLines(componentcollector.getResultOrEmpty(), maxWidth, Style.EMPTY, (text, isLineStart) -> {
             FormattedCharSequence formattedcharsequence = Language.getInstance().getVisualOrder(text);
-            list.add(p_94004_ ? FormattedCharSequence.composite(FormattedCharSequence.codepoint(32, Style.EMPTY), formattedcharsequence) : formattedcharsequence);
+            list.add(isLineStart ? FormattedCharSequence.composite(FormattedCharSequence.codepoint(32, Style.EMPTY), formattedcharsequence) : formattedcharsequence);
         });
         return (list.isEmpty() ? Lists.newArrayList(FormattedCharSequence.EMPTY) : list);
     }
