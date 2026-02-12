@@ -1,0 +1,82 @@
+repositories {
+    mavenLocal()
+    mavenCentral()
+
+    repositories {
+        maven {
+            name = 'GTCEu Maven'
+            url = 'https://maven.gtceu.com'
+            content {
+                includeGroup 'com.gregtechceu.gtceu'
+            }
+        }
+    }
+
+    maven {
+        name 'Configuration'
+        url = "https://repo.repsy.io/mvn/toma/public/"
+    }
+
+    maven { // LDLib
+        name = "FirstDarkDev Maven"
+        url = "https://maven.firstdarkdev.xyz/snapshots"
+    }
+
+    maven { // KubeJS and Rhino
+        url = "https://maven.latvian.dev/releases"
+        content {
+            includeGroup("dev.latvian.mods")
+        }
+    }
+
+    maven { // JEI
+        name = "Jared's Maven"
+        url = "https://maven.blamejared.com/"
+    }
+
+    maven { // JEI mirror, AE2
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
+
+    maven { // Modrinth
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+
+    maven {// Curse Forge
+        name = "CurseForge"
+        url "https://cursemaven.com/"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+
+
+    maven { // terraformers - EMI
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/releases/"
+        content {
+            includeGroup("dev.emi")
+        }
+    }
+
+    maven { // shedaniel - REI, architectury, cloth-config
+        name = "shedaniel Maven"
+        url = "https://maven.shedaniel.me/"
+        content {
+            includeGroupAndSubgroups("me.shedaniel")
+            includeGroup("dev.architectury")
+        }
+    }
+    maven { // tterrag - registrate
+        name = "tterrag Maven"
+        url = "https://maven.tterrag.com/"
+        content {
+            includeGroup("com.tterrag.registrate")
+        }
+    }
+}
