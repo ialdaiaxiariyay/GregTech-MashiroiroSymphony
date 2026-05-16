@@ -61,7 +61,16 @@ public class TimeWheel {
     }
 
     public @NotNull BigDecimal getAvgByTick() {
-        if (lastUpdateTick - firstUpdateTick < slotResolution * slotNum) return new BigDecimal(sum).divide(BigDecimal.valueOf(lastUpdateTick - firstUpdateTick + 1), RoundingMode.HALF_UP);
-        return slots.isEmpty() ? BigDecimal.ZERO : new BigDecimal(sum).divide(BigDecimal.valueOf((long) slots.size() * slotResolution + lastUpdateTick % slotResolution - slotResolution), RoundingMode.HALF_UP);
+        if (lastUpdateTick - firstUpdateTick < slotResolution * slotNum) return new BigDecimal(sum)
+                .divide(BigDecimal.valueOf(lastUpdateTick - firstUpdateTick + 1), RoundingMode.HALF_UP);
+        return slots.isEmpty() ? BigDecimal.ZERO :
+                new BigDecimal(sum).divide(BigDecimal.valueOf(
+                        (long) slots.size() * slotResolution + lastUpdateTick % slotResolution - slotResolution),
+                        RoundingMode.HALF_UP);
+    }
+
+    public static class Slot {
+
+        BigInteger sum = BigInteger.ZERO;
     }
 }

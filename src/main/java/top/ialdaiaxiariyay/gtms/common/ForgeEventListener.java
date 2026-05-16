@@ -5,6 +5,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import org.jetbrains.annotations.NotNull;
 import top.ialdaiaxiariyay.gtms.GTMS;
 import top.ialdaiaxiariyay.gtms.api.misc.wireless.WirelessContainer;
 import top.ialdaiaxiariyay.gtms.api.misc.wireless.WirelessData;
@@ -13,7 +15,7 @@ import top.ialdaiaxiariyay.gtms.api.misc.wireless.WirelessData;
 public class ForgeEventListener {
 
     @SubscribeEvent
-    public static void serverSetup(LevelEvent.Load event) {
+    public static void serverSetup(LevelEvent.@NotNull Load event) {
         if (event.getLevel() instanceof ServerLevel level) {
             ServerLevel overworld = level.getServer().getLevel(Level.OVERWORLD);
             if (overworld == null) return;

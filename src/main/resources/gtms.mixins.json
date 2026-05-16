@@ -5,8 +5,12 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "gtms.refmap.json",
   "mixins": [
-    "BetterGTAEMixin"
   ],
   "client": [
+    "forge.gui.TitleScreenModUpdateIndicatorMixin",
+    "mc.MinecraftAccessor",
+    "mc.gui.AbstractButtonMixin",
+    "mc.gui.FontManagerAccessor",
+    "mc.gui.TitleScreenMixin"
   ]
 }
