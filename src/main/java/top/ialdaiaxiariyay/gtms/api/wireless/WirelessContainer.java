@@ -1,8 +1,10 @@
-package top.ialdaiaxiariyay.gtms.api.misc.wireless;
+package top.ialdaiaxiariyay.gtms.api.wireless;
 
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
+
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.MinecraftServer;
+
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,17 +31,15 @@ public class WirelessContainer {
     }
 
     private BigInteger storage;
-    private long rate;
     private GlobalPos bindPos;
     private final UUID uuid;
     private final String resourceType;
     private final ResourceStat stat;
 
-    public WirelessContainer(UUID uuid, String resourceType, BigInteger storage, long rate, GlobalPos bindPos) {
+    public WirelessContainer(UUID uuid, String resourceType, BigInteger storage, GlobalPos bindPos) {
         this.uuid = uuid;
         this.resourceType = resourceType;
         this.storage = storage;
-        this.rate = rate;
         this.bindPos = bindPos;
         this.stat = new ResourceStat(resourceType, server != null ? server.getTickCount() : 0);
     }
@@ -48,14 +48,14 @@ public class WirelessContainer {
         this.uuid = uuid;
         this.resourceType = resourceType;
         this.storage = BigInteger.ZERO;
-        this.rate = 0;
         this.bindPos = null;
         this.stat = new ResourceStat(resourceType, server != null ? server.getTickCount() : 0);
     }
 
     public long addResource(long amount, @Nullable MetaMachine machine, @NotNull String type) {
         if (!type.equals(this.resourceType))
-            throw new IllegalArgumentException("Resource type mismatch: expected " + this.resourceType + ", got " + type);
+            throw new IllegalArgumentException(
+                    "Resource type mismatch: expected " + this.resourceType + ", got " + type);
         if (amount <= 0) return 0;
         storage = storage.add(BigInteger.valueOf(amount));
         WirelessData.INSTANCE.setDirty(true);
@@ -70,7 +70,8 @@ public class WirelessContainer {
 
     public long removeResource(long amount, @Nullable MetaMachine machine, String type) {
         if (!type.equals(this.resourceType))
-            throw new IllegalArgumentException("Resource type mismatch: expected " + this.resourceType + ", got " + type);
+            throw new IllegalArgumentException(
+                    "Resource type mismatch: expected " + this.resourceType + ", got " + type);
         long change = Math.min(BigIntegerUtils.getLongValue(storage), amount);
         if (change <= 0) return 0;
         storage = storage.subtract(BigInteger.valueOf(change));
@@ -89,13 +90,12 @@ public class WirelessContainer {
         WirelessData.INSTANCE.setDirty(true);
     }
 
-    public void setRate(long rate) {
-        this.rate = rate;
-        WirelessData.INSTANCE.setDirty(true);
-    }
-
     public void setBindPos(GlobalPos bindPos) {
         this.bindPos = bindPos;
         WirelessData.INSTANCE.setDirty(true);
+    }
+
+    public BigInteger getCapacity() {
+        return null;
     }
 }

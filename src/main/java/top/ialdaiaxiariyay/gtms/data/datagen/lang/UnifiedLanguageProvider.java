@@ -2,6 +2,7 @@ package top.ialdaiaxiariyay.gtms.data.datagen.lang;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
+
 import top.ialdaiaxiariyay.gtms.GTMS;
 import top.ialdaiaxiariyay.gtms.data.datagen.lang.initlang.BlockLang;
 import top.ialdaiaxiariyay.gtms.data.datagen.lang.initlang.ItemLang;
@@ -34,9 +35,9 @@ public class UnifiedLanguageProvider extends LanguageProvider {
     }
 
     private void initializeTranslations() {
+        TipsLang.init(this);
         BlockLang.init(this);
         ItemLang.init(this);
-        TipsLang.init(this);
         Lang.init(this);
     }
 

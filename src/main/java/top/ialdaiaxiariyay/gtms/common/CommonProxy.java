@@ -9,6 +9,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import top.ialdaiaxiariyay.gtms.GTMS;
 import top.ialdaiaxiariyay.gtms.api.registrate.GTMSRegistrate;
+import top.ialdaiaxiariyay.gtms.common.data.GTMSCreativeModeTab;
 import top.ialdaiaxiariyay.gtms.common.data.GTMSMachines;
 
 @SuppressWarnings("removal")
@@ -18,6 +19,7 @@ public class CommonProxy {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         GTMSRegistrate.REGISTRATE.registerEventListeners(modEventBus);
         modEventBus.addGenericListener(MachineDefinition.class, this::registerMachines);
+        GTMSCreativeModeTab.init();
         GTMS.LOGGER.info("CommonProxy is Load");
     }
 

@@ -1,4 +1,4 @@
-package top.ialdaiaxiariyay.gtms.api.misc.wireless;
+package top.ialdaiaxiariyay.gtms.api.wireless;
 
 import java.util.UUID;
 

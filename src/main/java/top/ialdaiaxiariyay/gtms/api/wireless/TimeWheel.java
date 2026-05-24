@@ -1,11 +1,11 @@
-package top.ialdaiaxiariyay.gtms.api.misc.wireless;
+package top.ialdaiaxiariyay.gtms.api.wireless;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.*;
+import java.util.ArrayDeque;
 
 public class TimeWheel {
 
@@ -61,12 +61,24 @@ public class TimeWheel {
     }
 
     public @NotNull BigDecimal getAvgByTick() {
-        if (lastUpdateTick - firstUpdateTick < slotResolution * slotNum) return new BigDecimal(sum)
-                .divide(BigDecimal.valueOf(lastUpdateTick - firstUpdateTick + 1), RoundingMode.HALF_UP);
-        return slots.isEmpty() ? BigDecimal.ZERO :
-                new BigDecimal(sum).divide(BigDecimal.valueOf(
-                        (long) slots.size() * slotResolution + lastUpdateTick % slotResolution - slotResolution),
-                        RoundingMode.HALF_UP);
+        if (firstUpdateTick == -1 || lastUpdateTick == -1) {
+            return BigDecimal.ZERO;
+        }
+
+        long totalTicks = lastUpdateTick - firstUpdateTick + 1;
+        long windowTicks = (long) slotResolution * slotNum;
+
+        if (totalTicks < windowTicks) {
+            if (totalTicks == 0) return BigDecimal.ZERO;
+            return new BigDecimal(sum).divide(BigDecimal.valueOf(totalTicks), RoundingMode.HALF_UP);
+        } else {
+            long denominator = (long) slots.size() * slotResolution + (lastUpdateTick % slotResolution) -
+                    slotResolution;
+            if (denominator <= 0) {
+                return BigDecimal.ZERO;
+            }
+            return new BigDecimal(sum).divide(BigDecimal.valueOf(denominator), RoundingMode.HALF_UP);
+        }
     }
 
     public static class Slot {

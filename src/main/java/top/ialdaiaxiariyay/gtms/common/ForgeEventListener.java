@@ -8,8 +8,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import org.jetbrains.annotations.NotNull;
 import top.ialdaiaxiariyay.gtms.GTMS;
-import top.ialdaiaxiariyay.gtms.api.misc.wireless.WirelessContainer;
-import top.ialdaiaxiariyay.gtms.api.misc.wireless.WirelessData;
+import top.ialdaiaxiariyay.gtms.api.wireless.WirelessContainer;
+import top.ialdaiaxiariyay.gtms.api.wireless.WirelessData;
 
 @Mod.EventBusSubscriber(modid = GTMS.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEventListener {

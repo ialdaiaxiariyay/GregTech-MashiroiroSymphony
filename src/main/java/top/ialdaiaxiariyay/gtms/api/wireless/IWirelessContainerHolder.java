@@ -1,4 +1,4 @@
-package top.ialdaiaxiariyay.gtms.api.misc.wireless;
+package top.ialdaiaxiariyay.gtms.api.wireless;
 
 import javax.annotation.Nullable;
 
@@ -8,7 +8,6 @@ public interface IWirelessContainerHolder extends IBindable {
     WirelessContainer getWirelessContainerCache(String resourceType);
 
     void setWirelessContainerCache(String resourceType, WirelessContainer container);
-
 
     @Nullable
     default WirelessContainer getWirelessContainer(String resourceType) {

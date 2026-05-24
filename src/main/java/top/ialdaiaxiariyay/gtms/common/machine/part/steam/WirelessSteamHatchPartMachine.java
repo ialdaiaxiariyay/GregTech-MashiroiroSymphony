@@ -1,4 +1,4 @@
-package top.ialdaiaxiariyay.gtms.common.machine.steam;
+package top.ialdaiaxiariyay.gtms.common.machine.part.steam;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
@@ -11,28 +11,33 @@ import com.gregtechceu.gtceu.api.machine.trait.NotifiableFluidTank;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.machine.multiblock.part.FluidHatchPartMachine;
 import com.gregtechceu.gtceu.config.ConfigHolder;
+
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.widget.ImageWidget;
 import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import top.ialdaiaxiariyay.bettergtae.utils.NumberUtil;
-import top.ialdaiaxiariyay.gtms.api.misc.wireless.IWirelessContainerHolder;
-import top.ialdaiaxiariyay.gtms.api.misc.wireless.WirelessContainer;
-import top.ialdaiaxiariyay.gtms.api.misc.wireless.WirelessType;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import top.ialdaiaxiariyay.bettergtae.utils.NumberUtil;
+import top.ialdaiaxiariyay.gtms.api.wireless.IWirelessContainerHolder;
+import top.ialdaiaxiariyay.gtms.api.wireless.WirelessContainer;
+import top.ialdaiaxiariyay.gtms.api.wireless.WirelessType;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class WirelessSteamHatchPartMachine extends FluidHatchPartMachine implements IFancyUIMachine, IWirelessContainerHolder {
+public class WirelessSteamHatchPartMachine extends FluidHatchPartMachine
+                                           implements IFancyUIMachine, IWirelessContainerHolder {
 
     public static final boolean IS_STEEL = ConfigHolder.INSTANCE.machines.steelSteamMultiblocks;
     public static final int STEAM_TRANSFER_RATE = 10000;
@@ -52,6 +57,7 @@ public class WirelessSteamHatchPartMachine extends FluidHatchPartMachine impleme
     }
 
     @Override
+    @Nullable
     public UUID getUUID() {
         if (getOwnerUUID() != null) {
             return getOwnerUUID();
@@ -62,7 +68,7 @@ public class WirelessSteamHatchPartMachine extends FluidHatchPartMachine impleme
     private TickableSubscription updSteamFluidSubs;
 
     public WirelessSteamHatchPartMachine(IMachineBlockEntity holder, IO io, Object... args) {
-        super(holder, 0, io, 64000*100, 1, args);
+        super(holder, 0, io, 64000 * 100, 1, args);
     }
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(

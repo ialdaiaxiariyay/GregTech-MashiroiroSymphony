@@ -1,7 +1,8 @@
-package top.ialdaiaxiariyay.gtms.api.misc.wireless;
+package top.ialdaiaxiariyay.gtms.api.wireless;
 
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
@@ -21,8 +22,8 @@ public class ResourceStat {
     public ResourceStat(String resourceType, int windowStart) {
         this.resourceType = resourceType;
         minute = new TimeWheel(TimeWheel.TIMESCALE.SECOND, 60, windowStart);
-        hour   = new TimeWheel(TimeWheel.TIMESCALE.MINUTE, 60, windowStart);
-        day    = new TimeWheel(TimeWheel.TIMESCALE.HOUR,   24, windowStart);
+        hour = new TimeWheel(TimeWheel.TIMESCALE.MINUTE, 60, windowStart);
+        day = new TimeWheel(TimeWheel.TIMESCALE.HOUR, 24, windowStart);
     }
 
     public void tick() {
@@ -33,7 +34,8 @@ public class ResourceStat {
         }
         avgRate = lastChangedCache.compareTo(BigInteger.ZERO) == 0 ?
                 BigDecimal.ZERO :
-                new BigDecimal(lastChangedCache).divide(BigDecimal.valueOf(minute.slotResolution), RoundingMode.HALF_UP);
+                new BigDecimal(lastChangedCache).divide(BigDecimal.valueOf(minute.slotResolution),
+                        RoundingMode.HALF_UP);
         lastChangedCache = BigInteger.ZERO;
     }
 

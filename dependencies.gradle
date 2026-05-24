@@ -7,7 +7,6 @@ dependencies {
     modImplementation(forge.registrate)
     modImplementation(forge.configuration)
     modImplementation(forge.bettergtae)
-    //modImplementation(forge.gtmoremachine)
 
     //Mixin
     annotationProcessor(variantOf(libs.mixin) { classifier("processor") })
@@ -29,6 +28,8 @@ dependencies {
     modImplementation(forge.embeddium)
 
     modRuntimeOnly(forge.jech)
+
+
 
     // ftb
     modImplementation(forge.ftblibrary)

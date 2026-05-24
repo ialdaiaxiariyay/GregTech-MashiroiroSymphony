@@ -1,4 +1,4 @@
-package top.ialdaiaxiariyay.gtms.api.misc.wireless;
+package top.ialdaiaxiariyay.gtms.api.wireless;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,9 +41,8 @@ public class WirelessData extends SavedData {
             UUID uuid = ct.getUUID("uuid");
             String type = ct.getString("type");
             BigInteger storage = new BigInteger(ct.getString("storage"));
-            long rate = ct.getLong("rate");
             GlobalPos bindPos = readGlobalPos(ct.getString("dim"), ct.getLong("pos"));
-            WirelessContainer container = new WirelessContainer(uuid, type, storage, rate, bindPos);
+            WirelessContainer container = new WirelessContainer(uuid, type, storage, bindPos);
             containerMap.computeIfAbsent(uuid, k -> new HashMap<>()).put(type, container);
         }
     }
@@ -60,9 +60,6 @@ public class WirelessData extends SavedData {
 
                 if (!container.getStorage().equals(BigInteger.ZERO)) {
                     ct.putString("storage", container.getStorage().toString());
-                }
-                if (container.getRate() != 0) {
-                    ct.putLong("rate", container.getRate());
                 }
                 GlobalPos bindPos = container.getBindPos();
                 if (bindPos != null) {
