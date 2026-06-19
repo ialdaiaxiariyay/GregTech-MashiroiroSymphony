@@ -29,7 +29,9 @@ dependencies {
 
     modRuntimeOnly(forge.jech)
 
-
+    modImplementation(forge.curios)
+    modImplementation(forge.patchouli)
+    modImplementation(forge.botania)
 
     // ftb
     modImplementation(forge.ftblibrary)

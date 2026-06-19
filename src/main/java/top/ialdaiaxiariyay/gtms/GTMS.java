@@ -1,8 +1,5 @@
 package top.ialdaiaxiariyay.gtms;
 
-import top.ialdaiaxiariyay.gtms.client.ClientProxy;
-import top.ialdaiaxiariyay.gtms.common.CommonProxy;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
@@ -10,6 +7,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import top.ialdaiaxiariyay.gtms.client.ClientProxy;
+import top.ialdaiaxiariyay.gtms.common.CommonProxy;
 
 import static net.minecraft.resources.ResourceLocation.tryBuild;
 

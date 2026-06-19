@@ -19,7 +19,9 @@ ftbteams_version = "5267190"
 ftbultimine_version = "5363345"
 ftbchunks_version = "5378090"
 bettergtae_version = "1.2.1"
-gtmoremachine_version = "mc1.20.1-1.5.1"
+curios_version = "5.14.1+1.20.1"
+patchouli_version = "1.20.1-85-FORGE"
+botania_version = "1.20.1-453-FORGE"
 
 [libraries]
 jei-common-api = { module = "mezz.jei:jei-1.20.1-common-api", version.ref = "jei_version" }
@@ -32,7 +34,6 @@ ldlib = { module = "com.lowdragmc.ldlib:ldlib-forge-1.20.1", version.ref = "ldli
 registrate = { module = "com.tterrag.registrate:Registrate", version.ref = "registrate_version" }
 configuration = { module = "dev.toma.configuration:configuration-1.20.1", version.ref = "configuration_version" }
 bettergtae = { module = "maven.modrinth:better-gregtech-and-applied-energistics", version.ref = "bettergtae_version" }
-gtmoremachine = { module = "maven.modrinth:gtmoremachine", version.ref = "gtmoremachine_version" }
 
 kubejs = { module = "maven.modrinth:kubejs", version.ref = "kubejs_version" }
 rhino = { module = "maven.modrinth:rhino", version.ref = "rhino_version" }
@@ -54,6 +55,10 @@ ftblibrary = { module = "curse.maven:ftb-library-forge-404465", version.ref = "f
 ftbteams = { module = "curse.maven:ftb-teams-forge-404468", version.ref = "ftbteams_version" }
 ftbultimine = { module = "curse.maven:ftb-ultimine-forge-386134", version.ref = "ftbultimine_version" }
 ftbchunks = { module = "curse.maven:ftb-chunks-forge-314906", version.ref = "ftbchunks_version" }
+
+curios = { module = "top.theillusivec4.curios:curios-forge", version.ref = "curios_version" }
+patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli_version" }
+botania = { module = "vazkii.botania:Botania", version.ref = "botania_version" }
 
 [bundles]
 jei = ["jei-common-api", "jei-forge-api", "jei-forge-impl"]

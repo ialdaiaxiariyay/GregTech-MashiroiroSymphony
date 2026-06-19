@@ -1,8 +1,13 @@
 package top.ialdaiaxiariyay.gtms.api.wireless;
 
+import java.util.UUID;
+
 import javax.annotation.Nullable;
 
-public interface IWirelessContainerHolder extends IBindable {
+public interface IWirelessContainerHolder {
+
+    @Nullable
+    UUID getUUID();
 
     @Nullable
     WirelessContainer getWirelessContainerCache(String resourceType);

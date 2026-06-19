@@ -29,24 +29,14 @@ import static com.gregtechceu.gtceu.utils.FormattingUtil.formatNumberReadable;
 
 public class FormatUtil {
 
-    public static String formatNumber(long number) {
-        if (number < 1000) {
-            return String.valueOf(number);
-        } else if (number < 1_000_000) {
-            return String.format("%.1fK", number / 1000.0);
-        } else if (number < 1_000_000_000) {
-            return String.format("%.2fM", number / 1_000_000.0);
-        } else {
-            return String.format("%.2fG", number / 1_000_000_000.0);
-        }
-    }
-
     public static String formatBigDecimalNumberOrSic(BigDecimal number) {
-        return number.compareTo(BigDecimal.valueOf(Long.MAX_VALUE)) > 0 ? DECIMAL_FORMAT_SIC_2F.format(number) : formatNumberReadable(number.longValue());
+        return number.compareTo(BigDecimal.valueOf(Long.MAX_VALUE)) > 0 ? DECIMAL_FORMAT_SIC_2F.format(number) :
+                formatNumberReadable(number.longValue());
     }
 
     public static String formatBigIntegerNumberOrSic(BigInteger number) {
-        return number.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0 ? DECIMAL_FORMAT_SIC_2F.format(number) : formatNumberReadable(number.longValue());
+        return number.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0 ? DECIMAL_FORMAT_SIC_2F.format(number) :
+                formatNumberReadable(number.longValue());
     }
 
     public static MutableComponent formatWithConstantWidth(String labelKey, Component body, Component... appends) {
@@ -67,7 +57,9 @@ public class FormatUtil {
     }
 
     public static BigDecimal voltageAmperage(BigDecimal avgEnergy) {
-        return avgEnergy.abs().divide(BigDecimal.valueOf(GTValues.VEX[GTUtil.getFloorTierByVoltage(avgEnergy.abs().longValue())]), 1, RoundingMode.FLOOR);
+        return avgEnergy.abs().divide(
+                BigDecimal.valueOf(GTValues.VEX[GTUtil.getFloorTierByVoltage(avgEnergy.abs().longValue())]), 1,
+                RoundingMode.FLOOR);
     }
 
     public static String getSpacer(Font font, String splitChar, int spaceLength) {
@@ -78,7 +70,8 @@ public class FormatUtil {
         return splitChar.repeat(spacerCount - 2) + " ";
     }
 
-    public static List<FormattedCharSequence> formatJustifyComponent(FormattedText component, int maxWidth, Font font, String splitChar) {
+    public static List<FormattedCharSequence> formatJustifyComponent(FormattedText component, int maxWidth, Font font,
+                                                                     String splitChar) {
         ComponentCollector componentcollector = new ComponentCollector();
         AtomicInteger before = new AtomicInteger();
         AtomicInteger after = new AtomicInteger();
@@ -93,15 +86,19 @@ public class FormatUtil {
             return Optional.empty();
         }, Style.EMPTY);
         component.visit((style, text) -> {
-            String content = text.equals(splitChar) ? getSpacer(font, splitChar, maxWidth - before.get() - after.get()) : text;
+            String content = text.equals(splitChar) ?
+                    getSpacer(font, splitChar, maxWidth - before.get() - after.get()) : text;
             componentcollector.append(FormattedText.of(stripColor(content), style));
             return Optional.empty();
         }, Style.EMPTY);
         List<FormattedCharSequence> list = Lists.newArrayList();
-        font.getSplitter().splitLines(componentcollector.getResultOrEmpty(), maxWidth, Style.EMPTY, (text, isLineStart) -> {
-            FormattedCharSequence formattedcharsequence = Language.getInstance().getVisualOrder(text);
-            list.add(isLineStart ? FormattedCharSequence.composite(FormattedCharSequence.codepoint(32, Style.EMPTY), formattedcharsequence) : formattedcharsequence);
-        });
+        font.getSplitter().splitLines(componentcollector.getResultOrEmpty(), maxWidth, Style.EMPTY,
+                (text, isLineStart) -> {
+                    FormattedCharSequence formattedcharsequence = Language.getInstance().getVisualOrder(text);
+                    list.add(isLineStart ? FormattedCharSequence
+                            .composite(FormattedCharSequence.codepoint(32, Style.EMPTY), formattedcharsequence) :
+                            formattedcharsequence);
+                });
         return (list.isEmpty() ? Lists.newArrayList(FormattedCharSequence.EMPTY) : list);
     }
 

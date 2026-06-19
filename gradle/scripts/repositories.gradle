@@ -34,6 +34,17 @@ repositories {
         url = "https://maven.blamejared.com/"
     }
 
+    maven { // Botania
+        name = "BlameJared"
+        url = "https://maven.blamejared.com/"
+    }
+
+    maven {
+        name = "Curios"
+        url = uri("https://maven.theillusivec4.top/")
+    }
+
+
     maven { // JEI mirror, AE2
         name = "ModMaven"
         url = "https://modmaven.dev"

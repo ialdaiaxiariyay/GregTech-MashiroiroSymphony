@@ -26,10 +26,17 @@ public class TipsLang {
         provider.add("gtms.machine.wireless_resource_monitor.team_only", "Only Our Team", "仅本队");
         provider.add("gtms.machine.wireless_resource_monitor.recent_transfers", "Recent transfers:", "最近传输记录:");
         provider.add("gtms.machine.wireless_resource_monitor.tooltip.summary",
-                "Monitors wireless resources (Energy, Steam, Mana) stored and transferred within your team.",
+                "Monitors wireless resources (EU, Steam, Mana) stored and transferred within your team.",
                 "监视团队内无线网络中的资源存储与传输（能量、蒸汽、魔力）。");
         provider.add("gtms.machine.wireless_resource_monitor.tooltip.usage",
-                "Click the resource type name (ENERGY/STEAM/MANA) to cycle through different resource types.",
-                "点击资源类型名称（ENERGY/STEAM/MANA）可在不同资源类型间循环切换。");
+                "Click the resource type name (EU/STEAM/MANA) to cycle through different resource types.",
+                "点击资源类型名称（EU/STEAM/MANA）可在不同资源类型间循环切换。");
+        provider.add("gtms.machine.wireless_resource_monitor.teleport_success", "Teleported to %s, %s, %s in %s",
+                "传送至 %s, %s, %s 于 %s");
+        provider.add("gtms.machine.spun_time_anchor.tips.0", "Anchoring Dreams and Reality", "锚定梦境与现实");
+        provider.add("gtms.recipe_modifier.insufficient_mana", "Insufficient Mana", "魔力不足");
+        provider.add("gtms.universal.tooltip.mana_in", "§aMax Mana IN: §f%d (%s§f)", "§a最大输入魔力：§f%d（%s§f）");
+        provider.add("gtms.universal.tooltip.mana_out", "§aMax Mana OUT: §f%d (%s§f)", "§a最大输出魔力：§f%d（%s§f）");
+        provider.add("gtms.universal.tooltip.mana_storage_capacity", "§cMana Capacity: §r%d Mana", "§c魔力缓存：§r%d Mana");
     }
 }

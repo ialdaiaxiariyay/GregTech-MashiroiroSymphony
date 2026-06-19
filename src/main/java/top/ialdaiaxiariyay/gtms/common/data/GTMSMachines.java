@@ -10,26 +10,47 @@ import com.gregtechceu.gtceu.utils.FormattingUtil;
 
 import net.minecraft.network.chat.Component;
 
+import top.ialdaiaxiariyay.gtms.api.recipe.GTMSRecipeModifiers;
 import top.ialdaiaxiariyay.gtms.api.registrate.GTMSRegistrate;
+import top.ialdaiaxiariyay.gtms.common.data.machines.GTMSMultiblockMachinesA;
+import top.ialdaiaxiariyay.gtms.common.machine.multiblock.part.energy.WirelessEnergyHatchPartMachine;
+import top.ialdaiaxiariyay.gtms.common.machine.multiblock.part.mana.ManaHatchPartMachine;
+import top.ialdaiaxiariyay.gtms.common.machine.multiblock.part.mana.WirelessManaHatchPartMachine;
+import top.ialdaiaxiariyay.gtms.common.machine.multiblock.part.steam.WirelessSteamHatchPartMachine;
 import top.ialdaiaxiariyay.gtms.common.machine.noenergy.WirelessResourceMonitor;
-import top.ialdaiaxiariyay.gtms.common.machine.part.energy.WirelessEnergyHatchPartMachine;
-import top.ialdaiaxiariyay.gtms.common.machine.part.steam.WirelessSteamHatchPartMachine;
 
-import static com.gregtechceu.gtceu.api.GTValues.V;
-import static com.gregtechceu.gtceu.api.GTValues.VNF;
+import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.capability.recipe.IO.IN;
 import static com.gregtechceu.gtceu.api.capability.recipe.IO.OUT;
-import static com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties.IS_FORMED;
-import static com.gregtechceu.gtceu.common.data.machines.GTMachineUtils.ALL_TIERS;
-import static top.ialdaiaxiariyay.gtms.utils.GTMSMachineUtils.registerTieredMachines;
+import static com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties.*;
+import static top.ialdaiaxiariyay.gtms.utils.GTMSMachineUtils.*;
 
 public class GTMSMachines {
 
-    public static void init() {}
+    public static void init() {
+        GTMSMultiblockMachinesA.init();
+    }
 
     static {
         GTMSRegistrate.REGISTRATE.creativeModeTab(() -> GTMSCreativeModeTab.MACHINE);
     }
+
+    public static final MachineDefinition[] ARC_FURNACE = registerSimpleManaMachines("arc_furnace",
+            GTMSRecipeTypes.FURNACE_RECIPES, GTMSRecipeModifiers.MANA_OC_NON_PERFECT);
+
+    public static final MachineDefinition WE_MONITOR = GTMSRegistrate.REGISTRATE
+            .extMachine("wire1nitor", (holder) -> new WirelessManaHatchPartMachine(holder, 2, IN, 4))
+            .tier(GTValues.MV)
+            .rotationState(RotationState.ALL)
+            .overlayTieredHullModel("wireless_resource_monitor")
+            .register();
+
+    public static final MachineDefinition WE_M13ONITOR = GTMSRegistrate.REGISTRATE
+            .extMachine("wire31nitor", (holder) -> new ManaHatchPartMachine(holder, 2, OUT, 4))
+            .tier(GTValues.MV)
+            .rotationState(RotationState.ALL)
+            .overlayTieredHullModel("wireless_resource_monitor")
+            .register();
 
     public static final MachineDefinition WIRELESS_RESOURCE_MONITOR = GTMSRegistrate.REGISTRATE
             .machine("wireless_resource_monitor", WirelessResourceMonitor::new)
@@ -46,6 +67,8 @@ public class GTMSMachines {
             .abilities(PartAbility.STEAM)
             .rotationState(RotationState.ALL)
             .overlaySteamHullModel(GTCEu.id("block/machine/part/steam_hatch"))
+            .modelProperty(IS_FORMED, false)
+            .allowCoverOnFront(true)
             .tooltips(
                     Component.translatable("gtms.machine.steam.wireless_steam_in_hatch.tooltip"),
                     Component.translatable("gtceu.universal.tooltip.fluid_storage_capacity", 64000 * 100),
@@ -58,6 +81,8 @@ public class GTMSMachines {
             .tier(GTValues.ULV)
             .rotationState(RotationState.ALL)
             .overlaySteamHullModel(GTCEu.id("block/machine/part/steam_hatch"))
+            .modelProperty(IS_FORMED, false)
+            .allowCoverOnFront(true)
             .tooltips(Component.translatable("gtms.machine.steam.wireless_steam_out_hatch.tooltip"),
                     Component.translatable("gtceu.universal.tooltip.fluid_storage_capacity", 64000 * 100),
                     Component.translatable("gtceu.machine.steam.steam_hatch.tooltip"))
@@ -180,4 +205,17 @@ public class GTMSMachines {
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_output_hatch_16a"))
                     .register(),
             ALL_TIERS);
+
+    public static final MachineDefinition[] LASER_INPUT_HATCH_256 = registerWirelessLaserHatch(IN, 256,
+            PartAbility.INPUT_LASER);
+    public static final MachineDefinition[] LASER_OUTPUT_HATCH_256 = registerWirelessLaserHatch(OUT, 256,
+            PartAbility.OUTPUT_LASER);
+    public static final MachineDefinition[] LASER_INPUT_HATCH_1024 = registerWirelessLaserHatch(IN, 1024,
+            PartAbility.INPUT_LASER);
+    public static final MachineDefinition[] LASER_OUTPUT_HATCH_1024 = registerWirelessLaserHatch(OUT, 1024,
+            PartAbility.OUTPUT_LASER);
+    public static final MachineDefinition[] LASER_INPUT_HATCH_4096 = registerWirelessLaserHatch(IN, 4096,
+            PartAbility.INPUT_LASER);
+    public static final MachineDefinition[] LASER_OUTPUT_HATCH_4096 = registerWirelessLaserHatch(OUT, 4096,
+            PartAbility.OUTPUT_LASER);
 }

@@ -6,20 +6,31 @@ import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.feature.IFancyUIMachine;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 
-import com.lowdragmc.lowdraglib.gui.util.ClickData;
 import com.lowdragmc.lowdraglib.gui.widget.*;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.ialdaiaxiariyay.gtms.api.gui.AlignComponentPanelWidget;
 import top.ialdaiaxiariyay.gtms.api.wireless.*;
 import top.ialdaiaxiariyay.gtms.utils.BigIntegerUtils;
+import top.ialdaiaxiariyay.gtms.utils.GTMSUtils;
 import top.ialdaiaxiariyay.gtms.utils.TeamUtil;
 
 import java.math.BigDecimal;
@@ -74,7 +85,7 @@ public class WirelessResourceMonitor extends MetaMachine implements IFancyUIMach
         return switch (selectedResourceType) {
             case WirelessType.ENERGY -> "EU";
             case WirelessType.STEAM -> "L";
-            case WirelessType.MANA -> "MP";
+            case WirelessType.MANA -> "Mana";
             default -> "unit";
         };
     }
@@ -89,7 +100,7 @@ public class WirelessResourceMonitor extends MetaMachine implements IFancyUIMach
                 .setBackground(GuiTextures.DISPLAY)
                 .addWidget(new AlignComponentPanelWidget(4, 17, this::addDisplayText)
                         .setMaxWidthLimit(DISPLAY_TEXT_WIDTH)
-                        .clickHandler(this::handleDisplayClick)
+                        .playerClickHandler(this::handleDisplayClickWithPlayer)
                         .setSplitChar("."));
 
         group.addWidget(scrollable);
@@ -104,14 +115,31 @@ public class WirelessResourceMonitor extends MetaMachine implements IFancyUIMach
         textList.addAll(textListCache);
     }
 
-    private void handleDisplayClick(String componentData, ClickData clickData) {
+    private void handleDisplayClickWithPlayer(String componentData, Player player) {
+        if (player.level().isClientSide) return;
+
         if (componentData.equals("all")) {
-            if (!clickData.isRemote) {
-                all = !all;
-            }
+            all = !all;
         } else if (componentData.equals("switch_resource")) {
-            if (!clickData.isRemote) {
-                cycleResourceType();
+            cycleResourceType();
+            GTMSUtils.Sanity(player, -10);
+        } else if (componentData.contains(":") && player instanceof ServerPlayer serverPlayer) {
+            int lastColon = componentData.lastIndexOf(':');
+            if (lastColon == -1) return;
+            String dimStr = componentData.substring(0, lastColon);
+            String[] xyz = componentData.substring(lastColon + 1).split(",");
+            if (xyz.length != 3) return;
+            ResourceKey<Level> dim = ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(dimStr));
+            double x = Integer.parseInt(xyz[0]) + 0.5;
+            double y = Integer.parseInt(xyz[1]) + 0.5;
+            double z = Integer.parseInt(xyz[2]) + 0.5;
+            ServerLevel targetWorld = serverPlayer.server.getLevel(dim);
+            if (targetWorld != null) {
+                serverPlayer.teleportTo(targetWorld, x, y, z,
+                        serverPlayer.getYRot(), serverPlayer.getXRot());
+                serverPlayer.sendSystemMessage(
+                        Component.translatable("gtms.machine.wireless_resource_monitor.teleport_success",
+                                xyz[0], xyz[1], xyz[2], dimStr).withStyle(ChatFormatting.GREEN));
             }
         }
     }
@@ -193,7 +221,26 @@ public class WirelessResourceMonitor extends MetaMachine implements IFancyUIMach
             lines.add(Component.translatable("gtms.machine.wireless_resource_monitor.recent_transfers")
                     .withStyle(ChatFormatting.UNDERLINE));
             for (ITransferData transfer : transfers) {
-                lines.add(transfer.getInfo(unit));
+                MetaMachine machine = transfer.machine();
+                String dim = Objects.requireNonNull(machine.getLevel()).dimension().location().toString();
+                BlockPos pos = machine.getPos();
+                String teleportData = dim + ":" + pos.getX() + "," + pos.getY() + "," + pos.getZ();
+
+                MutableComponent machineName = Component
+                        .translatable(machine.getBlockState().getBlock().getDescriptionId());
+                machineName.withStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                        Component.literal(dim + " [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "]"))));
+
+                MutableComponent line = machineName
+                        .append(Component.literal(" "))
+                        .append(Component.literal((transfer.Throughput() > 0 ? "+" : "") +
+                                FormattingUtil.formatNumbers(transfer.Throughput()))
+                                .withStyle(transfer.Throughput() > 0 ? ChatFormatting.GREEN : ChatFormatting.RED))
+                        .append(Component.literal(" " + unit + "/t "))
+                        .append(AlignComponentPanelWidget.withButton(
+                                Component.literal("[⤴]").withStyle(ChatFormatting.YELLOW),
+                                teleportData));
+                lines.add(line);
             }
         }
 

@@ -31,13 +31,14 @@
     [],
     [],
     [],
+    [],
+    [],
     [
-      "gtms:cyan_grass",
-      "gtms:cyan_flower",
-      "gtms:floating_text"
+      "minecraft:trees_plains",
+      "minecraft:flower_plain",
+      "minecraft:patch_grass_plain",
+      "gtms:light_block"
     ],
-    [],
-    [],
     []
   ],
   "spawners": {

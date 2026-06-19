@@ -21,4 +21,13 @@ public class GTMSCreativeModeTab {
                             GTMS.NAME + " Machine"))
                     .build())
             .register();
+
+    public static RegistryEntry<CreativeModeTab> BLOCK = REGISTRATE.defaultCreativeTab("block",
+            builder -> builder
+                    .displayItems(new GTCreativeModeTabs.RegistrateDisplayItemsGenerator("block", REGISTRATE))
+                    .icon(GTMSBlocks.DIVERGENT_DREAM_ROD::asStack)
+                    .title(REGISTRATE.addLang("itemGroup", GTMS.id("block"),
+                            GTMS.NAME + " Blocks"))
+                    .build())
+            .register();
 }

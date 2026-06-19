@@ -15,7 +15,9 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -42,6 +44,7 @@ public class AlignComponentPanelWidget extends Widget {
     protected boolean centered = false;
     protected int lineSpacing = 2;
     protected String delimiter;
+    protected BiConsumer<String, Player> playerClickHandler;
 
     public AlignComponentPanelWidget(int x, int y, @Nonnull Consumer<List<Component>> textProvider) {
         super(x, y, 0, 0);
@@ -146,12 +149,19 @@ public class AlignComponentPanelWidget extends Widget {
         }
     }
 
+    @Override
     public void handleClientAction(int id, FriendlyByteBuf buffer) {
         if (id == 1) {
             ClickData clickData = ClickData.readFromBuf(buffer);
             String componentData = buffer.readUtf();
-            if (this.clickAction != null) {
-                this.clickAction.accept(componentData, clickData);
+            Player player = null;
+            if (gui != null && gui.entityPlayer instanceof Player) {
+                player = gui.entityPlayer;
+            }
+            if (playerClickHandler != null && player instanceof ServerPlayer serverPlayer) {
+                playerClickHandler.accept(componentData, serverPlayer);
+            } else if (clickAction != null) {
+                clickAction.accept(componentData, clickData);
             }
         } else {
             super.handleClientAction(id, buffer);
@@ -273,6 +283,11 @@ public class AlignComponentPanelWidget extends Widget {
 
     public AlignComponentPanelWidget clickHandler(BiConsumer<String, ClickData> clickAction) {
         this.clickAction = clickAction;
+        return this;
+    }
+
+    public AlignComponentPanelWidget playerClickHandler(BiConsumer<String, Player> handler) {
+        this.playerClickHandler = handler;
         return this;
     }
 }

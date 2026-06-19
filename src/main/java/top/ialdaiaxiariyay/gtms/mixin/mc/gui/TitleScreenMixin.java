@@ -34,7 +34,6 @@ public abstract class TitleScreenMixin extends Screen {
         int buttonHeight = 20;
         int buttonSpacing = 2;
 
-        // 定义按钮列表（顺序、文本、点击事件）
         List<ButtonEntry> buttons = new ArrayList<>();
         if (this.minecraft != null) {
             buttons.add(new ButtonEntry("menu.singleplayer", btn -> minecraft.setScreen(new SelectWorldScreen(this))));
@@ -48,9 +47,8 @@ public abstract class TitleScreenMixin extends Screen {
             buttons.add(new ButtonEntry("menu.quit", btn -> minecraft.stop()));
         }
 
-        int totalHeight = buttons.size() * buttonHeight + (buttons.size() - 1) * buttonSpacing;
         int startX = this.width / 2 - buttonWidth / 2;
-        int y = this.height / 2 - totalHeight / 2;
+        int y = this.height / 4 + 48;
 
         for (ButtonEntry entry : buttons) {
             this.addRenderableWidget(new CustomButton(
