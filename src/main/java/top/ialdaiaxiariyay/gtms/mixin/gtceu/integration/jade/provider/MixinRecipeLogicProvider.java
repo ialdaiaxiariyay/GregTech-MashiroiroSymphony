@@ -20,7 +20,6 @@ import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 import top.ialdaiaxiariyay.bettergtae.utils.NumberUtil;
-import top.ialdaiaxiariyay.gtms.GTMS;
 import top.ialdaiaxiariyay.gtms.api.capability.recipe.ManaRecipeCapability;
 
 @Mixin(RecipeLogicProvider.class)
@@ -29,7 +28,7 @@ public abstract class MixinRecipeLogicProvider {
     @Inject(method = "write(Lnet/minecraft/nbt/CompoundTag;Lcom/gregtechceu/gtceu/api/machine/trait/RecipeLogic;)V",
             at = @At("RETURN"),
             remap = false)
-    private void injectWrite(CompoundTag data, RecipeLogic capability, CallbackInfo ci) {
+    private void injectWrite(CompoundTag data, @NotNull RecipeLogic capability, CallbackInfo ci) {
         GTRecipe recipe = capability.getLastRecipe();
         if (recipe == null) return;
 
@@ -43,8 +42,6 @@ public abstract class MixinRecipeLogicProvider {
             outputMana += ManaRecipeCapability.CAP.of(content.getContent()).amount();
         }
 
-        GTMS.LOGGER.info("Input Mana content size: {}, Output: {}", inputMana, outputMana);
-
         long netMana = inputMana - outputMana;
         if (netMana == 0) return;
 
@@ -53,8 +50,6 @@ public abstract class MixinRecipeLogicProvider {
         manaInfo.putLong("TotalMana", Math.abs(netMana) * recipe.duration);
         manaInfo.putBoolean("IsInput", netMana > 0);
         data.put("ManaInfo", manaInfo);
-        GTMS.LOGGER.info("Wrote ManaInfo: perTick={}, total={}, isInput={}",
-                Math.abs(netMana), Math.abs(netMana) * recipe.duration, netMana > 0);
     }
 
     @Inject(method = "addTooltip", at = @At("RETURN"), remap = false)

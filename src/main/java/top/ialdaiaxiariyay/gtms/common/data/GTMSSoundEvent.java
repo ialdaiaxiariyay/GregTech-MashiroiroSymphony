@@ -16,7 +16,4 @@ public class GTMSSoundEvent {
     public static final SoundEntry UI_BUTTON_CLICK_1 = GTMSRegistrate.REGISTRATE
             .sound(GTMS.id("mouse_click_1"))
             .build();
-
-    public static final SoundEntry UI_BUTTON_CLICK_2 = GTMSRegistrate.REGISTRATE.sound(GTMS.id("mouse_click_2"))
-            .build();
 }

@@ -67,14 +67,6 @@ public class ExtendFactoryBlockPattern {
         this.symbolMap.put(' ', Predicates.any());
     }
 
-    /**
-     * Adds a repeatable aisle to this pattern.
-     *
-     * @param minRepeat minimum number of repetitions
-     * @param maxRepeat maximum number of repetitions
-     * @param aisle     rows that form the aisle (each string is one row)
-     * @return this pattern builder
-     */
     public ExtendFactoryBlockPattern aisleRepeatable(int minRepeat, int maxRepeat, String... aisle) {
         if (!ArrayUtils.isEmpty(aisle) && !StringUtils.isEmpty(aisle[0])) {
             if (this.depth.isEmpty()) {
@@ -111,23 +103,10 @@ public class ExtendFactoryBlockPattern {
         }
     }
 
-    /**
-     * Adds a non-repeatable aisle (exactly once) to this pattern.
-     *
-     * @param aisle rows that form the aisle
-     * @return this pattern builder
-     */
     public ExtendFactoryBlockPattern aisle(String... aisle) {
         return aisleRepeatable(1, 1, aisle);
     }
 
-    /**
-     * Sets the last added aisle as repeatable with the given bounds.
-     *
-     * @param minRepeat minimum repetitions
-     * @param maxRepeat maximum repetitions
-     * @return this pattern builder
-     */
     public ExtendFactoryBlockPattern setRepeatable(int minRepeat, int maxRepeat) {
         if (minRepeat > maxRepeat)
             throw new IllegalArgumentException("Lower bound of repeat counting must smaller than upper bound!");
@@ -135,58 +114,25 @@ public class ExtendFactoryBlockPattern {
         return this;
     }
 
-    /**
-     * Sets the last added aisle as repeatable with a fixed repetition count.
-     *
-     * @param repeatCount exact number of repetitions
-     * @return this pattern builder
-     */
     public ExtendFactoryBlockPattern setRepeatable(int repeatCount) {
         return setRepeatable(repeatCount, repeatCount);
     }
 
-    /**
-     * Creates a new pattern builder with default directions (LEFT, UP, FRONT).
-     *
-     * @return a new pattern builder
-     */
     @Contract(" -> new")
     public static @NotNull ExtendFactoryBlockPattern start() {
         return new ExtendFactoryBlockPattern(RelativeDirection.LEFT, RelativeDirection.UP, RelativeDirection.FRONT);
     }
 
-    /**
-     * Creates a new pattern builder with custom axis directions.
-     *
-     * @param charDir   direction along which characters in a row increase
-     * @param stringDir direction along which strings in an aisle increase
-     * @param aisleDir  direction along which aisles increase
-     * @return a new pattern builder
-     */
     @Contract("_, _, _ -> new")
     public static @NotNull ExtendFactoryBlockPattern start(RelativeDirection charDir, RelativeDirection stringDir,
                                                            RelativeDirection aisleDir) {
         return new ExtendFactoryBlockPattern(charDir, stringDir, aisleDir);
     }
 
-    /**
-     * Binds a symbol to a block predicate.
-     *
-     * @param symbol       single character symbol used in the pattern
-     * @param blockMatcher predicate to match blocks
-     * @return this pattern builder
-     */
     public ExtendFactoryBlockPattern where(@NotNull String symbol, TraceabilityPredicate blockMatcher) {
         return this.where(symbol.charAt(0), blockMatcher);
     }
 
-    /**
-     * Binds a symbol to a block predicate.
-     *
-     * @param symbol       character symbol used in the pattern
-     * @param blockMatcher predicate to match blocks
-     * @return this pattern builder
-     */
     public ExtendFactoryBlockPattern where(char symbol, @NotNull TraceabilityPredicate blockMatcher) {
         if (blockMatcher.isAny() || blockMatcher.isAir()) {
             this.symbolMap.put(symbol, blockMatcher);
@@ -196,11 +142,6 @@ public class ExtendFactoryBlockPattern {
         return this;
     }
 
-    /**
-     * Builds the final BlockPattern after all aisles and symbols are defined.
-     *
-     * @return the constructed BlockPattern
-     */
     public BlockPattern build() {
         this.checkMissingPredicates();
         int[] centerOffset = new int[5];
@@ -223,11 +164,22 @@ public class ExtendFactoryBlockPattern {
         return new BlockPattern(predicate, structureDir, aisleRepetitions, centerOffset);
     }
 
-    // ==================== External file loading ====================
+    public RelativeDirection getCharDir() {
+        return structureDir[0];
+    }
+
+    public RelativeDirection getStringDir() {
+        return structureDir[1];
+    }
+
+    public RelativeDirection getAisleDir() {
+        return structureDir[2];
+    }
 
     /**
      * Loads a pattern definition from a resource file inside the mod JAR.
      * File format: each line is a function call like:
+     * direction(LEFT, UP, FRONT) (optional, must appear before any aisle lines)
      * aisle("string1", "string2", ...)
      * aisleRepeatable(2, 4, "string1", "string2", ...)
      * aisleRepeatable(3, "string1", "string2", ...)
@@ -266,6 +218,8 @@ public class ExtendFactoryBlockPattern {
      * <p>
      * The file is parsed only once; subsequent calls return a new instance built from cached data.
      * This is highly efficient for large pattern files (>100KB).
+     * <p>
+     * The direction specified in the file (or default) is preserved.
      *
      * @param location resource location
      * @param charset  character set
@@ -280,20 +234,16 @@ public class ExtendFactoryBlockPattern {
                 throw new UncheckedIOException(e);
             }
         });
-        // Create a fresh builder from the cached parsed data
         ExtendFactoryBlockPattern fresh = new ExtendFactoryBlockPattern(
-                RelativeDirection.LEFT, RelativeDirection.UP, RelativeDirection.FRONT);
-        // Copy depth arrays
+                parsed.charDir(), parsed.stringDir(), parsed.aisleDir());
         for (String[] aisle : parsed.depth) {
-            fresh.depth.add(aisle.clone()); // strings are immutable, safe to reference directly
+            fresh.depth.add(aisle.clone());
         }
-        // Copy repetitions
         for (int[] rep : parsed.aisleRepetitions) {
             fresh.aisleRepetitions.add(rep.clone());
         }
         fresh.aisleHeight = parsed.aisleHeight;
         fresh.rowWidth = parsed.rowWidth;
-        // Initialize symbolMap with all symbols (except space which is already set)
         for (char c : parsed.symbols) {
             if (c != ' ') {
                 fresh.symbolMap.put(c, null);
@@ -302,17 +252,23 @@ public class ExtendFactoryBlockPattern {
         return fresh;
     }
 
-    // ==================== Private parsing & caching infrastructure ====================
-
-    private record ParsedPattern(List<String[]> depth, List<int[]> aisleRepetitions,
-                                 int aisleHeight, int rowWidth, char[] symbols) {}
+    /**
+     * Cached data: includes direction because it's part of the file content.
+     */
+    private record ParsedPattern(List<String[]> depth,
+                                 List<int[]> aisleRepetitions,
+                                 int aisleHeight,
+                                 int rowWidth,
+                                 char[] symbols,
+                                 RelativeDirection charDir,
+                                 RelativeDirection stringDir,
+                                 RelativeDirection aisleDir) {}
 
     private static final Map<ResourceLocation, ParsedPattern> PARSED_CACHE = new ConcurrentHashMap<>();
 
     @Contract("_, _ -> new")
     private static @NotNull ParsedPattern parseAndCache(ResourceLocation location, Charset charset) throws IOException {
         ExtendFactoryBlockPattern temp = fromResource(location, charset);
-        // Extract symbols (keys from symbolMap except space)
         CharList symbolList = new CharArrayList();
         for (char c : temp.symbolMap.keySet()) {
             if (c != ' ') {
@@ -321,22 +277,67 @@ public class ExtendFactoryBlockPattern {
         }
         char[] symbols = symbolList.toCharArray();
         return new ParsedPattern(
-                new ArrayList<>(temp.depth),   // shallow copy of list, each String[] will be cloned later
+                new ArrayList<>(temp.depth),
                 new ArrayList<>(temp.aisleRepetitions),
                 temp.aisleHeight,
                 temp.rowWidth,
-                symbols);
+                symbols,
+                temp.getCharDir(),
+                temp.getStringDir(),
+                temp.getAisleDir());
     }
 
+    /**
+     * Parses the reader content. Supports an optional 'direction(...)' directive.
+     * The directive must appear before any aisle definition and at most once.
+     */
     private static @NotNull ExtendFactoryBlockPattern parseFromReader(@NotNull BufferedReader reader,
                                                                       String sourceName) throws IOException {
-        ExtendFactoryBlockPattern pattern = new ExtendFactoryBlockPattern(
-                RelativeDirection.LEFT, RelativeDirection.UP, RelativeDirection.FRONT);
+        List<String> lines = new ArrayList<>();
         String line;
-        int lineNum = 0;
         while ((line = reader.readLine()) != null) {
+            lines.add(line);
+        }
+
+        RelativeDirection charDir = RelativeDirection.LEFT;
+        RelativeDirection stringDir = RelativeDirection.UP;
+        RelativeDirection aisleDir = RelativeDirection.FRONT;
+        boolean directionFound = false;
+
+        List<String> remainingLines = new ArrayList<>();
+        for (String rawLine : lines) {
+            String trimmed = rawLine.trim();
+            if (trimmed.isEmpty() || trimmed.startsWith("#")) {
+                continue;
+            }
+            if (trimmed.startsWith("direction(") && trimmed.endsWith(")")) {
+                if (directionFound) {
+                    throw new IOException(sourceName + ": duplicate direction directive");
+                }
+                String argsPart = trimmed.substring("direction(".length(), trimmed.length() - 1).trim();
+                String[] parts = argsPart.split(",");
+                if (parts.length != 3) {
+                    throw new IOException(sourceName + ": direction requires exactly 3 arguments");
+                }
+                try {
+                    charDir = RelativeDirection.valueOf(parts[0].trim().toUpperCase());
+                    stringDir = RelativeDirection.valueOf(parts[1].trim().toUpperCase());
+                    aisleDir = RelativeDirection.valueOf(parts[2].trim().toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    throw new IOException(sourceName + ": invalid direction name", e);
+                }
+                directionFound = true;
+            } else {
+                remainingLines.add(rawLine);
+            }
+        }
+
+        ExtendFactoryBlockPattern pattern = new ExtendFactoryBlockPattern(charDir, stringDir, aisleDir);
+
+        int lineNum = 0;
+        for (String rawLine : remainingLines) {
             lineNum++;
-            String trimmed = line.trim();
+            String trimmed = rawLine.trim();
             if (trimmed.isEmpty() || trimmed.startsWith("#")) continue;
 
             int parenIndex = trimmed.indexOf('(');
@@ -389,7 +390,7 @@ public class ExtendFactoryBlockPattern {
             if (i >= len) break;
 
             if (argsPart.charAt(i) == '"') {
-                i++; // skip opening quote
+                i++;
                 StringBuilder sb = new StringBuilder();
                 while (i < len && argsPart.charAt(i) != '"') {
                     if (argsPart.charAt(i) == '\\' && i + 1 < len) {
@@ -404,18 +405,16 @@ public class ExtendFactoryBlockPattern {
                     i++;
                 }
                 if (i >= len) throw new IOException(sourceName + " line " + lineNum + ": unclosed string");
-                i++; // skip closing quote
+                i++;
                 result.add(sb.toString());
-                while (i < len && argsPart.charAt(i) == ' ') i++;
-                if (i < len && argsPart.charAt(i) == ',') i++;
             } else {
                 int start = i;
                 while (i < len && argsPart.charAt(i) != ',' && argsPart.charAt(i) != ' ') i++;
                 String token = argsPart.substring(start, i).trim();
                 result.add(token);
-                while (i < len && argsPart.charAt(i) == ' ') i++;
-                if (i < len && argsPart.charAt(i) == ',') i++;
             }
+            while (i < len && argsPart.charAt(i) == ' ') i++;
+            if (i < len && argsPart.charAt(i) == ',') i++;
         }
         return result;
     }

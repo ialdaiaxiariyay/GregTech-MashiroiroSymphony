@@ -11,10 +11,14 @@ import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
 import com.gregtechceu.gtceu.api.registry.registrate.MultiblockMachineBuilder;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import top.ialdaiaxiariyay.gtms.GTMS;
 import top.ialdaiaxiariyay.gtms.api.blockentity.GTMSExtendedMachineBlockEntity;
+import top.ialdaiaxiariyay.gtms.api.item.MagicModuleItem;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class GTMSRegistrate extends GTRegistrate {
 
@@ -32,6 +36,12 @@ public class GTMSRegistrate extends GTRegistrate {
                                                                                   Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
         return new MultiblockMachineBuilder<>(this, name, metaMachine,
                 MetaMachineBlock::new, MetaMachineItem::new, GTMSExtendedMachineBlockEntity::new);
+    }
+
+    @Contract(value = "_ -> new", pure = true)
+    @SafeVarargs
+    public final MagicModuleCombinationRegistry.@NotNull CombinationBuilder magicModuleRegistry(Supplier<? extends MagicModuleItem>... module) {
+        return MagicModuleCombinationRegistry.combination(module);
     }
 
     public static GTMSRegistrate REGISTRATE = new GTMSRegistrate(GTMS.MOD_ID);

@@ -14,13 +14,5 @@
         "name": "gtms:mouse_click_1"
       }
     ]
-  },
-  "mouse_click_2": {
-    "sounds": [
-      {
-        "type": "file",
-        "name": "gtms:mouse_click_2"
-      }
-    ]
   }
 }

@@ -27,7 +27,7 @@ public class GTMSBlocks {
 
     public static final BlockEntry<SandBlock> TIME_SAND = GTMSRegistrate.REGISTRATE
             .block("time_sand", properties -> new SandBlock(0x4A90D9, properties))
-            .initialProperties(() -> Blocks.IRON_BLOCK)
+            .initialProperties(() -> Blocks.SAND)
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
                     prov.models().cubeAll(ctx.getName(), GTMS.id("block/" + ctx.getName()))))
             .properties(p -> p.isValidSpawn((state, level, pos, ent) -> false))
