@@ -76,4 +76,9 @@ public class SummerModule extends MagicModuleItem {
     public float getChargeTimeModifier() {
         return 0.30f;
     }
+
+    @Override
+    public int getManaCost() {
+        return 2100;
+    }
 }

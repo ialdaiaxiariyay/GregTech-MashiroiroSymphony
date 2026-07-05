@@ -5,11 +5,11 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "gtms.refmap.json",
   "mixins": [
-    "forge.client.ForgeHooksClientMixin",
     "gtceu.integration.jade.provider.MixinRecipeLogicProvider",
     "gtceu.integration.xei.widgets.GTRecipeWidgetMixin"
   ],
   "client": [
+    "forge.client.ForgeHooksClientMixin",
     "forge.client.gui.TitleScreenModUpdateIndicatorMixin",
     "mc.MinecraftAccessor",
     "mc.gui.AbstractButtonMixin",

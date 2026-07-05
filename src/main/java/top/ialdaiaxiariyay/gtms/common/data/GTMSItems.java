@@ -3,6 +3,7 @@ package top.ialdaiaxiariyay.gtms.common.data;
 import net.minecraft.network.chat.Component;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
+import top.ialdaiaxiariyay.gtms.api.registrate.GTMSRegistrate;
 import top.ialdaiaxiariyay.gtms.common.item.MagicModularWandItem;
 import top.ialdaiaxiariyay.gtms.common.item.module.*;
 
@@ -11,6 +12,10 @@ import static top.ialdaiaxiariyay.gtms.utils.GTMSItemUtils.*;
 public class GTMSItems {
 
     public static void init() {}
+
+    static {
+        GTMSRegistrate.REGISTRATE.creativeModeTab(() -> GTMSCreativeModeTab.ITEM);
+    }
 
     public static final ItemEntry<MagicModularWandItem> BASICS_WAND = magicModularWand(
             properties -> new MagicModularWandItem(properties, 3, 100000), "basics_wand");

@@ -86,4 +86,9 @@ public class EarthModule extends MagicModuleItem {
     public float getChargeTimeModifier() {
         return 0.25f;
     }
+
+    @Override
+    public int getManaCost() {
+        return 2000;
+    }
 }

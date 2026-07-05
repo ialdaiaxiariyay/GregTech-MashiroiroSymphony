@@ -45,7 +45,7 @@ mixinExtras-common = { module = "io.github.llamalad7:mixinextras-common", versio
 mixinExtras-forge = { module = "io.github.llamalad7:mixinextras-forge", version.ref = "mixinextras_version" }
 
 ae2 = { module = "appeng:appliedenergistics2-forge", version.ref = "ae2_version" }
-guideme = { module = "maven.modrinth:guideme", version.ref = "guideme_version" }
+guideme = { module = "org.appliedenergistics:guideme", version.ref = "guideme_version" }
 
 embeddium = { module = "maven.modrinth:embeddium", version.ref = "embeddium_version" }
 

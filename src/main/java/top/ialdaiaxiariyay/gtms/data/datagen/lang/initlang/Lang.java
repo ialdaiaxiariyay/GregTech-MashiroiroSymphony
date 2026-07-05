@@ -9,8 +9,9 @@ public class Lang {
     public static void init(@NotNull UnifiedLanguageProvider provider) {
         registerManaTiers(provider);
         registerOreVein(provider);
-        provider.add("itemGroup.gtms.block", "Mashiroiro Symphony | Blocks", "纯白交响曲 | 方块");
+        provider.add("itemGroup.gtms.block", "Mashiroiro Symphony | Block", "纯白交响曲 | 方块");
         provider.add("itemGroup.gtms.machine", "Mashiroiro Symphony | Machine", "纯白交响曲 | 机器");
+        provider.add("itemGroup.gtms.item", "Mashiroiro Symphony | Item", "纯白交响曲 | 物品");
         provider.add("gui.gtms.sanity", "Sanity: %d", "理智: %d");
         provider.add("config.jade.plugin_gtms.mana_container", "[Mashiroiro Symphony] Mana Container",
                 "[Mashiroiro Symphony] 魔力槽");

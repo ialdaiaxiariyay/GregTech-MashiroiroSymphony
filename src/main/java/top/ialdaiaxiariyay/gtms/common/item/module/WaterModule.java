@@ -63,4 +63,9 @@ public class WaterModule extends MagicModuleItem {
     public float getChargeTimeModifier() {
         return -0.10f;
     }
+
+    @Override
+    public int getManaCost() {
+        return 1100;
+    }
 }

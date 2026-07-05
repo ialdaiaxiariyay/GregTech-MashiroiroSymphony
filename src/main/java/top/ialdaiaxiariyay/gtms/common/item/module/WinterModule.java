@@ -108,4 +108,9 @@ public class WinterModule extends MagicModuleItem {
     public float getChargeTimeModifier() {
         return 0.10f;
     }
+
+    @Override
+    public int getManaCost() {
+        return 2000;
+    }
 }

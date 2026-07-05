@@ -65,4 +65,9 @@ public class ManaModule extends MagicModuleItem {
     public float getChargeTimeModifier() {
         return 0.5f;
     }
+
+    @Override
+    public int getManaCost() {
+        return 2100;
+    }
 }

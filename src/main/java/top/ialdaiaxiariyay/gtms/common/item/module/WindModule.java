@@ -72,4 +72,9 @@ public class WindModule extends MagicModuleItem {
     public float getChargeTimeModifier() {
         return -0.25f;
     }
+
+    @Override
+    public int getManaCost() {
+        return 1810;
+    }
 }

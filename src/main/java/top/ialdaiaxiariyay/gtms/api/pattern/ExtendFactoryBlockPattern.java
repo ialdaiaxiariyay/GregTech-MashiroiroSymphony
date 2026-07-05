@@ -221,6 +221,27 @@ public class ExtendFactoryBlockPattern {
      * <p>
      * The direction specified in the file (or default) is preserved.
      *
+     * <p>
+     * <b>Example resource file content (with custom direction):</b>
+     * 
+     * <pre>
+     * # Custom direction: characters increment along UP, strings along RIGHT, aisles along BACK
+     * direction(UP, RIGHT, BACK)
+     * aisle("AAA", "ABA", "AAA")
+     * aisleRepeatable(3, "AAA", "AAA", "AAA")
+     * aisle("AAA", "ABA", "AAA")
+     * </pre>
+     *
+     * <p>
+     * After loading, bind the symbols via {@code where}:
+     * 
+     * <pre>
+     * ResourceLocation loc = new ResourceLocation("gtms", "multiblock/my_structure.mb");
+     * ExtendFactoryBlockPattern pattern = ExtendFactoryBlockPattern.fromResourceCached(loc, StandardCharsets.UTF_8);
+     * pattern.where('A', Predicates.blocks(Blocks.STONE))
+     *         .where('B', Predicates.blocks(Blocks.IRON_BLOCK));
+     * </pre>
+     *
      * @param location resource location
      * @param charset  character set
      * @return a new ExtendFactoryBlockPattern instance (unbound, all symbols null)

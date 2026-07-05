@@ -3,6 +3,8 @@ package top.ialdaiaxiariyay.gtms.mixin.forge.client;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.forge.snapshots.ForgeSnapshotsModClient;
@@ -14,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@OnlyIn(Dist.CLIENT)
 @Mixin(ForgeHooksClient.class)
 public abstract class ForgeHooksClientMixin {
 

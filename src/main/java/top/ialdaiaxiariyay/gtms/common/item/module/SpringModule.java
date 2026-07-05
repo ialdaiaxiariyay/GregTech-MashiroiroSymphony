@@ -74,4 +74,9 @@ public class SpringModule extends MagicModuleItem {
     public float getChargeTimeModifier() {
         return -0.15f;
     }
+
+    @Override
+    public int getManaCost() {
+        return 900;
+    }
 }

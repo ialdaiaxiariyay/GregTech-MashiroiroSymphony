@@ -28,7 +28,6 @@ public class MagicModuleCombinationRegistry {
         void execute(Level level, Player player, float chargeTime);
     }
 
-    // 增加 manaCost 字段
     public record CombinationEntry(CombinationAction action, Component displayName,
                                    List<Component> tooltips, @Nullable Integer manaCost) {}
 
@@ -37,7 +36,6 @@ public class MagicModuleCombinationRegistry {
     private static final List<Runnable> PENDING = new ArrayList<>();
     private static boolean frozen = true;
 
-    // 重载注册方法，增加 manaCost 参数
     @SafeVarargs
     public static void register(CombinationAction action, Component displayName, boolean ordered,
                                 List<Component> tooltips, @Nullable Integer manaCost,

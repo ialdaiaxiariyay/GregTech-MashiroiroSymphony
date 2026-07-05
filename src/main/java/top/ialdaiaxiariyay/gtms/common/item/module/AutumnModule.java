@@ -1,9 +1,14 @@
 package top.ialdaiaxiariyay.gtms.common.item.module;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +17,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import org.jetbrains.annotations.NotNull;
+import top.ialdaiaxiariyay.gtms.GTMS;
 import top.ialdaiaxiariyay.gtms.api.item.MagicModuleItem;
+import top.ialdaiaxiariyay.gtms.client.gui.screens.MarkdownViewScreen;
 import top.ialdaiaxiariyay.gtms.utils.GTMSDamageUtils;
 
 import java.util.function.Predicate;
@@ -62,5 +69,22 @@ public class AutumnModule extends MagicModuleItem {
     @Override
     public int getManaCost() {
         return 2100;
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        if (level.isClientSide) {
+            Minecraft.getInstance().execute(() -> {
+                ResourceLocation base = GTMS.id("docs/readme.md");
+                try {
+                    Minecraft.getInstance().setScreen(
+                            new MarkdownViewScreen(Component.literal("说明文档"), base));
+                } catch (Exception e) {
+                    GTMS.LOGGER.info(e.getMessage()); // 打印异常
+                }
+            });
+            return InteractionResultHolder.success(player.getItemInHand(hand));
+        }
+        return super.use(level, player, hand);
     }
 }
