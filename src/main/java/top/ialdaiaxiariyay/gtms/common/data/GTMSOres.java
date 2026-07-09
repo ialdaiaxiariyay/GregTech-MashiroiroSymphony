@@ -14,15 +14,10 @@ import top.ialdaiaxiariyay.gtms.GTMS;
 
 import java.util.Set;
 
+import static top.ialdaiaxiariyay.gtms.common.data.GTMSWorldGenLayers.*;
+
 @MethodsReturnNonnullByDefault
 public class GTMSOres {
-
-    public static final TagMatchTest DEEPSLATE_RULE = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
-
-    public static final IWorldGenLayer DARKROOM_DEEPSLATE = new SimpleWorldGenLayer(
-            "darkroom_deepslate",
-            () -> new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
-            Set.of(GTMS.id(GTMSDimension.TheDarkroom)));
 
     public static final GTOreDefinition TIME_SAND_VEIN_DEEPSLATE = create("time_sand_vein_deepslate", vein -> vein
             .clusterSize(UniformInt.of(8, 16))

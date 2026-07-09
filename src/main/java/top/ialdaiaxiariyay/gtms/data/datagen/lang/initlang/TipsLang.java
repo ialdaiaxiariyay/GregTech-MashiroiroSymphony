@@ -11,7 +11,10 @@ public class TipsLang {
         provider.add("gtms.machine.steam.wireless_steam_out_hatch.tooltip", "Transmit steam into wireless network",
                 "将蒸汽输入到无线网络中");
         provider.add("gtms.machine.wireless_resource_monitor.tooltip", "Owner: %s", "所有者：%s");
-        provider.add("gtms.gui.wireless_steam", "Wireless Total Steam Volume", "无线蒸汽总量");
+        provider.add("gtms.gui.wireless_steam", "Wireless Total Steam Volume: %s", "无线蒸汽总量: %s");
+        provider.add("gtms.machine.wireless_resource_monitor.transfers", "No recent transfers", "无传输记录");
+        provider.add("gtms.machine.wireless_resource_monitor.teleport", "Click to teleport", "点击传送");
+        provider.add("gtms.machine.wireless_resource_monitor.switch", "Switch: ", "切换: ");
         provider.add("gtms.machine.wireless_resource_monitor.title", "%s Monitor - Team: %s", "%s 监视器 - 团队: %s");
         provider.add("gtms.machine.wireless_resource_monitor.no_team", "No team found", "未找到团队");
         provider.add("gtms.machine.wireless_resource_monitor.no_data_for_type", "No data available for resource: %s",
@@ -46,6 +49,7 @@ public class TipsLang {
         provider.add("gtms.tooltip.wand.combination", "Combination is empty", "组合为空");
         provider.add("gtms.tooltip.wand.charge_time", "Charge time: %s", "蓄力时间: %s");
         provider.add("gtms.tooltip.magic_module.manacost", "Mana cost: %s", "魔力消耗: %s");
+        provider.add("gtms.tooltip.wand.total_mana_cost","Total mana cost: %s","总魔力消耗: %s");
         provider.add("gtms.tooltip.magic_module.charge_time_modifier", "Charge Time Modifier: %s", "蓄力时间修正: %s");
         provider.add("gtms.tooltip.magic_module.skill", "Module skill:", "模块技能:");
         provider.add("gtms.tooltip.spring_module.0",

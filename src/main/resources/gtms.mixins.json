@@ -6,7 +6,7 @@
   "refmap": "gtms.refmap.json",
   "mixins": [
     "gtceu.integration.jade.provider.MixinRecipeLogicProvider",
-    "gtceu.integration.xei.widgets.GTRecipeWidgetMixin"
+    "gtceu.api.recipe.gui.GTRecipeViewerWidgetMixin"
   ],
   "client": [
     "forge.client.ForgeHooksClientMixin",

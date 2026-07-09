@@ -22,12 +22,12 @@ public class ManaRecipeHelper {
 
         List<Content> newList = new ArrayList<>(originalList.size());
         for (Content content : originalList) {
-            if (content.content instanceof ManaStack stack) {
+            if (content.content() instanceof ManaStack stack) {
                 long singleAmount = (long) Math.ceil((double) stack.amount() / parallels);
                 long newSingle = (long) Math.ceil(singleAmount * multiplier);
                 long newTotal = newSingle * parallels;
                 ManaStack newStack = stack.withAmount(newTotal);
-                newList.add(new Content(newStack, content.chance, content.maxChance, content.tierChanceBoost));
+                newList.add(new Content(newStack, content.chance(), content.maxChance()));
             } else {
                 newList.add(content);
             }
@@ -47,9 +47,9 @@ public class ManaRecipeHelper {
 
     public static ManaStack.WithIO getRealManaWithIO(@NotNull GTRecipe recipe) {
         long inputMana = recipe.getTickInputContents(CAP).stream()
-                .mapToLong(c -> ((ManaStack) c.getContent()).amount()).sum();
+                .mapToLong(c -> ((ManaStack) c.content()).amount()).sum();
         long outputMana = recipe.getTickOutputContents(CAP).stream()
-                .mapToLong(c -> ((ManaStack) c.getContent()).amount()).sum();
+                .mapToLong(c -> ((ManaStack) c.content()).amount()).sum();
 
         long totalMana;
         IO io;

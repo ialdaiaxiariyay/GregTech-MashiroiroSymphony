@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.api.recipe.content.ContentModifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
+import top.ialdaiaxiariyay.gtms.GTMS;
 import top.ialdaiaxiariyay.gtms.api.capability.IManaContainer;
 import top.ialdaiaxiariyay.gtms.api.recipe.content.SerializerManaStack;
 import top.ialdaiaxiariyay.gtms.api.recipe.ingredient.ManaStack;
@@ -23,7 +24,7 @@ public class ManaRecipeCapability extends RecipeCapability<ManaStack> {
     public static final ManaRecipeCapability CAP = new ManaRecipeCapability();
 
     protected ManaRecipeCapability() {
-        super("mana", 0xFF4C9A2A, false, 2, SerializerManaStack.INSTANCE);
+        super(GTMS.id("mana"), 0xFF4C9A2A, false, 2, SerializerManaStack.INSTANCE);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class ManaRecipeCapability extends RecipeCapability<ManaStack> {
      */
     @Contract("_ -> new")
     public static @NotNull @Unmodifiable List<Content> makeManaContent(ManaStack mana) {
-        return List.of(new Content(mana, ChanceLogic.getMaxChancedValue(), ChanceLogic.getMaxChancedValue(), 0));
+        return List.of(new Content(mana, ChanceLogic.getMaxChancedValue(), ChanceLogic.getMaxChancedValue()));
     }
 
     /**
@@ -58,7 +59,7 @@ public class ManaRecipeCapability extends RecipeCapability<ManaStack> {
         }
         List<Content> outputs = tick ? recipe.getTickOutputContents(this) : recipe.getOutputContents(this);
         if (outputs.isEmpty()) return multiplier;
-        long recipeMana = outputs.stream().mapToLong(c -> ((ManaStack) c.getContent()).amount()).sum();
+        long recipeMana = outputs.stream().mapToLong(c -> ((ManaStack) c.content()).amount()).sum();
         if (recipeMana == 0) return multiplier;
 
         if (tick) {
@@ -80,7 +81,7 @@ public class ManaRecipeCapability extends RecipeCapability<ManaStack> {
                 boolean failed = false;
                 for (var handler : handlers) {
                     var result = handler.handleRecipe(IO.OUT, recipe, manaList, true);
-                    if (result == null || result.isEmpty()) {
+                    if (result.isEmpty()) {
                         failed = true;
                         break;
                     }
@@ -102,7 +103,7 @@ public class ManaRecipeCapability extends RecipeCapability<ManaStack> {
         }
         List<Content> inputs = tick ? recipe.getTickInputContents(this) : recipe.getInputContents(this);
         if (inputs.isEmpty()) return limit;
-        long recipeMana = inputs.stream().mapToLong(c -> ((ManaStack) c.getContent()).amount()).sum();
+        long recipeMana = inputs.stream().mapToLong(c -> ((ManaStack) c.content()).amount()).sum();
         if (recipeMana == 0) return limit;
 
         if (tick) {

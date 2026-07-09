@@ -61,6 +61,11 @@ configurations {
     renderNurseCfg {
         canBeConsumed = false
     }
+
+}
+
+configurations.configureEach {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 afterEvaluate {

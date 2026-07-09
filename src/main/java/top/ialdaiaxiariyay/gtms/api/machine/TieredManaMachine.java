@@ -1,111 +1,57 @@
 package top.ialdaiaxiariyay.gtms.api.machine;
 
 import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.gui.GuiTextures;
-import com.gregtechceu.gtceu.api.gui.editor.EditableUI;
-import com.gregtechceu.gtceu.api.machine.*;
-import com.gregtechceu.gtceu.api.machine.feature.IExplosionMachine;
-import com.gregtechceu.gtceu.api.machine.feature.ITieredMachine;
-import com.gregtechceu.gtceu.config.ConfigHolder;
+import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
+import com.gregtechceu.gtceu.api.machine.TieredMachine;
+import com.gregtechceu.gtceu.api.machine.trait.MachineTrait;
+import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
+import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
+import com.gregtechceu.gtceu.common.machine.trait.EnvironmentalExplosionTrait;
 
-import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
-import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
-import com.lowdragmc.lowdraglib.gui.widget.ProgressWidget;
-import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
-import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
-import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
-
-import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import top.ialdaiaxiariyay.gtms.api.capability.*;
+import top.ialdaiaxiariyay.gtms.api.capability.forge.GTMSCapability;
 import top.ialdaiaxiariyay.gtms.api.machine.trait.NotifiableManaContainer;
+import top.ialdaiaxiariyay.gtms.api.misc.ManaContainerList;
+import top.ialdaiaxiariyay.gtms.api.misc.ManaInfoProviderList;
+import vazkii.botania.api.BotaniaForgeCapabilities;
 import vazkii.botania.api.mana.ManaReceiver;
-import vazkii.botania.api.mana.spark.ManaSpark;
 import vazkii.botania.api.mana.spark.SparkAttachable;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+public class TieredManaMachine extends TieredMachine {
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
-public class TieredManaMachine extends TieredMachine implements ITieredMachine, IExplosionMachine,
-                               ManaReceiver, SparkAttachable {
-
-    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(TieredManaMachine.class,
-            MetaMachine.MANAGED_FIELD_HOLDER);
-
-    @Persisted
-    @DescSynced
+    @SaveField
+    @SyncToClient
     public final NotifiableManaContainer manaContainer;
 
-    protected TickableSubscription explosionSub;
-
-    @Nullable
     @Getter
-    protected ManaSpark attachedSpark; // 当前附着的火花
+    protected final EnvironmentalExplosionTrait environmentalExplosionTrait;
 
-    public TieredManaMachine(IMachineBlockEntity holder, int tier, Object... args) {
-        super(holder, tier);
-        manaContainer = createManaContainer(args);
+    public TieredManaMachine(BlockEntityCreationInfo info, int tier,
+                             NotifiableManaContainer manaContainer) {
+        super(info, tier);
+        this.manaContainer = attachTrait(manaContainer);
+        environmentalExplosionTrait = attachTrait(new EnvironmentalExplosionTrait(tier, tier * 10,
+                () -> manaContainer.getManaStored() > 0));
     }
 
-    //////////////////////////////////////
-    // ***** Initialization ******//
-    //////////////////////////////////////
-    @Override
-    public ManagedFieldHolder getFieldHolder() {
-        return MANAGED_FIELD_HOLDER;
+    public TieredManaMachine(BlockEntityCreationInfo info, int tier, boolean emitsMana) {
+        this(info, tier,
+                emitsMana ? NotifiableManaContainer.emitterContainer(GTValues.V[tier] * 64L, GTValues.V[tier], 1) :
+                        NotifiableManaContainer.receiverContainer(GTValues.V[tier] * 64L, GTValues.V[tier], 1));
     }
 
-    protected NotifiableManaContainer createManaContainer(Object... args) {
-        long tierMana = GTValues.V[tier];
-        if (isManaEmitter()) {
-            return NotifiableManaContainer.emitterContainer(this,
-                    tierMana * 64L, tierMana, getMaxManaTransferAmperage());
-        } else {
-            return NotifiableManaContainer.receiverContainer(this,
-                    tierMana * 64L, tierMana, getMaxManaTransferAmperage());
-        }
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        if (!isRemote() && ConfigHolder.INSTANCE.machines.shouldWeatherOrTerrainExplosion &&
-                shouldWeatherOrTerrainExplosion()) {
-            explosionSub = subscribeServerTick(this::checkExplosion);
-            checkExplosion();
-        }
-    }
-
-    @Override
-    public void onUnload() {
-        super.onUnload();
-        if (explosionSub != null) {
-            explosionSub.unsubscribe();
-            explosionSub = null;
-        }
-        attachedSpark = null;
-    }
-
-    //////////////////////////////////////
-    // ******** Explosion ********//
-    //////////////////////////////////////
-    protected void checkExplosion() {
-        if (manaContainer.getManaStored() > 0) {
-            checkWeatherOrTerrainExplosion(tier, tier * 10);
-        }
-    }
-
-    //////////////////////////////////////
-    // ********** MISC ***********//
-    //////////////////////////////////////
     @Override
     public int getAnalogOutputSignal() {
         long manaStored = manaContainer.getManaStored();
@@ -114,89 +60,81 @@ public class TieredManaMachine extends TieredMachine implements ITieredMachine, 
         return Mth.floor(f * 14.0f) + (manaStored > 0 ? 1 : 0);
     }
 
-    /**
-     * Determines max transfer rate (amperage) of mana.
-     */
-    protected long getMaxManaTransferAmperage() {
-        return 1L;
-    }
-
-    /**
-     * Determines if this machine is in mana emitter or receiver mode.
-     */
-    protected boolean isManaEmitter() {
-        return false;
-    }
-
-    /**
-     * Create a mana bar widget.
-     */
-    protected static EditableUI<ProgressWidget, TieredManaMachine> createManaBar() {
-        return new EditableUI<>("mana_container", ProgressWidget.class, () -> {
-            var progressBar = new ProgressWidget(ProgressWidget.JEIProgress, 0, 0, 18, 60,
-                    new ProgressTexture(IGuiTexture.EMPTY, GuiTextures.ENERGY_BAR_BASE));
-            progressBar.setFillDirection(ProgressTexture.FillDirection.DOWN_TO_UP);
-            progressBar.setBackground(GuiTextures.ENERGY_BAR_BACKGROUND);
-            return progressBar;
-        }, (progressBar, machine) -> progressBar.setProgressSupplier(
-                () -> machine.manaContainer.getManaStored() * 1d / machine.manaContainer.getManaCapacity()));
-    }
-
-    // ========== ManaReceiver 实现 ==========
     @Override
-    public Level getManaReceiverLevel() {
-        return Objects.requireNonNull(getLevel());
-    }
-
-    @Override
-    public BlockPos getManaReceiverPos() {
-        return getPos();
-    }
-
-    @Override
-    public int getCurrentMana() {
-        return (int) Math.min(manaContainer.getManaStored(), Integer.MAX_VALUE);
-    }
-
-    @Override
-    public boolean isFull() {
-        return manaContainer.getManaStored() >= manaContainer.getManaCapacity();
-    }
-
-    @Override
-    public void receiveMana(int mana) {
-        if (mana > 0 && !isManaEmitter()) {
-            manaContainer.changeMana(mana);
+    public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+        if (cap == GTMSCapability.CAPABILITY_MANA_CONTAINER) {
+            if (this.manaContainer != null) {
+                return GTMSCapability.CAPABILITY_MANA_CONTAINER.orEmpty(cap,
+                        LazyOptional.of(() -> this.manaContainer));
+            }
+            List<IManaContainer> containers = getCapabilitiesFromTraits(this.getAllTraits(), side,
+                    IManaContainer.class);
+            if (!containers.isEmpty()) {
+                if (containers.size() == 1) {
+                    return GTMSCapability.CAPABILITY_MANA_CONTAINER.orEmpty(cap,
+                            LazyOptional.of(() -> containers.get(0)));
+                } else {
+                    return GTMSCapability.CAPABILITY_MANA_CONTAINER.orEmpty(cap,
+                            LazyOptional.of(() -> new ManaContainerList(containers)));
+                }
+            }
         }
+
+        if (cap == GTMSCapability.CAPABILITY_MANA_INFO_PROVIDER) {
+            if (this.manaContainer != null) {
+                return GTMSCapability.CAPABILITY_MANA_INFO_PROVIDER.orEmpty(cap,
+                        LazyOptional.of(() -> this.manaContainer));
+            }
+            List<IManaInfoProvider> providers = getCapabilitiesFromTraits(this.getAllTraits(), side,
+                    IManaInfoProvider.class);
+            if (!providers.isEmpty()) {
+                if (providers.size() == 1) {
+                    return GTMSCapability.CAPABILITY_MANA_INFO_PROVIDER.orEmpty(cap,
+                            LazyOptional.of(() -> providers.get(0)));
+                } else {
+                    return GTMSCapability.CAPABILITY_MANA_INFO_PROVIDER.orEmpty(cap,
+                            LazyOptional.of(() -> new ManaInfoProviderList(providers)));
+                }
+            }
+        }
+
+        if (cap == BotaniaForgeCapabilities.MANA_RECEIVER) {
+            if (this instanceof ManaReceiver) {
+                return BotaniaForgeCapabilities.MANA_RECEIVER.orEmpty(cap,
+                        LazyOptional.of(() -> (ManaReceiver) this));
+            }
+            List<ManaReceiver> receivers = getCapabilitiesFromTraits(this.getAllTraits(), side, ManaReceiver.class);
+            if (!receivers.isEmpty()) {
+                return BotaniaForgeCapabilities.MANA_RECEIVER.orEmpty(cap,
+                        LazyOptional.of(() -> receivers.get(0)));
+            }
+        }
+
+        if (cap == BotaniaForgeCapabilities.SPARK_ATTACHABLE) {
+            if (this instanceof SparkAttachable) {
+                return BotaniaForgeCapabilities.SPARK_ATTACHABLE.orEmpty(cap,
+                        LazyOptional.of(() -> (SparkAttachable) this));
+            }
+            List<SparkAttachable> attachables = getCapabilitiesFromTraits(this.getAllTraits(), side,
+                    SparkAttachable.class);
+            if (!attachables.isEmpty()) {
+                return BotaniaForgeCapabilities.SPARK_ATTACHABLE.orEmpty(cap,
+                        LazyOptional.of(() -> attachables.get(0)));
+            }
+        }
+
+        return super.getCapability(cap, side);
     }
 
-    @Override
-    public boolean canReceiveManaFromBursts() {
-        return !isManaEmitter();
-    }
-
-    @Override
-    public boolean canAttachSpark(ItemStack stack) {
-        return true;
-    }
-
-    @Override
-    public void attachSpark(ManaSpark entity) {
-        this.attachedSpark = entity;
-    }
-
-    @Override
-    public int getAvailableSpaceForMana() {
-        long space = manaContainer.getManaCapacity() - manaContainer.getManaStored();
-        return (int) Math.min(space, Integer.MAX_VALUE);
-    }
-
-    @Override
-    public boolean areIncomingTranfersDone() {
-        return false;
-    }
-
-    public void setAttachedSpark(@Nullable ManaSpark spark) {
-        this.attachedSpark = spark;
+    private static <T> List<T> getCapabilitiesFromTraits(List<MachineTrait> traits, @Nullable Direction accessSide,
+                                                         Class<T> capability) {
+        if (traits.isEmpty()) return Collections.emptyList();
+        List<T> list = new ArrayList<>();
+        for (MachineTrait trait : traits) {
+            if (trait.hasCapability(accessSide) && capability.isInstance(trait)) {
+                list.add(capability.cast(trait));
+            }
+        }
+        return list;
     }
 }

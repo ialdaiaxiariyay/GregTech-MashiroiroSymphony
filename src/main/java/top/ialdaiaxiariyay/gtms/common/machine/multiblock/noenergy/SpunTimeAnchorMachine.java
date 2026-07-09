@@ -1,25 +1,23 @@
 package top.ialdaiaxiariyay.gtms.common.machine.multiblock.noenergy;
 
+import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
-import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
-import com.gregtechceu.gtceu.api.machine.feature.IFancyUIMachine;
-import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
+import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
-import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
-import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
+import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableItemStackHandler;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
+import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
+import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
-
-import com.lowdragmc.lowdraglib.syncdata.ISubscription;
-import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+import com.gregtechceu.gtceu.utils.ISubscription;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -29,10 +27,10 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.network.PacketDistributor;
 
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import top.ialdaiaxiariyay.bettergtae.api.recipe.CustomRecipeLogic;
@@ -46,7 +44,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class SpunTimeAnchorMachine extends WorkableMultiblockMachine implements IMachineLife, IFancyUIMachine {
+public class SpunTimeAnchorMachine extends WorkableMultiblockMachine {
 
     private int teleportCooldown = 0;
     private static final int COOLDOWN_TICKS = 20 * 4;
@@ -54,44 +52,43 @@ public class SpunTimeAnchorMachine extends WorkableMultiblockMachine implements 
             GTMS.id(GTMSDimension.TheDarkroom));
     private static final BlockPos TARGET_POS = new BlockPos(0, 132, 0);
 
-    @Persisted
+    @SaveField
+    @SyncToClient
     private final NotifiableItemStackHandler inventory;
     @Nullable
     private ISubscription inventorySubs;
 
-    public SpunTimeAnchorMachine(IMachineBlockEntity holder, Object... args) {
-        super(holder, args);
+    public SpunTimeAnchorMachine(BlockEntityCreationInfo info) {
+        super(info, new SpunTimeAnchorRecipeLogic());
+        if (getRecipeLogic() instanceof CustomRecipeLogic custom) {
+            custom.setRecipeSupplier(this::getGTRecipe);
+        }
         this.inventory = createInventory();
-        attachTraits(inventory);
+        attachTrait(inventory);
     }
 
     protected NotifiableItemStackHandler createInventory() {
-        return new NotifiableItemStackHandler(this, 1, IO.BOTH) {
+        return new NotifiableItemStackHandler(1, IO.BOTH) {
 
             @Override
             public void onContentsChanged() {
                 super.onContentsChanged();
-                if (recipeLogic != null) {
-                    recipeLogic.updateTickSubscription();
-                }
+                recipeLogic.updateTickSubscription();
             }
         };
     }
 
     public static class SpunTimeAnchorRecipeLogic extends CustomRecipeLogic {
 
-        private final SpunTimeAnchorMachine machine;
-
-        private final Supplier<GTRecipe> recipeSupplier;
-
-        public SpunTimeAnchorRecipeLogic(SpunTimeAnchorMachine machine, Supplier<GTRecipe> recipeSupplier) {
-            super(machine, recipeSupplier);
-            this.machine = machine;
-            this.recipeSupplier = recipeSupplier;
+        public SpunTimeAnchorRecipeLogic() {
+            super();
         }
+
+        private Supplier<GTRecipe> recipeSupplier;
 
         @Override
         public void onRecipeFinish() {
+            IRecipeLogicMachine machine = getRLMachine();
             machine.afterWorking();
             if (lastRecipe != null) {
                 handleRecipeIO(lastRecipe, IO.OUT);
@@ -101,7 +98,9 @@ public class SpunTimeAnchorMachine extends WorkableMultiblockMachine implements 
                 suspendAfterFinish = false;
             } else {
                 if (RecipeHelper.matchRecipe(machine, lastRecipe).isSuccess()) {
-                    setupRecipe(lastRecipe);
+                    if (lastRecipe != null) {
+                        setupRecipe(lastRecipe);
+                    }
                     return;
                 } else {
                     GTRecipe match = recipeSupplier.get();
@@ -120,18 +119,10 @@ public class SpunTimeAnchorMachine extends WorkableMultiblockMachine implements 
         @Override
         public void serverTick() {
             super.serverTick();
-            machine.checkTeleport();
+            if (getMachine() instanceof SpunTimeAnchorMachine spunTimeAnchorMachine) {
+                spunTimeAnchorMachine.checkTeleport();
+            }
         }
-    }
-
-    @Override
-    public boolean shouldOpenUI(Player player, InteractionHand hand, BlockHitResult hit) {
-        return false;
-    }
-
-    @Override
-    protected @NotNull RecipeLogic createRecipeLogic(Object @NotNull... args) {
-        return new SpunTimeAnchorRecipeLogic(this, this::getGTRecipe);
     }
 
     private @NotNull GTRecipe getGTRecipe() {
@@ -148,7 +139,7 @@ public class SpunTimeAnchorMachine extends WorkableMultiblockMachine implements 
         Level level = getLevel();
         if (level == null || level.isClientSide) return;
 
-        BlockPos abovePos = getPos().above();
+        BlockPos abovePos = getBlockPos();
         Player player = level.getNearestPlayer(abovePos.getX() + 0.5, abovePos.getY(), abovePos.getZ() + 0.5, 1.2,
                 false);
         if (player != null && player.onGround() && !player.isPassenger()) {
@@ -205,17 +196,13 @@ public class SpunTimeAnchorMachine extends WorkableMultiblockMachine implements 
         };
 
         player.changeDimension(targetWorld, teleporter);
-        player.playSound(net.minecraft.sounds.SoundEvents.PORTAL_TRAVEL, 1.0F, 1.0F);
+        player.playSound(SoundEvents.PORTAL_TRAVEL, 1.0F, 1.0F);
     }
 
     @Override
     public void onLoad() {
         super.onLoad();
-        inventorySubs = inventory.addChangedListener(() -> {
-            if (recipeLogic != null) {
-                recipeLogic.updateTickSubscription();
-            }
-        });
+        inventorySubs = inventory.addChangedListener(recipeLogic::updateTickSubscription);
     }
 
     @Override
@@ -228,10 +215,9 @@ public class SpunTimeAnchorMachine extends WorkableMultiblockMachine implements 
     }
 
     @Override
-    public void onStructureFormed() {
-        super.onStructureFormed();
-        if (recipeLogic != null) {
-            recipeLogic.updateTickSubscription();
-        }
+    @MustBeInvokedByOverriders
+    public void formStructure(@NotNull String substructureName) {
+        super.formStructure(substructureName);
+        recipeLogic.updateTickSubscription();
     }
 }

@@ -1,6 +1,6 @@
 [versions]
-gtceu_version = "7.5.0"
-ldlib_version = "1.0.47"
+gtceu_version = "8.0.0-SNAPSHOT"
+mui = "3.3.1-SNAPSHOT"
 registrate_version = "MC1.20-1.3.11"
 kubejs_version = "2001.6.4-build.120+forge"
 configuration_version = "3.1.0-forge"
@@ -18,7 +18,7 @@ ftblibrary_version = "5567591"
 ftbteams_version = "5267190"
 ftbultimine_version = "5363345"
 ftbchunks_version = "5378090"
-bettergtae_version = "1.2.1"
+bettergtae_version = "1.2.3-20260707.143655-5"
 curios_version = "5.14.1+1.20.1"
 patchouli_version = "1.20.1-85-FORGE"
 botania_version = "1.20.1-453-FORGE"
@@ -30,10 +30,10 @@ jei-forge-impl = { module = "mezz.jei:jei-1.20.1-forge", version.ref = "jei_vers
 emi = { module = "dev.emi:emi-forge", version.ref = "emi_version" }
 
 gtceu = { module = "com.gregtechceu.gtceu:gtceu-1.20.1", version.ref = "gtceu_version" }
-ldlib = { module = "com.lowdragmc.ldlib:ldlib-forge-1.20.1", version.ref = "ldlib_version" }
+mui = { module = "brachy.modularui:modularui-mc1.20.1", version.ref = "mui" }
 registrate = { module = "com.tterrag.registrate:Registrate", version.ref = "registrate_version" }
 configuration = { module = "dev.toma.configuration:configuration-1.20.1", version.ref = "configuration_version" }
-bettergtae = { module = "maven.modrinth:better-gregtech-and-applied-energistics", version.ref = "bettergtae_version" }
+bettergtae = { module = "top.ialdaiaxiariyay:bettergtae", version.ref = "bettergtae_version" }
 
 kubejs = { module = "maven.modrinth:kubejs", version.ref = "kubejs_version" }
 rhino = { module = "maven.modrinth:rhino", version.ref = "rhino_version" }

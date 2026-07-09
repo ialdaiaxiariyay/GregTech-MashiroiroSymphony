@@ -1,11 +1,9 @@
 package top.ialdaiaxiariyay.gtms.common.machine.multiblock.part.energy;
 
+import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
-import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.common.machine.multiblock.part.EnergyHatchPartMachine;
-
-import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 
@@ -29,16 +27,8 @@ public class WirelessEnergyHatchPartMachine extends EnergyHatchPartMachine imple
     @Nullable
     private TickableSubscription wirelessTransferSub;
 
-    public WirelessEnergyHatchPartMachine(IMachineBlockEntity holder, int tier, IO io, int amperage, Object... args) {
-        super(holder, tier, io, amperage, args);
-    }
-
-    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
-            WirelessEnergyHatchPartMachine.class, EnergyHatchPartMachine.MANAGED_FIELD_HOLDER);
-
-    @Override
-    public ManagedFieldHolder getFieldHolder() {
-        return MANAGED_FIELD_HOLDER;
+    public WirelessEnergyHatchPartMachine(BlockEntityCreationInfo info, int tier, IO io, int amperage) {
+        super(info, tier, io, amperage);
     }
 
     @Override

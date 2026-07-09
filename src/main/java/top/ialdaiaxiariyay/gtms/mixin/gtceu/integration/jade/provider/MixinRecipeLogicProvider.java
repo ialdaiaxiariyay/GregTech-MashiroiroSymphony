@@ -1,6 +1,6 @@
 package top.ialdaiaxiariyay.gtms.mixin.gtceu.integration.jade.provider;
 
-import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
+import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.integration.jade.provider.RecipeLogicProvider;
@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
@@ -25,10 +26,10 @@ import top.ialdaiaxiariyay.gtms.api.capability.recipe.ManaRecipeCapability;
 @Mixin(RecipeLogicProvider.class)
 public abstract class MixinRecipeLogicProvider {
 
-    @Inject(method = "write(Lnet/minecraft/nbt/CompoundTag;Lcom/gregtechceu/gtceu/api/machine/trait/RecipeLogic;)V",
+    @Inject(method = "write(Lcom/gregtechceu/gtceu/api/machine/trait/recipe/RecipeLogic;)Lnet/minecraft/nbt/CompoundTag;",
             at = @At("RETURN"),
             remap = false)
-    private void injectWrite(CompoundTag data, @NotNull RecipeLogic capability, CallbackInfo ci) {
+    private void injectWrite(RecipeLogic capability, CallbackInfoReturnable<CompoundTag> cir) {
         GTRecipe recipe = capability.getLastRecipe();
         if (recipe == null) return;
 
@@ -36,10 +37,10 @@ public abstract class MixinRecipeLogicProvider {
         long outputMana = 0;
 
         for (Content content : recipe.getTickInputContents(ManaRecipeCapability.CAP)) {
-            inputMana += ManaRecipeCapability.CAP.of(content.getContent()).amount();
+            inputMana += ManaRecipeCapability.CAP.of(content.content()).amount();
         }
         for (Content content : recipe.getTickOutputContents(ManaRecipeCapability.CAP)) {
-            outputMana += ManaRecipeCapability.CAP.of(content.getContent()).amount();
+            outputMana += ManaRecipeCapability.CAP.of(content.content()).amount();
         }
 
         long netMana = inputMana - outputMana;
@@ -49,7 +50,7 @@ public abstract class MixinRecipeLogicProvider {
         manaInfo.putLong("ManaPerTick", Math.abs(netMana));
         manaInfo.putLong("TotalMana", Math.abs(netMana) * recipe.duration);
         manaInfo.putBoolean("IsInput", netMana > 0);
-        data.put("ManaInfo", manaInfo);
+        cir.getReturnValue().put("ManaInfo", manaInfo);
     }
 
     @Inject(method = "addTooltip", at = @At("RETURN"), remap = false)

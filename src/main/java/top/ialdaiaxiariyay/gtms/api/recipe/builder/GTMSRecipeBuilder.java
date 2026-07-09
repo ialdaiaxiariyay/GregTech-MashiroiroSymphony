@@ -508,84 +508,83 @@ public class GTMSRecipeBuilder extends GTRecipeBuilder {
     }
 
     @Override
-    public GTMSRecipeBuilder chancedInput(Ingredient stack, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedInput(stack, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedInput(Ingredient stack, int chance) {
+        return (GTMSRecipeBuilder) super.chancedInput(stack, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedInput(FluidIngredient stack, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedInput(stack, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedInput(FluidIngredient stack, int chance) {
+        return (GTMSRecipeBuilder) super.chancedInput(stack, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(Ingredient stack, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(stack, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(Ingredient stack, int chance) {
+        return (GTMSRecipeBuilder) super.chancedOutput(stack, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(FluidIngredient stack, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(stack, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(FluidIngredient stack, int chance) {
+        return (GTMSRecipeBuilder) super.chancedOutput(stack, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedInput(ItemStack stack, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedInput(stack, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedInput(ItemStack stack, int chance) {
+        return (GTMSRecipeBuilder) super.chancedInput(stack, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedInput(FluidStack stack, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedInput(stack, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedInput(FluidStack stack, int chance) {
+        return (GTMSRecipeBuilder) super.chancedInput(stack, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(ItemStack stack, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(stack, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(ItemStack stack, int chance) {
+        return (GTMSRecipeBuilder) super.chancedOutput(stack, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(FluidStack stack, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(stack, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(FluidStack stack, int chance) {
+        return (GTMSRecipeBuilder) super.chancedOutput(stack, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(TagPrefix tag, Material mat, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(tag, mat, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(TagPrefix tag, Material mat, int chance) {
+        return (GTMSRecipeBuilder) super.chancedOutput(tag, mat, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(TagPrefix tag, Material mat, int count, int chance, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(tag, mat, count, chance, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(TagPrefix tag, Material mat, int count, int chance) {
+        return (GTMSRecipeBuilder) super.chancedOutput(tag, mat, count, chance);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(ItemStack stack, String fraction, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(stack, fraction, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(ItemStack stack, String fraction) {
+        return (GTMSRecipeBuilder) super.chancedOutput(stack, fraction);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(TagPrefix prefix, Material material, int count, String fraction,
-                                           int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(prefix, material, count, fraction, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(TagPrefix prefix, Material material, int count, String fraction) {
+        return (GTMSRecipeBuilder) super.chancedOutput(prefix, material, count, fraction);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(TagPrefix prefix, Material material, String fraction, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(prefix, material, fraction, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(TagPrefix prefix, Material material, String fraction) {
+        return (GTMSRecipeBuilder) super.chancedOutput(prefix, material, fraction);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(Item item, int count, String fraction, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(item, count, fraction, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(Item item, int count, String fraction) {
+        return (GTMSRecipeBuilder) super.chancedOutput(item, count, fraction);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedOutput(Item item, String fraction, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedOutput(item, fraction, tierChanceBoost);
+    public GTMSRecipeBuilder chancedOutput(Item item, String fraction) {
+        return (GTMSRecipeBuilder) super.chancedOutput(item, fraction);
     }
 
     @Override
-    public GTMSRecipeBuilder chancedFluidOutput(FluidStack stack, String fraction, int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.chancedFluidOutput(stack, fraction, tierChanceBoost);
+    public GTMSRecipeBuilder chancedFluidOutput(FluidStack stack, String fraction) {
+        return (GTMSRecipeBuilder) super.chancedFluidOutput(stack, fraction);
     }
 
     @Override
@@ -1073,11 +1072,6 @@ public class GTMSRecipeBuilder extends GTRecipeBuilder {
     @Override
     public @NotNull GTMSRecipeBuilder maxChance(int maxChance) {
         return (GTMSRecipeBuilder) super.maxChance(maxChance);
-    }
-
-    @Override
-    public @NotNull GTMSRecipeBuilder tierChanceBoost(int tierChanceBoost) {
-        return (GTMSRecipeBuilder) super.tierChanceBoost(tierChanceBoost);
     }
 
     @Override

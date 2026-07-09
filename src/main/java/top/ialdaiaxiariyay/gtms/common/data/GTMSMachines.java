@@ -10,7 +10,6 @@ import com.gregtechceu.gtceu.utils.FormattingUtil;
 
 import net.minecraft.network.chat.Component;
 
-import top.ialdaiaxiariyay.gtms.api.recipe.GTMSRecipeModifiers;
 import top.ialdaiaxiariyay.gtms.api.registrate.GTMSRegistrate;
 import top.ialdaiaxiariyay.gtms.common.data.machines.GTMSMultiblockMachinesA;
 import top.ialdaiaxiariyay.gtms.common.machine.multiblock.part.energy.WirelessEnergyHatchPartMachine;
@@ -36,17 +35,24 @@ public class GTMSMachines {
     }
 
     public static final MachineDefinition[] ARC_FURNACE = registerSimpleManaMachines("arc_furnace",
-            GTMSRecipeTypes.FURNACE_RECIPES, GTMSRecipeModifiers.MANA_OC_NON_PERFECT);
+            GTMSRecipeTypes.FURNACE_RECIPES);
 
     public static final MachineDefinition WE_MONITOR = GTMSRegistrate.REGISTRATE
-            .extMachine("wire1nitor", (holder) -> new WirelessManaHatchPartMachine(holder, 2, IN, 4))
+            .machine("wire1nitor", (holder) -> new WirelessManaHatchPartMachine(holder, 2, IN, 4))
             .tier(GTValues.MV)
             .rotationState(RotationState.ALL)
             .overlayTieredHullModel("wireless_resource_monitor")
             .register();
 
     public static final MachineDefinition WE_M13ONITOR = GTMSRegistrate.REGISTRATE
-            .extMachine("wire31nitor", (holder) -> new ManaHatchPartMachine(holder, 2, OUT, 4))
+            .machine("wire31nitor", (holder) -> new ManaHatchPartMachine(holder, 2, IN, 4))
+            .tier(GTValues.MV)
+            .rotationState(RotationState.ALL)
+            .overlayTieredHullModel("wireless_resource_monitor")
+            .register();
+
+    public static final MachineDefinition WE_M13ON1ITOR = GTMSRegistrate.REGISTRATE
+            .machine("wire31ni1tor", (holder) -> new ManaHatchPartMachine(holder, 2, OUT, 4))
             .tier(GTValues.MV)
             .rotationState(RotationState.ALL)
             .overlayTieredHullModel("wireless_resource_monitor")

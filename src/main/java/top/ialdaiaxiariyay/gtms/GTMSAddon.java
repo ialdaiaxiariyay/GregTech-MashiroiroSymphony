@@ -32,27 +32,12 @@ public class GTMSAddon implements IGTAddon {
     }
 
     @Override
-    public void registerSounds() {
-        GTMSSoundEvent.init();
-    }
-
-    @Override
     public void addRecipes(Consumer<FinishedRecipe> provider) {
         AAA.init(provider);
     }
 
     @Override
-    public void registerRecipeCapabilities() {
-        GTRegistries.RECIPE_CAPABILITIES.register(ManaRecipeCapability.CAP.name, ManaRecipeCapability.CAP);
-    }
-
-    @Override
     public boolean requiresHighTier() {
         return true;
-    }
-
-    @Override
-    public void registerOreVeins() {
-        GTMSOres.init();
     }
 }

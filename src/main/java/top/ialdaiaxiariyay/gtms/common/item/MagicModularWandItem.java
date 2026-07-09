@@ -1,5 +1,7 @@
 package top.ialdaiaxiariyay.gtms.common.item;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Direction;
@@ -14,7 +16,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -376,7 +382,8 @@ public class MagicModularWandItem extends Item {
                 tooltip.add(Component.translatable("gtms.tooltip.wand.combo.tooltip"));
                 tooltip.addAll(entry.tooltips());
             }
-
+            int manaCost = calcTotalManaCost(modules);
+            tooltip.add(Component.translatable("gtms.tooltip.wand.total_mana_cost", manaCost));
             int chargeTicks = getMaxChargeTicks(stack);
             float seconds = chargeTicks / 20.0f;
             tooltip.add(Component.translatable("gtms.tooltip.wand.charge_time", String.format("%.1f", seconds))
@@ -392,5 +399,19 @@ public class MagicModularWandItem extends Item {
                 .withStyle(ChatFormatting.DARK_GRAY));
         tooltip.add(Component.translatable("gtms.tooltip.wand.controls")
                 .withStyle(ChatFormatting.ITALIC, ChatFormatting.DARK_GREEN));
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
+        if (slot == EquipmentSlot.MAINHAND) {
+            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+            builder.put(Attributes.ATTACK_DAMAGE,
+                    new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", 4.0, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.ATTACK_SPEED,
+                    new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", -2.0, AttributeModifier.Operation.ADDITION));
+            return builder.build();
+        }
+        return super.getDefaultAttributeModifiers(slot);
     }
 }

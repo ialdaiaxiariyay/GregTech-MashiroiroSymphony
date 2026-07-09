@@ -3,7 +3,7 @@ dependencies {
 
     //gtceu
     modImplementation(forge.gtceu)
-    modImplementation(forge.ldlib)
+    modImplementation(forge.mui)
     modImplementation(forge.registrate)
     modImplementation(forge.configuration)
     modImplementation(forge.bettergtae)

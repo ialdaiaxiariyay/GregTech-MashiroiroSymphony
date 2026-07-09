@@ -3,23 +3,16 @@ package top.ialdaiaxiariyay.gtms.api.recipe;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.IRecipeCapabilityHolder;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
-import com.gregtechceu.gtceu.api.gui.SteamTexture;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
-import com.gregtechceu.gtceu.api.recipe.chance.boost.ChanceBoostFunction;
+import com.gregtechceu.gtceu.api.recipe.gui.GTRecipeTypeUILayout;
 import com.gregtechceu.gtceu.api.recipe.lookup.RecipeAdditionHandler;
 import com.gregtechceu.gtceu.api.recipe.lookup.RecipeDB;
-import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.api.sound.SoundEntry;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
+
 import com.gregtechceu.gtceu.utils.FormattingUtil;
-
-import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
-import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
-import com.lowdragmc.lowdraglib.gui.texture.ResourceTexture;
-import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
-
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -47,8 +40,8 @@ public class GTMSRecipeType extends GTRecipeType {
     }
 
     @Override
-    public GTMSRecipeType setMaxIOSize(int maxInputs, int maxOutputs, int maxFluidInputs, int maxFluidOutputs) {
-        return (GTMSRecipeType) super.setMaxIOSize(maxInputs, maxOutputs, maxFluidInputs, maxFluidOutputs);
+    public GTMSRecipeType setMaxIOSize(int maxItemInputs, int maxItemOutputs, int maxFluidInputs, int maxFluidOutputs) {
+        return (GTMSRecipeType) super.setMaxIOSize(maxItemInputs, maxItemOutputs, maxFluidInputs, maxFluidOutputs);
     }
 
     @Override
@@ -62,28 +55,8 @@ public class GTMSRecipeType extends GTRecipeType {
     }
 
     @Override
-    public GTMSRecipeType setSlotOverlay(boolean isOutput, boolean isFluid, IGuiTexture slotOverlay) {
-        return (GTMSRecipeType) super.setSlotOverlay(isOutput, isFluid, slotOverlay);
-    }
-
-    @Override
-    public GTMSRecipeType setSlotOverlay(boolean isOutput, boolean isFluid, boolean isLast, IGuiTexture slotOverlay) {
-        return (GTMSRecipeType) super.setSlotOverlay(isOutput, isFluid, isLast, slotOverlay);
-    }
-
-    @Override
-    public GTMSRecipeType setProgressBar(ResourceTexture progressBar, ProgressTexture.FillDirection moveType) {
-        return (GTMSRecipeType) super.setProgressBar(progressBar, moveType);
-    }
-
-    @Override
-    public GTMSRecipeType setSteamProgressBar(SteamTexture progressBar, ProgressTexture.FillDirection moveType) {
-        return (GTMSRecipeType) super.setSteamProgressBar(progressBar, moveType);
-    }
-
-    @Override
-    public GTMSRecipeType setUiBuilder(BiConsumer<GTRecipe, WidgetGroup> uiBuilder) {
-        return (GTMSRecipeType) super.setUiBuilder(uiBuilder);
+    public GTMSRecipeType UI(UnaryOperator<GTRecipeTypeUILayout.Builder> builder) {
+        return (GTMSRecipeType) super.UI(builder);
     }
 
     @Override
@@ -94,11 +67,6 @@ public class GTMSRecipeType extends GTRecipeType {
     @Override
     public GTMSRecipeType setXEIVisible(boolean XEIVisible) {
         return (GTMSRecipeType) super.setXEIVisible(XEIVisible);
-    }
-
-    @Override
-    public GTMSRecipeType addDataInfo(Function<CompoundTag, String> dataInfo) {
-        return (GTMSRecipeType) super.addDataInfo(dataInfo);
     }
 
     @Override
@@ -129,6 +97,11 @@ public class GTMSRecipeType extends GTRecipeType {
     @Override
     public int getMaxOutputs(RecipeCapability<?> cap) {
         return super.getMaxOutputs(cap);
+    }
+
+    @Override
+    public int getMaxSlots(RecipeCapability<?> cap, IO io) {
+        return super.getMaxSlots(cap, io);
     }
 
     @Override
@@ -164,8 +137,7 @@ public class GTMSRecipeType extends GTRecipeType {
         return recipeBuilder(GTMS.id(id), append);
     }
 
-    @Override
-    public GTMSRecipeBuilder copyFrom(GTRecipeBuilder builder) {
+    public GTMSRecipeBuilder copyFrom(GTMSRecipeBuilder builder) {
         return gtmsRecipeBuilder.copyFrom(builder);
     }
 
@@ -226,34 +198,18 @@ public class GTMSRecipeType extends GTRecipeType {
     }
 
     @Override
-    public @NotNull GTMSRecipeType setRecipeBuilder(GTRecipeBuilder recipeBuilder) {
-        if (recipeBuilder instanceof GTMSRecipeBuilder msBuilder) {
-            this.gtmsRecipeBuilder = msBuilder;
-        } else {
-            this.gtmsRecipeBuilder = new GTMSRecipeBuilder(recipeBuilder.buildRawRecipe(), this);
-        }
-        super.setRecipeBuilder(this.gtmsRecipeBuilder);
+    public void beginStagingRecipes() {
+        super.beginStagingRecipes();
+    }
+
+    @Override
+    public ResourceLocation getRegistryName() {
+        return super.getRegistryName();
+    }
+
+    public GTMSRecipeType setRecipeBuilder(GTMSRecipeBuilder recipeBuilder) {
+        this.gtmsRecipeBuilder = recipeBuilder;
         return this;
-    }
-
-    @Override
-    public ChanceBoostFunction getChanceFunction() {
-        return super.getChanceFunction();
-    }
-
-    @Override
-    public @NotNull GTMSRecipeType setChanceFunction(ChanceBoostFunction chanceFunction) {
-        return (GTMSRecipeType) super.setChanceFunction(chanceFunction);
-    }
-
-    @Override
-    public GTRecipeTypeUI getRecipeUI() {
-        return super.getRecipeUI();
-    }
-
-    @Override
-    public @NotNull GTMSRecipeType setRecipeUI(GTRecipeTypeUI recipeUI) {
-        return (GTMSRecipeType) super.setRecipeUI(recipeUI);
     }
 
     @Override
@@ -359,5 +315,15 @@ public class GTMSRecipeType extends GTRecipeType {
     @Override
     public int getMinRecipeConditions() {
         return super.getMinRecipeConditions();
+    }
+
+    @Override
+    public GTRecipeTypeUILayout getUiLayout() {
+        return super.getUiLayout();
+    }
+
+    @Override
+    public @NotNull GTMSRecipeType setUiLayout(GTRecipeTypeUILayout uiLayout) {
+        return (GTMSRecipeType) super.setUiLayout(uiLayout);
     }
 }

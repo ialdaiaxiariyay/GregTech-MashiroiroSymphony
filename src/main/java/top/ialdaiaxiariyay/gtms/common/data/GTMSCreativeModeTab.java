@@ -34,7 +34,7 @@ public class GTMSCreativeModeTab {
     public static RegistryEntry<CreativeModeTab> ITEM = REGISTRATE.defaultCreativeTab("item",
                     builder -> builder
                             .displayItems(new GTCreativeModeTabs.RegistrateDisplayItemsGenerator("item", REGISTRATE))
-                            .icon(GTMSBlocks.DIVERGENT_DREAM_ROD::asStack)
+                            .icon(GTMSItems.BASICS_WAND::asStack)
                             .title(REGISTRATE.addLang("itemGroup", GTMS.id("item"),
                                     GTMS.NAME + " Items"))
                             .build())
