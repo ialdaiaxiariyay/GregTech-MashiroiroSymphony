@@ -21,6 +21,7 @@ import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 import vazkii.botania.api.mana.ManaReceiver;
 import vazkii.botania.api.mana.spark.SparkAttachable;
@@ -220,7 +221,7 @@ public abstract class WorkableTieredManaMachine extends TieredManaMachine implem
         }
     }
 
-    public GTRecipeType getRecipeType() {
+    public @NotNull GTRecipeType getRecipeType() {
         int index = activeRecipeType >= 0 && activeRecipeType < recipeTypes.length ? activeRecipeType : 0;
         return recipeTypes[index];
     }

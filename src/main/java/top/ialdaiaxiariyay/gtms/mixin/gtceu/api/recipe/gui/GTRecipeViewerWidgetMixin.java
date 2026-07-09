@@ -67,7 +67,6 @@ public abstract class GTRecipeViewerWidgetMixin {
         gtms$baseManaTier = ManaRecipeHelper.getTierFromMana(gtms$baseManaPerTick);
         gtms$currentManaTier = gtms$baseManaTier;
 
-        // ----- 安全替换耗时行 -----
         List<IWidget> children = textComponents.getChildren();
         if (!children.isEmpty()) {
             //noinspection DataFlowIssue

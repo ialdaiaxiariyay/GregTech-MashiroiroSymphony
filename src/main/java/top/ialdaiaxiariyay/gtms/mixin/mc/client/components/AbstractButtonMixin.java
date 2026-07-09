@@ -1,4 +1,4 @@
-package top.ialdaiaxiariyay.gtms.mixin.mc.gui;
+package top.ialdaiaxiariyay.gtms.mixin.mc.client.components;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
