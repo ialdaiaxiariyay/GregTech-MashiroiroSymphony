@@ -27,7 +27,7 @@ afterEvaluate {
     tasks.withType(org.gradle.jvm.tasks.Jar).configureEach {
         destinationDirectory = file('build/libs/')
         manifest.attributes([
-                'MixinConfigs': 'gtms.mixins.json',
+                'MixinConfigs': 'gtbss.mixins.json',
                 'Specification-Title': project.name,
                 'Specification-Version': mod_version,
                 'Specification-Vendor': 'ialdaiaxiariyay',

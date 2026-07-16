@@ -1,0 +1,11 @@
+{
+  "type": "gtbss:the_darkroom",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "minecraft:overworld",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "gtbss:liminal_field"
+    }
+  }
+}

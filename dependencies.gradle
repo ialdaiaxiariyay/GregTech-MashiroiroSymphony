@@ -16,6 +16,7 @@ dependencies {
     //jei
     modImplementation(forge.bundles.jei)
     modImplementation(forge.emi)
+    modRuntimeOnly(forge.emi.accelerator)
 
     modImplementation(forge.jade)
 

@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "top.ialdaiaxiariyay.gtbss.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "gtbss.refmap.json",
+  "mixins": [
+    "gtceu.api.recipe.gui.GTRecipeViewerWidgetMixin",
+    "gtceu.integration.jade.provider.MixinRecipeLogicProvider",
+    "mc.sounds.MusicsMixin",
+    "mc.stats.RecipeBookMixin",
+    "mc.stats.ServerRecipeBookMixin"
+  ],
+  "client": [
+    "forge.client.ForgeHooksClientMixin",
+    "forge.client.gui.TitleScreenModUpdateIndicatorMixin",
+    "mc.client.ClientRecipeBookMixin",
+    "mc.client.components.AbstractButtonMixin",
+    "mc.client.gui.screens.TitleScreenMixin",
+    "mc.client.gui.screens.WorldSelectionListMixin"
+  ]
+}

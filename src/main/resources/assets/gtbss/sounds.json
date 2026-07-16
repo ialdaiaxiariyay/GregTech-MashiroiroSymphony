@@ -1,0 +1,49 @@
+{
+  "mouse_hover_1": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:mouse_hover_1"
+      }
+    ]
+  },
+  "mouse_click_1": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:mouse_click_1"
+      }
+    ]
+  },
+  "menu_1": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:menu_1"
+      }
+    ]
+  },
+  "menu_2": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:menu_2"
+      }
+    ]
+  },
+  "menu_tori_no_uta": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:tori_no_uta"
+      }
+    ]
+  },
+  "menu_music": {
+    "sounds": [
+      { "name": "gtbss:menu_1", "weight": 1 },
+      { "name": "gtbss:menu_2", "weight": 1 },
+      { "name": "gtbss:tori_no_uta", "weight": 1 }
+    ]
+  }
+}

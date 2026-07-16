@@ -92,7 +92,6 @@ repositories {
         name = "BetterGTAE"
         url = "https://maven.pkg.github.com/ialdaiaxiariyay/BetterGregTechAndAppliedEnergistics"
         credentials {
-            // 这里必须要有凭证，否则 GitHub 会拒绝访问
             username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
             password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
         }

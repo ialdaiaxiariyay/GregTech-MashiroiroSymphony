@@ -5,7 +5,8 @@ registrate_version = "MC1.20-1.3.11"
 kubejs_version = "2001.6.4-build.120+forge"
 configuration_version = "3.1.0-forge"
 jei_version = "15.20.0.121"
-emi_version = "1.1.22+1.20.1"
+emi_version = "1.1.24+1.20.1"
+emi_accelerator_version = "6oY5A4Iy" # 1.0.1
 mixinextras_version = "0.5.0-rc.3"
 jade_version = "11.13.2+forge"
 architectury_version = "9.1.12"
@@ -18,7 +19,7 @@ ftblibrary_version = "5567591"
 ftbteams_version = "5267190"
 ftbultimine_version = "5363345"
 ftbchunks_version = "5378090"
-bettergtae_version = "1.2.3-20260707.143655-5"
+bettergtae_version = "1.2.3-20260716.051306-6"
 curios_version = "5.14.1+1.20.1"
 patchouli_version = "1.20.1-85-FORGE"
 botania_version = "1.20.1-453-FORGE"
@@ -28,6 +29,7 @@ jei-common-api = { module = "mezz.jei:jei-1.20.1-common-api", version.ref = "jei
 jei-forge-api = { module = "mezz.jei:jei-1.20.1-forge-api", version.ref = "jei_version" }
 jei-forge-impl = { module = "mezz.jei:jei-1.20.1-forge", version.ref = "jei_version" }
 emi = { module = "dev.emi:emi-forge", version.ref = "emi_version" }
+emi_accelerator = { module = "maven.modrinth:emiaccelerator", version.ref = "emi_accelerator_version" }
 
 gtceu = { module = "com.gregtechceu.gtceu:gtceu-1.20.1", version.ref = "gtceu_version" }
 mui = { module = "brachy.modularui:modularui-mc1.20.1", version.ref = "mui" }
