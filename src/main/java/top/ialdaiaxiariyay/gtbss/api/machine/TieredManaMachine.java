@@ -126,8 +126,9 @@ public class TieredManaMachine extends TieredMachine {
         return super.getCapability(cap, side);
     }
 
-    private static <T> List<T> getCapabilitiesFromTraits(List<MachineTrait> traits, @Nullable Direction accessSide,
-                                                         Class<T> capability) {
+    private static <T> @NotNull List<T> getCapabilitiesFromTraits(@NotNull List<MachineTrait> traits,
+                                                                  @Nullable Direction accessSide,
+                                                                  Class<T> capability) {
         if (traits.isEmpty()) return Collections.emptyList();
         List<T> list = new ArrayList<>();
         for (MachineTrait trait : traits) {

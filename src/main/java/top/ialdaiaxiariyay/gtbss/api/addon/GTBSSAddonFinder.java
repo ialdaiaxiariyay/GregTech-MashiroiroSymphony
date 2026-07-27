@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Type;
+import top.ialdaiaxiariyay.gtbss.api.annotation.GTBSSAddon;
 
 import java.lang.reflect.Constructor;
 import java.util.*;

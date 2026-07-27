@@ -31,11 +31,19 @@
       }
     ]
   },
-  "menu_tori_no_uta": {
+  "menu_3": {
     "sounds": [
       {
         "type": "file",
-        "name": "gtbss:tori_no_uta"
+        "name": "gtbss:menu_3"
+      }
+    ]
+  },
+  "menu_4": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:menu_4"
       }
     ]
   },
@@ -43,7 +51,8 @@
     "sounds": [
       { "name": "gtbss:menu_1", "weight": 1 },
       { "name": "gtbss:menu_2", "weight": 1 },
-      { "name": "gtbss:tori_no_uta", "weight": 1 }
+      { "name": "gtbss:menu_3", "weight": 1 },
+      { "name": "gtbss:menu_4", "weight": 1 }
     ]
   }
 }

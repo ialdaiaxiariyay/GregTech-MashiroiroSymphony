@@ -9,6 +9,7 @@ public class Lang {
     public static void init(@NotNull UnifiedLanguageProvider provider) {
         registerManaTiers(provider);
         registerOreVein(provider);
+        registerEnchantmentLang(provider);
         provider.add("itemGroup.gtbss.block", "Blue Symphony | Block", "蓝天交响曲 | 方块");
         provider.add("itemGroup.gtbss.machine", "Blue Symphony | Machine", "蓝天交响曲 | 机器");
         provider.add("itemGroup.gtbss.item", "Blue Symphony | Item", "蓝天交响曲 | 物品");
@@ -34,5 +35,9 @@ public class Lang {
             String key = "gtbss.lang.mana_tier." + GTBSSValues.MN[i].toLowerCase();
             provider.add(key, GTBSSValues.MNF_EN[i], GTBSSValues.MNF_CN[i]);
         }
+    }
+
+    private static void registerEnchantmentLang(UnifiedLanguageProvider provider) {
+        provider.add("enchantment.gtbss.spear_fall_protection", "Gungnir's Grace", "冈格尼尔之佑");
     }
 }

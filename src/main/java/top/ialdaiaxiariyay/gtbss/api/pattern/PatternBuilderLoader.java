@@ -36,14 +36,12 @@ public class PatternBuilderLoader {
         this.builder = MultiblockPatternBuilder.start(sliceDir, stringDir, charDir);
     }
 
-    public PatternBuilderLoader slice(String... slice) {
+    public void slice(String... slice) {
         builder.slice(slice);
-        return this;
     }
 
-    public PatternBuilderLoader sliceRepeatable(int minRepeat, int maxRepeat, String... slice) {
+    public void sliceRepeatable(int minRepeat, int maxRepeat, String... slice) {
         builder.sliceRepeatable(minRepeat, maxRepeat, slice);
-        return this;
     }
 
     public PatternBuilderLoader where(char symbol, PatternPredicate predicate) {

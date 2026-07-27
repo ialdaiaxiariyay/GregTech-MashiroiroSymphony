@@ -1,9 +1,6 @@
 package top.ialdaiaxiariyay.gtbss.common.item.module;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -19,8 +16,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import top.ialdaiaxiariyay.gtbss.GTBSS;
 import top.ialdaiaxiariyay.gtbss.api.item.MagicModuleItem;
-import top.ialdaiaxiariyay.gtbss.client.gui.screens.MarkdownViewScreen;
 import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtils;
+import top.ialdaiaxiariyay.gtbss.utils.GTBSSUtils;
 
 import java.util.function.Predicate;
 
@@ -72,17 +69,10 @@ public class AutumnModule extends MagicModuleItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player,
+                                                           @NotNull InteractionHand hand) {
         if (level.isClientSide) {
-            Minecraft.getInstance().execute(() -> {
-                ResourceLocation base = GTBSS.id("docs/readme.md");
-                try {
-                    Minecraft.getInstance().setScreen(
-                            new MarkdownViewScreen(Component.literal("说明文档"), base));
-                } catch (Exception e) {
-                    GTBSS.LOGGER.info(e.getMessage()); // 打印异常
-                }
-            });
+            GTBSSUtils.openMarkdownViewScreenGui(GTBSS.id("docs/readme.md"));
             return InteractionResultHolder.success(player.getItemInHand(hand));
         }
         return super.use(level, player, hand);

@@ -10,9 +10,11 @@ import com.gregtechceu.gtceu.utils.FormattingUtil;
 
 import net.minecraft.network.chat.Component;
 
+import top.ialdaiaxiariyay.gtbss.api.machine.GTBSSPartAbility;
 import top.ialdaiaxiariyay.gtbss.api.registrate.GTBSSRegistrate;
 import top.ialdaiaxiariyay.gtbss.common.data.machines.GTBSSMultiblockMachinesA;
 import top.ialdaiaxiariyay.gtbss.common.machine.multiblock.part.MEOutputDualPartMachine;
+import top.ialdaiaxiariyay.gtbss.common.machine.multiblock.part.MultipleRecipeParallelHatchPartMachine;
 import top.ialdaiaxiariyay.gtbss.common.machine.multiblock.part.energy.WirelessEnergyHatchPartMachine;
 import top.ialdaiaxiariyay.gtbss.common.machine.multiblock.part.mana.ManaHatchPartMachine;
 import top.ialdaiaxiariyay.gtbss.common.machine.multiblock.part.mana.WirelessManaHatchPartMachine;
@@ -238,4 +240,15 @@ public class GTBSSMachines {
             PartAbility.INPUT_LASER);
     public static final MachineDefinition[] LASER_OUTPUT_HATCH_4096 = registerWirelessLaserHatch(OUT, 4096,
             PartAbility.OUTPUT_LASER);
+
+    public static final MachineDefinition[] MULTIPLE_RECIPE_PARALLEL = registerTieredMachines(
+            "multiple_recipe_parallel_hatch",
+            MultipleRecipeParallelHatchPartMachine::new,
+            (tier, builder) -> builder
+                    .rotationState(RotationState.ALL)
+                    .abilities(GTBSSPartAbility.MULTIPLE_RECIPE_PARALLEL)
+                    .modelProperty(IS_FORMED, false)
+                    .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_output_hatch_16a"))
+                    .register(),
+            Luv2Max_TIERS);
 }

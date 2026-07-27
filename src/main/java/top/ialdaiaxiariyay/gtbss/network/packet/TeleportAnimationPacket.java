@@ -3,10 +3,12 @@ package top.ialdaiaxiariyay.gtbss.network.packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
+import top.ialdaiaxiariyay.gtbss.api.annotation.NetworkPacket;
 import top.ialdaiaxiariyay.gtbss.client.hud.TeleportClientHandler;
 
 import java.util.function.Supplier;
 
+@NetworkPacket
 public class TeleportAnimationPacket {
 
     private final boolean start;

@@ -46,6 +46,8 @@ import static com.gregtechceu.gtceu.utils.FormattingUtil.toEnglishName;
 @MethodsReturnNonnullByDefault
 public class GTBSSMachineUtils {
 
+    public static final int[] Luv2Max_TIERS = GTValues.tiersBetween(LuV, MAX);
+
     public static <MACHINE extends MetaMachine> MachineDefinition[] registerTieredMachines(String name,
                                                                                            MachineInstanceFactory.Tiered<MACHINE> factory,
                                                                                            BiFunction<Integer, MachineBuilder<MachineDefinition, MACHINE, ?>, MachineDefinition> builder,

@@ -10,7 +10,6 @@ public class TipsLang {
                 "能从无线网络中获取蒸汽");
         provider.add("gtbss.machine.steam.wireless_steam_out_hatch.tooltip", "Transmit steam into wireless network",
                 "将蒸汽输入到无线网络中");
-        provider.add("gtbss.machine.wireless_resource_monitor.tooltip", "Owner: %s", "所有者：%s");
         provider.add("gtbss.gui.wireless_steam", "Wireless Total Steam Volume: %s", "无线蒸汽总量: %s");
         provider.add("gtbss.machine.wireless_resource_monitor.transfers", "No recent transfers", "无传输记录");
         provider.add("gtbss.machine.wireless_resource_monitor.teleport", "Click to teleport", "点击传送");
@@ -40,6 +39,9 @@ public class TipsLang {
         provider.add("gtbss.recipe_modifier.insufficient_mana", "Insufficient Mana", "魔力不足");
         provider.add("gtbss.universal.tooltip.mana_in", "§aMax Mana IN: §f%d (%s§f)", "§a最大输入魔力：§f%d（%s§f）");
         provider.add("gtbss.universal.tooltip.mana_out", "§aMax Mana OUT: §f%d (%s§f)", "§a最大输出魔力：§f%d（%s§f）");
+        provider.add("gtbss.multiblock.max_mana_per_tick", "Max Mana/t: §a%s (%s§r)", "Max Mana/t: §a%s (%s§r)");
+        provider.add("gtbss.multiblock.max_mana_per_tick_hover",
+                "The maximum Mana/t available for running recipes or overclocking", "用于运行配方或超频的最大的 Mana/t");
         provider.add("gtbss.universal.tooltip.mana_storage_capacity", "§cMana Capacity: §r%d Mana", "§c魔力缓存：§r%d Mana");
         provider.add("gtbss.tooltip.wand.combo", "Active Combination: %s", "已激活组合");
         provider.add("gtbss.tooltip.wand.no_modules", "No modules installed", "未安装模块");
@@ -66,8 +68,8 @@ public class TipsLang {
                 "Wind Chain (Bouncing Damage):\nFires a wind projectile that bounces up to 3 + charge time * 3 times, dealing 5 + charge time * 7 damage per hit,\nwith damage decaying by (20% - 10%*charge time) each bounce. The first target is knocked back with force 0.5 + charge time.\nEach bounce seeks the nearest un-hit enemy within range.",
                 "风之连锁（弹射伤害）：\n发射一枚风弹，最多弹射 3 + 蓄力时间×3 次，每次造成 5 + 蓄力时间×7 伤害，\n每次弹射伤害衰减 20% - 10%×蓄力时间。首个目标被击退，强度 0.5 + 蓄力时间。\n每次弹射自动寻找范围内最近的未受伤敌人。");
         provider.add("gtbss.tooltip.fire_module.0",
-                "Flame Burst (Independent Area Damage):\nLaunches a fireball (speed and explosion radius scale with charge time), which explodes on impact in a 2 + charge time * 2 block radius.\nEvery enemy within the explosion takes 4 + charge time * 4 fire damage individually (damage is NOT shared).\nAlso sets fire to nearby blocks for a short duration.",
-                "烈焰冲击（独立范围伤害）：\n发射一枚火球（速度与爆炸范围受蓄力时间影响），命中后产生 2 + 蓄力时间×2 格爆炸。\n爆炸范围内每个敌人独立受到 4 + 蓄力时间×4 火焰伤害（伤害不均分）。\n同时点燃附近方块一段时间。");
+                "Flame Burst (Independent Area Damage):\nLaunches a fireball (speed and explosion radius scale with charge time), which explodes on impact in a 2 + charge time * 2 block radius.\nEvery enemy within the explosion takes 4 + charge time * 4 fire damage individually (damage is NOT shared).",
+                "烈焰冲击（独立范围伤害）：\n发射一枚火球（速度与爆炸范围受蓄力时间影响），命中后产生 2 + 蓄力时间×2 格爆炸。\n爆炸范围内每个敌人独立受到 4 + 蓄力时间×4 火焰伤害（伤害不均分）。");
         provider.add("gtbss.tooltip.mana_module.0",
                 "Mana Burst (Shared Damage):\nDeals a total of 12 + charge time * 18 magic damage to all enemies within a radius of 8 blocks, split equally among all targets.\nAdditionally, grants the caster an Absorption shield equal to 30% of the total damage dealt, lasting 10 seconds.",
                 "魔力爆发（均摊伤害）：\n对半径 8 格内所有敌人造成总计 12 + 蓄力时间×18 魔法伤害，伤害在所有目标间均分。\n同时为施法者提供相当于总伤害 30% 的伤害吸收护盾，持续 10 秒。");
@@ -81,7 +83,12 @@ public class TipsLang {
                 "Scorching Heat (Shared Damage):\nDeals a total of 8 + charge time * 12 magic damage to all enemies within a radius of 6 blocks, split equally among all targets.\nAlso applies Slowness II and Weakness I to each enemy for 5 + charge time * 5 seconds.",
                 "灼热高温（均摊伤害）：\n对半径 6 格内所有敌人造成总计 8 + 蓄力时间×12 魔法伤害，伤害在所有目标间均分。\n同时对每个敌人施加缓慢 II 和虚弱 I，持续 5 + 蓄力时间×5 秒。");
         provider.add("gtbss.tooltip.wand.combo.tooltip", "Combo skill:", "组合技能:");
-        provider.add("gtbss.machine.me_dual_output_part.tooltip.0","Unified Output for Multiblocks: Supports direct transfer of both items and fluids into an ME network without intermediate buffers or pipes.","多方块统一输出：支持物品和流体直接输入ME网络，无需中间缓存或管道。");
-        provider.add("gtbss.machine.me_dual_output_part.tooltip.1","Dual Infinite Buffers: While disconnected from the ME network, the internal item buffer and fluid buffer each have unlimited capacity, allowing arbitrary amounts of both item and fluid types to be stored until the network reconnects.","双无限缓存：在未连接ME网络时，内部的物品缓存和流体缓存各自拥有无限容量，可任意存储两种类型的资源，直到网络恢复。");
+        provider.add("gtbss.machine.me_dual_output_part.tooltip.0",
+                "Unified Output for Multiblocks: Supports direct transfer of both items and fluids into an ME network without intermediate buffers or pipes.",
+                "多方块统一输出：支持物品和流体直接输入ME网络，无需中间缓存或管道。");
+        provider.add("gtbss.machine.me_dual_output_part.tooltip.1",
+                "Dual Infinite Buffers: While disconnected from the ME network, the internal item buffer and fluid buffer each have unlimited capacity, allowing arbitrary amounts of both item and fluid types to be stored until the network reconnects.",
+                "双无限缓存：在未连接ME网络时，内部的物品缓存和流体缓存各自拥有无限容量，可任意存储两种类型的资源，直到网络恢复。");
+        provider.add("gtbss.machine.multiple_recipe_parallel_hatch.parallel_ui", "Recipe duration", "配方时间");
     }
 }

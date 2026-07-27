@@ -46,6 +46,8 @@ public class CommonProxy {
         GTBSSCreativeModeTab.init();
         GTBSSBlocks.init();
         GTBSSItems.init();
+        GTBSSEntityTypes.init();
+        GTBSSEnchantments.init();
     }
 
     private void onCommonSetup(@NotNull FMLCommonSetupEvent event) {

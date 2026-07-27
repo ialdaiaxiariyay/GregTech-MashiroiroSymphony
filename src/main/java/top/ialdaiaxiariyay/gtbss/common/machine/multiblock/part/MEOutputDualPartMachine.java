@@ -1,23 +1,5 @@
 package top.ialdaiaxiariyay.gtbss.common.machine.multiblock.part;
 
-import appeng.api.networking.IGrid;
-import appeng.api.networking.IGridNodeListener;
-import appeng.api.networking.IManagedGridNode;
-import appeng.api.networking.security.IActionSource;
-import appeng.api.stacks.AEFluidKey;
-import appeng.api.stacks.AEItemKey;
-import appeng.api.storage.MEStorage;
-import brachy.modularui.api.drawable.Text;
-import brachy.modularui.factory.PosGuiData;
-import brachy.modularui.screen.UISettings;
-import brachy.modularui.value.sync.BooleanSyncValue;
-import brachy.modularui.value.sync.DynamicLinkedSyncHandler;
-import brachy.modularui.value.sync.PanelSyncManager;
-import brachy.modularui.widget.ParentWidget;
-import brachy.modularui.widget.scroll.VerticalScrollData;
-import brachy.modularui.widgets.TextWidget;
-import brachy.modularui.widgets.dynamic.DynamicWidget;
-import brachy.modularui.widgets.layout.Flow;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
@@ -40,8 +22,7 @@ import com.gregtechceu.gtceu.integration.ae2.machine.feature.IGridConnectedMachi
 import com.gregtechceu.gtceu.integration.ae2.machine.trait.GridNodeHolder;
 import com.gregtechceu.gtceu.integration.ae2.utils.KeyStorage;
 import com.gregtechceu.gtceu.utils.ISubscription;
-import lombok.Getter;
-import lombok.Setter;
+
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -49,17 +30,39 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fluids.FluidStack;
+
+import appeng.api.networking.IGrid;
+import appeng.api.networking.IGridNodeListener;
+import appeng.api.networking.IManagedGridNode;
+import appeng.api.networking.security.IActionSource;
+import appeng.api.stacks.AEFluidKey;
+import appeng.api.stacks.AEItemKey;
+import appeng.api.storage.MEStorage;
+import brachy.modularui.api.drawable.Text;
+import brachy.modularui.factory.PosGuiData;
+import brachy.modularui.screen.UISettings;
+import brachy.modularui.value.sync.BooleanSyncValue;
+import brachy.modularui.value.sync.DynamicLinkedSyncHandler;
+import brachy.modularui.value.sync.PanelSyncManager;
+import brachy.modularui.widget.ParentWidget;
+import brachy.modularui.widget.scroll.VerticalScrollData;
+import brachy.modularui.widgets.TextWidget;
+import brachy.modularui.widgets.dynamic.DynamicWidget;
+import brachy.modularui.widgets.layout.Flow;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class MEOutputDualPartMachine extends TieredIOPartMachine
-        implements IGridConnectedMachine, IMuiMachine {
+                                     implements IGridConnectedMachine, IMuiMachine {
 
     @SaveField
     @Getter
@@ -223,13 +226,13 @@ public class MEOutputDualPartMachine extends TieredIOPartMachine
         var flow = Flow.col().coverChildren();
 
         flow.child(Text.dynamic(() -> isOnlineValue.getBoolValue() ?
-                        Component.translatable("gtceu.gui.me_network.online") :
-                        Component.translatable("gtceu.gui.me_network.offline"))
+                Component.translatable("gtceu.gui.me_network.online") :
+                Component.translatable("gtceu.gui.me_network.offline"))
                 .asWidget().marginTop(2).marginBottom(4));
 
         var itemSyncHandler = new AEKeyStorageSyncHandler(itemBuffer);
         syncManager.syncValue("item_output_display", itemSyncHandler);
-        int[] itemScroll = {0};
+        int[] itemScroll = { 0 };
         var itemDynamic = new DynamicLinkedSyncHandler<>(itemSyncHandler)
                 .widgetProvider((sm, value) -> {
                     var col = Flow.col().leftRel(0.5f).coverChildrenHeight();
@@ -245,7 +248,7 @@ public class MEOutputDualPartMachine extends TieredIOPartMachine
 
         var fluidSyncHandler = new AEKeyStorageSyncHandler(fluidBuffer);
         syncManager.syncValue("fluid_output_display", fluidSyncHandler);
-        int[] fluidScroll = {0};
+        int[] fluidScroll = { 0 };
         var fluidDynamic = new DynamicLinkedSyncHandler<>(fluidSyncHandler)
                 .widgetProvider((sm, value) -> {
                     var col = Flow.col().leftRel(0.5f).coverChildrenHeight();
@@ -411,7 +414,7 @@ public class MEOutputDualPartMachine extends TieredIOPartMachine
                                                        boolean simulate) {
             if (io != IO.OUT) return left;
             FluidAction action = simulate ? FluidAction.SIMULATE : FluidAction.EXECUTE;
-            for (var it = left.iterator(); it.hasNext(); ) {
+            for (var it = left.iterator(); it.hasNext();) {
                 var ingredient = it.next();
                 if (ingredient.isEmpty()) {
                     it.remove();
@@ -421,7 +424,7 @@ public class MEOutputDualPartMachine extends TieredIOPartMachine
                 if (ingredient instanceof IntProviderFluidIngredient provider) {
                     provider.setFluidStacks(null);
                     provider.setSampledCount(-1);
-                    fluids = simulate ? new FluidStack[]{provider.getMaxSizeStack()} : provider.getStacks();
+                    fluids = simulate ? new FluidStack[] { provider.getMaxSizeStack() } : provider.getStacks();
                 } else {
                     fluids = ingredient.getStacks();
                 }
@@ -490,5 +493,4 @@ public class MEOutputDualPartMachine extends TieredIOPartMachine
             return FluidStack.EMPTY;
         }
     }
-
 }

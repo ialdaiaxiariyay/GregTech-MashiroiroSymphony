@@ -1,7 +1,9 @@
 package top.ialdaiaxiariyay.gtbss.utils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -13,6 +15,7 @@ import net.minecraftforge.registries.tags.ITag;
 
 import org.jetbrains.annotations.NotNull;
 import top.ialdaiaxiariyay.gtbss.GTBSS;
+import top.ialdaiaxiariyay.gtbss.client.gui.screens.MarkdownViewScreen;
 import top.ialdaiaxiariyay.gtbss.network.NetworkHandler;
 import top.ialdaiaxiariyay.gtbss.network.packet.SanitySyncPacket;
 
@@ -65,5 +68,18 @@ public class GTBSSUtils {
             return HolderSet::direct;
         }
         return () -> HolderSet.direct(holders);
+    }
+
+    public static void openMarkdownViewScreenGui(ResourceLocation file) {
+        if (Minecraft.getInstance().level != null && Minecraft.getInstance().level.isClientSide) {
+            Minecraft.getInstance().execute(() -> {
+                try {
+                    Minecraft.getInstance().setScreen(
+                            new MarkdownViewScreen(Component.literal("docs"), file));
+                } catch (Exception e) {
+                    GTBSS.LOGGER.info(e.getMessage());
+                }
+            });
+        }
     }
 }

@@ -9,16 +9,8 @@ import com.gregtechceu.gtceu.utils.FormattingUtil;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 
-import brachy.modularui.api.MCHelper;
 import brachy.modularui.api.drawable.IDrawable;
 import brachy.modularui.api.drawable.Text;
 import brachy.modularui.api.widget.IWidget;
@@ -73,8 +65,6 @@ public class WirelessResourceMonitor extends MetaMachine implements IMuiMachine,
 
     private BooleanSyncValue allSync;
     private StringSyncValue resourceSync;
-    private BooleanSyncValue teleportTriggerSync;
-    private StringSyncValue teleportDataSync;
     private StringSyncValue transferSync;
 
     public WirelessResourceMonitor(BlockEntityCreationInfo info) {
@@ -102,15 +92,6 @@ public class WirelessResourceMonitor extends MetaMachine implements IMuiMachine,
 
     private void tickHandler() {
         if (getOffsetTimer() % 10 == 0) {
-            if (teleportTriggerSync != null && teleportTriggerSync.getBoolValue()) {
-                teleportTriggerSync.setBoolValue(false);
-                String data = teleportDataSync != null ? teleportDataSync.getValue() : null;
-                if (data != null && !data.isEmpty()) {
-                    executeTeleport(data);
-                    teleportDataSync.setValue("");
-                }
-            }
-
             if (!isRemote()) {
                 WirelessContainer container = getWirelessContainer(selectedResourceType);
                 if (container != null) {
@@ -197,16 +178,8 @@ public class WirelessResourceMonitor extends MetaMachine implements IMuiMachine,
                 () -> new StringSyncValue(() -> selectedResourceType, s -> selectedResourceType = s));
         resourceSync.allowC2S(true);
 
-        teleportTriggerSync = syncManager.getOrCreateSyncHandler("teleportTrigger", BooleanSyncValue.class,
-                () -> new BooleanSyncValue(() -> false, b -> {}));
-        teleportTriggerSync.allowC2S(true);
-
-        teleportDataSync = syncManager.getOrCreateSyncHandler("teleportData", StringSyncValue.class,
-                () -> new StringSyncValue(() -> "", s -> {}));
-        teleportDataSync.allowC2S(true);
-
         transferSync = syncManager.getOrCreateSyncHandler("transferSync", StringSyncValue.class,
-                () -> new StringSyncValue(() -> transferInfo, s -> transferInfo = s));
+                () -> new StringSyncValue(() -> transferInfo, s -> transferInfo = s)).allowC2S(true);
 
         var panel = new ParentWidget<>()
                 .size(UI_WIDTH, UI_HEIGHT)
@@ -396,35 +369,6 @@ public class WirelessResourceMonitor extends MetaMachine implements IMuiMachine,
         row.child(textWidget);
         row.height(12);
         widgets.add(row);
-    }
-
-    private void executeTeleport(String teleportData) {
-        if (getLevel() == null) return;
-        Player player = MCHelper.getPlayer();
-        if (!(player instanceof ServerPlayer serverPlayer)) return;
-
-        int lastColon = teleportData.lastIndexOf(':');
-        if (lastColon == -1) return;
-        String dimStr = teleportData.substring(0, lastColon);
-        String[] xyz = teleportData.substring(lastColon + 1).split(",");
-        if (xyz.length != 3) return;
-
-        ResourceKey<Level> dimKey = ResourceKey.create(Registries.DIMENSION,
-                ResourceLocation.parse(dimStr));
-        ServerLevel targetWorld = serverPlayer.server.getLevel(dimKey);
-        if (targetWorld != null) {
-            try {
-                double x = Double.parseDouble(xyz[0]) + 0.5;
-                double y = Double.parseDouble(xyz[1]) + 0.5;
-                double z = Double.parseDouble(xyz[2]) + 0.5;
-                serverPlayer.teleportTo(targetWorld, x, y, z,
-                        serverPlayer.getYRot(), serverPlayer.getXRot());
-                serverPlayer.sendSystemMessage(
-                        Component.translatable("gtbss.machine.wireless_resource_monitor.teleport_success",
-                                xyz[0], xyz[1], xyz[2], dimStr)
-                                .withStyle(ChatFormatting.GREEN));
-            } catch (NumberFormatException ignored) {}
-        }
     }
 
     private Component getTimeText(BigInteger ticks) {

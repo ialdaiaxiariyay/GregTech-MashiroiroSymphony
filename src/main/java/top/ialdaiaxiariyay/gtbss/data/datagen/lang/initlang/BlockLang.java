@@ -11,7 +11,7 @@ public class BlockLang {
         DynamoHatch(provider);
         LaserSourceHatch(provider);
         LaserTargetHatch(provider);
-        provider.add("block.gtbss.me_dual_output_part","ME Output Dual Part","ME输出总成");
+        provider.add("block.gtbss.me_dual_output_part", "ME Output Dual Part", "ME输出总成");
         provider.add("block.gtbss.wireless_steam_input_hatch", "Wireless Steam Input Hatch", "无线蒸汽输入仓");
         provider.add("block.gtbss.wireless_steam_output_hatch", "Wireless Steam Output Hatch", "无线蒸汽输出仓");
         provider.add("block.gtbss.wireless_resource_monitor", "Wireless Resource Monitor", "无线资源监视器");

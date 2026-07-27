@@ -1,7 +1,10 @@
 package top.ialdaiaxiariyay.gtbss.api.recipe;
 
+import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.feature.IOverclockMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.api.recipe.modifier.ModifierFunction;
 import com.gregtechceu.gtceu.api.recipe.modifier.RecipeModifier;
 
@@ -9,6 +12,7 @@ import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 
 import org.jetbrains.annotations.NotNull;
+import top.ialdaiaxiariyay.gtbss.api.machine.multiblock.MultipleRecipeCoilWorkableElectricMultiblockMachine;
 
 import java.util.function.Function;
 
@@ -33,5 +37,22 @@ public class GTBSSRecipeModifiers {
     private static long getBaseManaRequirement(@NotNull GTRecipe recipe) {
         var manaWithIO = ManaRecipeHelper.getRealManaWithIO(recipe);
         return manaWithIO.stack().amount();
+    }
+
+    public static @NotNull ModifierFunction NoParallelEbfOverclock(@NotNull MetaMachine machine,
+                                                                   @NotNull GTRecipe recipe) {
+        if (!(machine instanceof MultipleRecipeCoilWorkableElectricMultiblockMachine coilMachine)) {
+            return RecipeModifier.nullWrongType(MultipleRecipeCoilWorkableElectricMultiblockMachine.class, machine);
+        }
+        int blastFurnaceTemperature = coilMachine.getCoilType().getCoilTemperature() +
+                (100 * Math.max(0, coilMachine.getTier() - GTValues.MV));
+        int recipeTemp = recipe.data.getInt("ebf_temp");
+        if (!recipe.data.contains("ebf_temp") || recipeTemp > blastFurnaceTemperature) {
+            return ModifierFunction.cancel(Component.translatable("gtceu.recipe_modifier.coil_temperature_too_low"));
+        }
+        if (RecipeHelper.getRecipeEUtTier(recipe) > coilMachine.getTier()) {
+            return ModifierFunction.cancel(Component.translatable("gtceu.recipe_modifier.insufficient_voltage"));
+        }
+        return ModifierFunction.builder().build();
     }
 }

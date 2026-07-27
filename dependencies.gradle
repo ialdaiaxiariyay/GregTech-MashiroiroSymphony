@@ -17,6 +17,7 @@ dependencies {
     modImplementation(forge.bundles.jei)
     modImplementation(forge.emi)
     modRuntimeOnly(forge.emi.accelerator)
+    modRuntimeOnly(forge.jech)
 
     modImplementation(forge.jade)
 
@@ -28,7 +29,7 @@ dependencies {
 
     modImplementation(forge.embeddium)
 
-    modRuntimeOnly(forge.jech)
+
 
     modImplementation(forge.curios)
     modImplementation(forge.patchouli)
@@ -39,4 +40,6 @@ dependencies {
     modImplementation(forge.ftbteams)
     modRuntimeOnly(forge.ftbultimine)
     modRuntimeOnly(forge.ftbchunks)
+
+    modImplementation(forge.bundles.cc.t)
 }

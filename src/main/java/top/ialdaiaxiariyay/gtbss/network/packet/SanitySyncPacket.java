@@ -8,10 +8,12 @@ import net.minecraftforge.network.NetworkEvent;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import top.ialdaiaxiariyay.gtbss.api.annotation.NetworkPacket;
 import top.ialdaiaxiariyay.gtbss.common.ForgeEventListener;
 
 import java.util.function.Supplier;
 
+@NetworkPacket
 public class SanitySyncPacket {
 
     private final int playerId;

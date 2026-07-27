@@ -23,6 +23,7 @@ bettergtae_version = "1.2.3-20260716.051306-6"
 curios_version = "5.14.1+1.20.1"
 patchouli_version = "1.20.1-85-FORGE"
 botania_version = "1.20.1-453-FORGE"
+ccTweaked = "1.114.3"
 
 [libraries]
 jei-common-api = { module = "mezz.jei:jei-1.20.1-common-api", version.ref = "jei_version" }
@@ -62,6 +63,11 @@ curios = { module = "top.theillusivec4.curios:curios-forge", version.ref = "curi
 patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli_version" }
 botania = { module = "vazkii.botania:Botania", version.ref = "botania_version" }
 
+cc-tweaked-core-api   = { module = "cc.tweaked:cc-tweaked-1.20.1-core-api", version.ref = "ccTweaked" }
+cc-tweaked-forge-api  = { module = "cc.tweaked:cc-tweaked-1.20.1-forge-api", version.ref = "ccTweaked" }
+cc-tweaked-forge-impl = { module = "cc.tweaked:cc-tweaked-1.20.1-forge", version.ref = "ccTweaked" }
+
 [bundles]
 jei = ["jei-common-api", "jei-forge-api", "jei-forge-impl"]
 kjs = ["kubejs", "rhino", "architectury"]
+cc-t = ["cc-tweaked-core-api", "cc-tweaked-forge-api", "cc-tweaked-forge-impl"]
