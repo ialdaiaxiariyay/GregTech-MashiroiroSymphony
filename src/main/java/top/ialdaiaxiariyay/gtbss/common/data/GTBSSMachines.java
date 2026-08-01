@@ -63,7 +63,7 @@ public class GTBSSMachines {
 
     public static final MachineDefinition WIRELESS_RESOURCE_MONITOR = GTBSSRegistrate.REGISTRATION
             .machine("wireless_resource_monitor", WirelessResourceMonitor::new)
-            .tier(GTValues.ULV)
+            .tier(LV)
             .rotationState(RotationState.ALL)
             .overlayTieredHullModel("wireless_resource_monitor")
             .tooltips(Component.translatable("gtbss.machine.wireless_resource_monitor.tooltip.summary"),
@@ -110,7 +110,8 @@ public class GTBSSMachines {
                     Component.translatable("gtceu.part_sharing.enabled"))
             .register();
 
-    public static final MachineDefinition[] ENERGY_INPUT_HATCH = registerTieredMachines("wireless_energy_input_hatch",
+    public static final MachineDefinition[] WIRELESS_ENERGY_INPUT_HATCH = registerTieredMachines(
+            "wireless_energy_input_hatch",
             (holder, tier) -> new WirelessEnergyHatchPartMachine(holder, tier, IN, 2),
             (tier, builder) -> builder
                     .langValue(VNF[tier] + " Energy Hatch")
@@ -127,9 +128,10 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.input.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_input_hatch"))
                     .register(),
-            ALL_TIERS);
+            GTValues.tiersBetween(LV,MAX));
 
-    public static final MachineDefinition[] ENERGY_OUTPUT_HATCH = registerTieredMachines("wireless_energy_output_hatch",
+    public static final MachineDefinition[] WIRELESS_ENERGY_OUTPUT_HATCH = registerTieredMachines(
+            "wireless_energy_output_hatch",
             (holder, tier) -> new WirelessEnergyHatchPartMachine(holder, tier, OUT, 2),
             (tier, builder) -> builder
                     .langValue(VNF[tier] + " Dynamo Hatch")
@@ -148,7 +150,7 @@ public class GTBSSMachines {
                     .register(),
             ALL_TIERS);
 
-    public static final MachineDefinition[] ENERGY_INPUT_HATCH_4A = registerTieredMachines(
+    public static final MachineDefinition[] WIRELESS_ENERGY_INPUT_HATCH_4A = registerTieredMachines(
             "wireless_energy_input_hatch_4a",
             (holder, tier) -> new WirelessEnergyHatchPartMachine(holder, tier, IN, 4),
             (tier, builder) -> builder
@@ -166,9 +168,9 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.input_hi_amp.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_input_hatch_4a"))
                     .register(),
-            ALL_TIERS);
+            GTValues.tiersBetween(EV,MAX));
 
-    public static final MachineDefinition[] ENERGY_OUTPUT_HATCH_4A = registerTieredMachines(
+    public static final MachineDefinition[] WIRELESS_ENERGY_OUTPUT_HATCH_4A = registerTieredMachines(
             "wireless_energy_output_hatch_4a",
             (holder, tier) -> new WirelessEnergyHatchPartMachine(holder, tier, OUT, 4),
             (tier, builder) -> builder
@@ -186,9 +188,9 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.output_hi_amp.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_output_hatch_4a"))
                     .register(),
-            ALL_TIERS);
+            GTValues.tiersBetween(EV,MAX));
 
-    public static final MachineDefinition[] ENERGY_INPUT_HATCH_16A = registerTieredMachines(
+    public static final MachineDefinition[] WIRELESS_ENERGY_INPUT_HATCH_16A = registerTieredMachines(
             "wireless_energy_input_hatch_16a",
             (holder, tier) -> new WirelessEnergyHatchPartMachine(holder, tier, IN, 16),
             (tier, builder) -> builder
@@ -206,9 +208,9 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.input_hi_amp.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_input_hatch_16a"))
                     .register(),
-            ALL_TIERS);
+            GTValues.tiersBetween(EV,MAX));
 
-    public static final MachineDefinition[] ENERGY_OUTPUT_HATCH_16A = registerTieredMachines(
+    public static final MachineDefinition[] WIRELESS_ENERGY_OUTPUT_HATCH_16A = registerTieredMachines(
             "wireless_energy_output_hatch_16a",
             (holder, tier) -> new WirelessEnergyHatchPartMachine(holder, tier, OUT, 16),
             (tier, builder) -> builder
@@ -226,19 +228,19 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.output_hi_amp.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_output_hatch_16a"))
                     .register(),
-            ALL_TIERS);
+            GTValues.tiersBetween(EV,MAX));
 
-    public static final MachineDefinition[] LASER_INPUT_HATCH_256 = registerWirelessLaserHatch(IN, 256,
+    public static final MachineDefinition[] WIRELESS_LASER_INPUT_HATCH_256 = registerWirelessLaserHatch(IN, 256,
             PartAbility.INPUT_LASER);
-    public static final MachineDefinition[] LASER_OUTPUT_HATCH_256 = registerWirelessLaserHatch(OUT, 256,
+    public static final MachineDefinition[] WIRELESS_LASER_OUTPUT_HATCH_256 = registerWirelessLaserHatch(OUT, 256,
             PartAbility.OUTPUT_LASER);
-    public static final MachineDefinition[] LASER_INPUT_HATCH_1024 = registerWirelessLaserHatch(IN, 1024,
+    public static final MachineDefinition[] WIRELESS_LASER_INPUT_HATCH_1024 = registerWirelessLaserHatch(IN, 1024,
             PartAbility.INPUT_LASER);
-    public static final MachineDefinition[] LASER_OUTPUT_HATCH_1024 = registerWirelessLaserHatch(OUT, 1024,
+    public static final MachineDefinition[] WIRELESS_LASER_OUTPUT_HATCH_1024 = registerWirelessLaserHatch(OUT, 1024,
             PartAbility.OUTPUT_LASER);
-    public static final MachineDefinition[] LASER_INPUT_HATCH_4096 = registerWirelessLaserHatch(IN, 4096,
+    public static final MachineDefinition[] WIRELESS_LASER_INPUT_HATCH_4096 = registerWirelessLaserHatch(IN, 4096,
             PartAbility.INPUT_LASER);
-    public static final MachineDefinition[] LASER_OUTPUT_HATCH_4096 = registerWirelessLaserHatch(OUT, 4096,
+    public static final MachineDefinition[] WIRELESS_LASER_OUTPUT_HATCH_4096 = registerWirelessLaserHatch(OUT, 4096,
             PartAbility.OUTPUT_LASER);
 
     public static final MachineDefinition[] MULTIPLE_RECIPE_PARALLEL = registerTieredMachines(

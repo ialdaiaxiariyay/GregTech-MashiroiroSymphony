@@ -97,7 +97,7 @@ public class GTBSSMachineUtils {
                         .modelProperty(IS_FORMED, false)
                         .overlayTieredHullModel(GTCEu.id("block/machine/part/" + "laser_" + name + "_hatch"))
                         .register(),
-                HIGH_TIERS);
+                GTValues.tiersBetween(IV, MAX));
     }
 
     public static MachineDefinition[] registerSimpleManaMachines(String name,
