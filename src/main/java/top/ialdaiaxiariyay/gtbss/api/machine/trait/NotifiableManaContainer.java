@@ -3,7 +3,6 @@ package top.ialdaiaxiariyay.gtbss.api.machine.trait;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
-import com.gregtechceu.gtceu.api.machine.trait.MachineTraitType;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
@@ -31,14 +30,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class NotifiableManaContainer extends NotifiableRecipeHandlerTrait<ManaStack> implements IManaContainer {
-
-    public static final MachineTraitType<NotifiableManaContainer> TYPE = new MachineTraitType<>(
-            NotifiableManaContainer.class);
-
-    @Override
-    public MachineTraitType<? extends NotifiableManaContainer> getTraitType() {
-        return TYPE;
-    }
 
     @Getter
     protected IO handlerIO;
@@ -217,7 +208,7 @@ public class NotifiableManaContainer extends NotifiableRecipeHandlerTrait<ManaSt
         long canAccept = getManaCapacity() - getManaStored();
         if (manaPerPacket > 0L && inputsMana(side)) {
             if (manaPerPacket > getInputPacketSize()) {
-                var explodable = getMachine().getTrait(EnvironmentalExplosionTrait.TYPE);
+                var explodable = getMachine().getTrait(EnvironmentalExplosionTrait.class);
                 if (explodable != null)
                     GTUtil.doExplosion(getLevel(), getBlockPos(), GTUtil.getExplosionPower(manaPerPacket));
                 return Math.min(packetCount, getInputPacketCount() - packetsReceivedThisTick);

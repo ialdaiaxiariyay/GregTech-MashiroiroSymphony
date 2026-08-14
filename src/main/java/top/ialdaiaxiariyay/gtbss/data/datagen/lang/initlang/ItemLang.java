@@ -17,5 +17,6 @@ public class ItemLang {
         provider.add("item.gtbss.water_module", "Module of Water", "水之模块");
         provider.add("item.gtbss.summer_module", "Module of Summer", "夏之模块");
         provider.add("item.gtbss.chocolate_coin", "Chocolate Coin", "巧克力硬币");
+        provider.add("item.gtbss.materialized_spirit_shard", "Materialized Spirit Shard", "精神具象化碎片");
     }
 }

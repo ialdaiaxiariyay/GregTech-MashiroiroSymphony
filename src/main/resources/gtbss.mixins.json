@@ -5,11 +5,14 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "gtbss.refmap.json",
   "mixins": [
+    "botania.common.block.entity.flower.PureDaisyBlockEntityMixin",
     "gtceu.api.recipe.gui.GTRecipeViewerWidgetMixin",
     "gtceu.integration.jade.provider.MixinRecipeLogicProvider",
-    "mc.sounds.MusicsMixin",
+    "mc.sounds.MusicsAccessor",
     "mc.stats.RecipeBookMixin",
-    "mc.stats.ServerRecipeBookMixin"
+    "mc.stats.ServerRecipeBookMixin",
+    "mc.world.item.CreativeModeTabMixin",
+    "mc.world.item.RecipeManagerMixin"
   ],
   "client": [
     "forge.client.ForgeHooksClientMixin",

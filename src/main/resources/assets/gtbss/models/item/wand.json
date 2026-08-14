@@ -1,6 +1,6 @@
 {
   "gui_light": "front",
-  "parent": "item/generated",
+  "parent": "minecraft:item/handheld",
   "display": {
     "firstperson_righthand": {
       "rotation": [ -20, 90, -35 ],

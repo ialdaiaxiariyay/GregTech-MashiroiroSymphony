@@ -37,17 +37,11 @@ public class ManaRecipeCapability extends RecipeCapability<ManaStack> {
         return content.withAmount(modifier.apply(content.amount()));
     }
 
-    /**
-     * Creates a List<Content> with the specified Mana.
-     */
     @Contract("_ -> new")
     public static @NotNull @Unmodifiable List<Content> makeManaContent(ManaStack mana) {
         return List.of(new Content(mana, ChanceLogic.getMaxChancedValue(), ChanceLogic.getMaxChancedValue()));
     }
 
-    /**
-     * Puts a Mana singleton Content into the given content map.
-     */
     public static void putManaContent(@NotNull Map<RecipeCapability<?>, List<Content>> contents, ManaStack mana) {
         contents.put(ManaRecipeCapability.CAP, makeManaContent(mana));
     }
@@ -118,7 +112,7 @@ public class ManaRecipeCapability extends RecipeCapability<ManaStack> {
         }
     }
 
-    private long getMaxManaInputPerTick(IRecipeCapabilityHolder holder) {
+    private long getMaxManaInputPerTick(@NotNull IRecipeCapabilityHolder holder) {
         var containers = holder.getCapabilitiesFlat(IO.IN, ManaRecipeCapability.CAP);
         if (!containers.isEmpty() && containers.get(0) instanceof IManaContainer container) {
             return container.getInputPerSec() / 20;
@@ -126,7 +120,7 @@ public class ManaRecipeCapability extends RecipeCapability<ManaStack> {
         return Long.MAX_VALUE;
     }
 
-    private long getMaxManaOutputPerTick(IRecipeCapabilityHolder holder) {
+    private long getMaxManaOutputPerTick(@NotNull IRecipeCapabilityHolder holder) {
         var containers = holder.getCapabilitiesFlat(IO.OUT, ManaRecipeCapability.CAP);
         if (!containers.isEmpty() && containers.get(0) instanceof IManaContainer container) {
             return container.getOutputPerSec() / 20;
@@ -134,7 +128,7 @@ public class ManaRecipeCapability extends RecipeCapability<ManaStack> {
         return Long.MAX_VALUE;
     }
 
-    private long getTotalManaStoredForInput(IRecipeCapabilityHolder holder) {
+    private long getTotalManaStoredForInput(@NotNull IRecipeCapabilityHolder holder) {
         long total = 0;
         var containers = holder.getCapabilitiesFlat(IO.IN, ManaRecipeCapability.CAP);
         for (var obj : containers) {

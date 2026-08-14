@@ -19,7 +19,8 @@ ftblibrary_version = "5567591"
 ftbteams_version = "5267190"
 ftbultimine_version = "5363345"
 ftbchunks_version = "5378090"
-bettergtae_version = "1.2.3-20260716.051306-6"
+ftbquests_version = "8078538"
+bettergtae_version = "1.2.3-20260812.115520-10"
 curios_version = "5.14.1+1.20.1"
 patchouli_version = "1.20.1-85-FORGE"
 botania_version = "1.20.1-453-FORGE"
@@ -58,6 +59,7 @@ ftblibrary = { module = "curse.maven:ftb-library-forge-404465", version.ref = "f
 ftbteams = { module = "curse.maven:ftb-teams-forge-404468", version.ref = "ftbteams_version" }
 ftbultimine = { module = "curse.maven:ftb-ultimine-forge-386134", version.ref = "ftbultimine_version" }
 ftbchunks = { module = "curse.maven:ftb-chunks-forge-314906", version.ref = "ftbchunks_version" }
+ftbquests = { module = "curse.maven:ftb-quests-forge-289412", version.ref = "ftbquests_version" }
 
 curios = { module = "top.theillusivec4.curios:curios-forge", version.ref = "curios_version" }
 patchouli = { module = "vazkii.patchouli:Patchouli", version.ref = "patchouli_version" }

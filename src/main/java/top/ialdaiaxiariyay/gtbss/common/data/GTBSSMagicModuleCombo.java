@@ -4,15 +4,7 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
 
-import top.ialdaiaxiariyay.gtbss.api.addon.GTBSSAddonFinder;
-import top.ialdaiaxiariyay.gtbss.api.addon.IGTBSSAddon;
-import top.ialdaiaxiariyay.gtbss.api.registrate.MagicModuleCombinationRegistry;
-
 public class GTBSSMagicModuleCombo {
-
-    static {
-        MagicModuleCombinationRegistry.unfreeze();
-    }
 
     private static void registry() {}
 
@@ -26,7 +18,5 @@ public class GTBSSMagicModuleCombo {
 
     public static void init() {
         registry();
-        GTBSSAddonFinder.getAddons().forEach(IGTBSSAddon::registerMagicModuleCombo);
-        MagicModuleCombinationRegistry.freeze();
     }
 }

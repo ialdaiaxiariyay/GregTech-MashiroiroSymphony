@@ -81,8 +81,8 @@ public class WirelessSteamHatchPartMachine extends FluidHatchPartMachine
         super.buildMainUI(mainWidget, guiData, syncManager, settings);
 
         mainWidget.child(new TextWidget<>(Text.dynamic(this::getTeamSteamDisplay))
-                .top(40)
-                .left(10)
+                .top(80)
+                .left(0)
                 .color(0xFFFFFFFF));
     }
 

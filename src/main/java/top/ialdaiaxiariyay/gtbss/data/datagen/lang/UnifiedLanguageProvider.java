@@ -5,10 +5,7 @@ import net.minecraftforge.common.data.LanguageProvider;
 
 import org.jetbrains.annotations.NotNull;
 import top.ialdaiaxiariyay.gtbss.GTBSS;
-import top.ialdaiaxiariyay.gtbss.data.datagen.lang.initlang.BlockLang;
-import top.ialdaiaxiariyay.gtbss.data.datagen.lang.initlang.ItemLang;
-import top.ialdaiaxiariyay.gtbss.data.datagen.lang.initlang.Lang;
-import top.ialdaiaxiariyay.gtbss.data.datagen.lang.initlang.TipsLang;
+import top.ialdaiaxiariyay.gtbss.data.datagen.lang.initlang.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +36,7 @@ public class UnifiedLanguageProvider extends LanguageProvider {
         TipsLang.init(this);
         BlockLang.init(this);
         ItemLang.init(this);
+        MaterialLang.init(this);
         Lang.init(this);
     }
 

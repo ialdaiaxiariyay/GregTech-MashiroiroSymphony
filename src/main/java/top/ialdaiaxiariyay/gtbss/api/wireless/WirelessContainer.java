@@ -8,7 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import top.ialdaiaxiariyay.gtbss.utils.BigIntegerUtils;
+import top.ialdaiaxiariyay.gtbss.utils.BigIntegerUtil;
 import top.ialdaiaxiariyay.gtbss.utils.TeamUtil;
 
 import java.math.BigInteger;
@@ -72,7 +72,7 @@ public class WirelessContainer {
         if (!type.equals(this.resourceType))
             throw new IllegalArgumentException(
                     "Resource type mismatch: expected " + this.resourceType + ", got " + type);
-        long change = Math.min(BigIntegerUtils.getLongValue(storage), amount);
+        long change = Math.min(BigIntegerUtil.getLongValue(storage), amount);
         if (change <= 0) return 0;
         storage = storage.subtract(BigInteger.valueOf(change));
         WirelessData.INSTANCE.setDirty(true);

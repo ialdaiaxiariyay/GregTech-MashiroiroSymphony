@@ -11,7 +11,7 @@ import top.ialdaiaxiariyay.gtbss.GTBSS;
 import top.ialdaiaxiariyay.gtbss.api.registrate.GTBSSRegistrate;
 import top.ialdaiaxiariyay.gtbss.common.block.DivergentDreamRodBlock;
 
-import static top.ialdaiaxiariyay.gtbss.utils.GTBSSBlockUtils.*;
+import static top.ialdaiaxiariyay.gtbss.utils.GTBSSBlockUtil.*;
 
 public class GTBSSBlocks {
 

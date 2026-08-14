@@ -62,7 +62,6 @@ public class Assembler {
         for (int i = 0; i <= maxTierIndex; i++) {
             int[] tier = GTValues.tiersBetween(GTValues.LV, GTValues.MAX);
 
-
             TYPE.recipeBuilder(GTBSS.id("wireless_energy_input_hatch_" + i))
                     .inputItems(TagPrefix.plate, GTMaterials.EnderEye)
                     .inputItems(TagPrefix.plateDouble, DOUBLE_PLATE[i])
@@ -74,7 +73,6 @@ public class Assembler {
                     .duration(20 * 5)
                     .EUt(GTValues.VA[tier[i]])
                     .save(consumer);
-
 
             TYPE.recipeBuilder(GTBSS.id("wireless_energy_output_hatch_" + i))
                     .inputItems(TagPrefix.plate, GTMaterials.EnderEye)
@@ -93,8 +91,7 @@ public class Assembler {
     private static void generateHighAmpRecipes(Consumer<FinishedRecipe> consumer) {
         int[] actualTiers = GTValues.tiersBetween(
                 GTValues.EV,
-                GTCEuAPI.isHighTier() ? GTValues.MAX : GTValues.UHV
-        );
+                GTCEuAPI.isHighTier() ? GTValues.MAX : GTValues.UHV);
 
         final int EV_INDEX_OFFSET = GTValues.EV - GTValues.LV;
 
@@ -113,7 +110,7 @@ public class Assembler {
                     .inputItems(TagPrefix.plateDouble, DOUBLE_PLATE[safeIndex])
                     .inputItems(SENSOR[safeIndex % SENSOR.length])
                     .inputItems(EMITTER[safeIndex % EMITTER.length])
-                    .inputItems(GTMachines.ENERGY_INPUT_HATCH_4A[tier]) // 使用 tier 作为索引
+                    .inputItems(GTMachines.ENERGY_INPUT_HATCH_4A[tier])
                     .inputFluids(GTMaterials.SolderingAlloy.getFluid(144))
                     .outputItems(WIRELESS_ENERGY_INPUT_HATCH_4A[tier])
                     .duration(20 * 5)

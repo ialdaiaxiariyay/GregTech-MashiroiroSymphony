@@ -1,13 +1,17 @@
 package top.ialdaiaxiariyay.gtbss.utils;
 
+import com.gregtechceu.gtceu.api.data.tag.TagUtil;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,7 +31,7 @@ import java.util.function.Supplier;
 
 import static top.ialdaiaxiariyay.gtbss.common.ForgeEventListener.SANITY;
 
-public class GTBSSUtils {
+public class GTBSSUtil {
 
     public static void Sanity(@NotNull Player player, int san) {
         player.getCapability(SANITY).ifPresent(sanity -> {
@@ -81,5 +85,9 @@ public class GTBSSUtils {
                 }
             });
         }
+    }
+
+    public static TagKey<Item> getItemTag(ResourceLocation resourceLocation) {
+        return TagUtil.optionalTag(BuiltInRegistries.ITEM, resourceLocation);
     }
 }

@@ -161,7 +161,6 @@ public class GTBSSMultipleRecipesLogic extends RecipeLogic {
     private boolean tryStartRecipe(GTRecipe originalRecipe) {
         MetaMachine machine = getMachine();
 
-        // 1. 复制并应用部件修改
         GTRecipe baseRecipe = originalRecipe.copy();
         if (machine instanceof MultiblockControllerMachine controller) {
             for (MultiblockPartMachine part : controller.getParts()) {
@@ -170,15 +169,13 @@ public class GTBSSMultipleRecipesLogic extends RecipeLogic {
             }
         }
 
-        // 2. 应用机器定义的全部修改器（含超频、BATCH_MODE、PARALLEL_HATCH 等）
         if (machine instanceof MultipleRecipeWorkableElectricMultiblockMachine custom) {
             baseRecipe = custom.doModifyRecipe(baseRecipe);
             if (baseRecipe == null) return false;
         }
 
-        // 3. 批处理强制最短时长（从 MultipleRecipeParallelHatchPartMachine 读取配置）
         if (machine instanceof MultipleRecipeWorkableElectricMultiblockMachine custom && custom.isBatchEnabled()) {
-            int minDuration = 20; // 默认值
+            int minDuration = 20;
             for (MultiblockPartMachine part : custom.getParts()) {
                 if (part instanceof MultipleRecipeParallelHatchPartMachine hatch) {
                     minDuration = hatch.getMinRecipeDuration();
@@ -188,9 +185,7 @@ public class GTBSSMultipleRecipesLogic extends RecipeLogic {
             if (baseRecipe.duration < minDuration) {
                 int factor = (int) Math.ceil((double) minDuration / baseRecipe.duration);
                 if (factor > 1) {
-                    // 延长时长
                     baseRecipe.duration *= factor;
-                    // 调整 EU/t 保持总能耗不变
                     EnergyStack energyStack = RecipeHelper.getRealEUt(baseRecipe);
                     if (!energyStack.isEmpty()) {
                         long originalVoltage = energyStack.voltage();
@@ -209,7 +204,6 @@ public class GTBSSMultipleRecipesLogic extends RecipeLogic {
             }
         }
 
-        // 4. 若 PARALLEL_HATCH 已生效，直接使用
         if (baseRecipe.parallels > 1) {
             if (RecipeHelper.matchContents((IRecipeCapabilityHolder) machine, baseRecipe).isSuccess()) {
                 ActionResult result = RecipeHelper.handleRecipeIO(
@@ -228,7 +222,6 @@ public class GTBSSMultipleRecipesLogic extends RecipeLogic {
             return false;
         }
 
-        // 5. 手动降级并行
         int attempted = getMaxParallel();
         GTRecipe finalRecipe = null;
         while (attempted > 0) {
@@ -278,9 +271,6 @@ public class GTBSSMultipleRecipesLogic extends RecipeLogic {
         return newEuList;
     }
 
-    /**
-     * 计算当前所有活动配方的平均进度百分比
-     */
     private double calculateAverageProgress() {
         if (activeRecipes.isEmpty()) return 0;
         double sum = 0;
@@ -304,7 +294,7 @@ public class GTBSSMultipleRecipesLogic extends RecipeLogic {
         }
 
         RecipeManager recipeManager = getMachine().getLevel().getRecipeManager();
-        List<GTRecipe> all = recipeManager.getAllRecipesFor(activeType); // 用户确认可运行
+        List<GTRecipe> all = recipeManager.getAllRecipesFor(activeType);
         for (Recipe<?> r : all) {
             if (r instanceof GTRecipe gtRecipe) {
                 if (RecipeHelper.checkConditions(gtRecipe, this).isSuccess()) {
@@ -405,7 +395,7 @@ public class GTBSSMultipleRecipesLogic extends RecipeLogic {
         public int retryCount = 0;
 
         public ActiveRecipe(GTRecipe recipe, int maxProgress,
-                            IdentityHashMap<RecipeCapability<?>, Object2IntMap<?>> chanceCaches) {
+                            @NotNull IdentityHashMap<RecipeCapability<?>, Object2IntMap<?>> chanceCaches) {
             this.recipe = recipe;
             this.progress = 0.0;
             this.maxProgress = Math.max(1, maxProgress);

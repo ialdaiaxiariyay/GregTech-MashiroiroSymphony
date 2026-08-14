@@ -9,9 +9,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import org.jetbrains.annotations.NotNull;
+import top.ialdaiaxiariyay.gtbss.client.renderer.block.AutoCollisionShapes;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+@SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
 public abstract class AutoCollisionBlock extends Block {
 

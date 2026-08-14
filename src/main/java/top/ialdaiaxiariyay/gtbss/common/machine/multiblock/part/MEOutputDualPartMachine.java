@@ -422,7 +422,9 @@ public class MEOutputDualPartMachine extends TieredIOPartMachine
                 }
                 FluidStack[] fluids;
                 if (ingredient instanceof IntProviderFluidIngredient provider) {
-                    provider.setFluidStacks(null);
+                    if (provider.stacks != null) {
+                        provider.stacks.clone();
+                    }
                     provider.setSampledCount(-1);
                     fluids = simulate ? new FluidStack[] { provider.getMaxSizeStack() } : provider.getStacks();
                 } else {

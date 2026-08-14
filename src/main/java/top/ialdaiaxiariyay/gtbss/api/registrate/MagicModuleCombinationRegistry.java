@@ -8,7 +8,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import org.jetbrains.annotations.Nullable;
-import top.ialdaiaxiariyay.gtbss.GTBSS;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -34,13 +33,11 @@ public class MagicModuleCombinationRegistry {
     private static final Map<String, CombinationEntry> COMBOS_UNORDERED = new HashMap<>();
     private static final Map<String, CombinationEntry> COMBOS_ORDERED = new HashMap<>();
     private static final List<Runnable> PENDING = new ArrayList<>();
-    private static boolean frozen = true;
 
     @SafeVarargs
     public static void register(CombinationAction action, Component displayName, boolean ordered,
                                 List<Component> tooltips, @Nullable Integer manaCost,
                                 Supplier<? extends Item>... modules) {
-        if (frozen) throw new IllegalStateException("Registry is frozen!");
         PENDING.add(() -> {
             List<String> ids = new ArrayList<>();
             for (Supplier<? extends Item> sup : modules) {
@@ -134,25 +131,5 @@ public class MagicModuleCombinationRegistry {
     public static @Nullable CombinationAction getCombinationAction(List<String> moduleIds) {
         CombinationEntry entry = getCombinationEntry(moduleIds);
         return entry != null ? entry.action() : null;
-    }
-
-    public static void unfreeze() {
-        if (!frozen) {
-            GTBSS.LOGGER.warn("Registry already unfrozen, ignoring duplicate call.");
-            return;
-        }
-        frozen = false;
-    }
-
-    public static void freeze() {
-        if (frozen) {
-            GTBSS.LOGGER.warn("Registry already frozen, ignoring duplicate call.");
-            return;
-        }
-        PENDING.forEach(Runnable::run);
-        PENDING.clear();
-        frozen = true;
-        GTBSS.LOGGER.info("Registered {} unordered and {} ordered magic combinations.",
-                COMBOS_UNORDERED.size(), COMBOS_ORDERED.size());
     }
 }

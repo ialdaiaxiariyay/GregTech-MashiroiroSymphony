@@ -12,7 +12,7 @@ import top.ialdaiaxiariyay.gtbss.common.item.MagicModularWandItem;
 import top.ialdaiaxiariyay.gtbss.common.item.SpearItem;
 import top.ialdaiaxiariyay.gtbss.common.item.module.*;
 
-import static top.ialdaiaxiariyay.gtbss.utils.GTBSSItemUtils.*;
+import static top.ialdaiaxiariyay.gtbss.utils.GTBSSItemUtil.*;
 
 public class GTBSSItems {
 
@@ -53,6 +53,8 @@ public class GTBSSItems {
             Component.translatable("gtbss.tooltip.water_module.0"));
     public static final ItemEntry<SummerModule> SUMMER_MODULE = magicModular(SummerModule::new, "summer_module",
             Component.translatable("gtbss.tooltip.summer_module.0"));
+
+    public static final ItemEntry<Item> MATERIALIZED_SPIRIT_SHARD = item("materialized_spirit_shard");
 
     public static final ItemEntry<Item> CHOCOLATE_COIN = GTBSSRegistrate.REGISTRATION
             .item("chocolate_coin", Item::new)

@@ -10,12 +10,12 @@ public class Lang {
         registerManaTiers(provider);
         registerOreVein(provider);
         registerEnchantmentLang(provider);
-        provider.add("itemGroup.gtbss.block", "Blue Symphony | Block", "蓝天交响曲 | 方块");
-        provider.add("itemGroup.gtbss.machine", "Blue Symphony | Machine", "蓝天交响曲 | 机器");
-        provider.add("itemGroup.gtbss.item", "Blue Symphony | Item", "蓝天交响曲 | 物品");
+        provider.add("itemGroup.gtbss.block", "BlueSky Symphony | Block", "蓝天交响曲 | 方块");
+        provider.add("itemGroup.gtbss.machine", "BlueSky Symphony | Machine", "蓝天交响曲 | 机器");
+        provider.add("itemGroup.gtbss.item", "BlueSky Symphony | Item", "蓝天交响曲 | 物品");
         provider.add("gui.gtbss.sanity", "Sanity: %d", "理智: %d");
-        provider.add("config.jade.plugin_gtbss.mana_container", "[Blue Symphony] Mana Container",
-                "[Blue Symphony] 魔力槽");
+        provider.add("config.jade.plugin_gtbss.mana_container", "[BlueSky Symphony] Mana Container",
+                "[BlueSky Symphony] 魔力槽");
         provider.add("recipe.capability.mana.name", "Mana", "魔力");
         provider.add("gtbss.jade.mana_stored", "%d / %d Mana", "%d / %d Mana");
         provider.add("gtbss.recipe.mana_per_tick", "Mana: %s mana/t", "魔力: %s 魔力/t");
@@ -24,6 +24,9 @@ public class Lang {
         provider.add("gtbss.jade.mana_production", "Mana Production: %s", "魔力产出：%s /t");
         provider.add("gtbss.jade.mana_unit", "Total consumption: %s", "总消耗: %s");
         provider.add("gtbss.recipe.mana_tier", "Mana Tier: %s", "魔力等级: %s");
+        provider.add("key.category.gtbss", "BlueSky Symphony", "蓝天交响曲");
+        provider.add("key.gtbss.recall_spear", "Recall Spear", "召回投矛");
+        provider.add("emi.category.gtbss.pure_daisy", "Pure Daisy-Item Mode", "白楚菊-物品模式");
     }
 
     private static void registerOreVein(@NotNull UnifiedLanguageProvider provider) {

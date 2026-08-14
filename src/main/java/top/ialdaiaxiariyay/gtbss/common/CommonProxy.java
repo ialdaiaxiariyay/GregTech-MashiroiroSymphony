@@ -2,6 +2,7 @@ package top.ialdaiaxiariyay.gtbss.common;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
+import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 import com.gregtechceu.gtceu.api.data.worldgen.GTOreDefinition;
 import com.gregtechceu.gtceu.api.data.worldgen.IWorldGenLayer;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
@@ -9,7 +10,11 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.api.sound.SoundEntry;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.Music;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,9 +27,11 @@ import top.ialdaiaxiariyay.gtbss.api.capability.forge.GTBSSCapability;
 import top.ialdaiaxiariyay.gtbss.api.capability.recipe.ManaRecipeCapability;
 import top.ialdaiaxiariyay.gtbss.api.registrate.GTBSSRegistrate;
 import top.ialdaiaxiariyay.gtbss.common.data.*;
+import top.ialdaiaxiariyay.gtbss.data.recipe.RemoveRecipe;
+import top.ialdaiaxiariyay.gtbss.mixin.mc.sounds.MusicsAccessor;
 import top.ialdaiaxiariyay.gtbss.network.NetworkHandler;
 
-@SuppressWarnings("removal")
+@SuppressWarnings({ "removal", "deprecation" })
 public class CommonProxy {
 
     public CommonProxy() {
@@ -43,16 +50,19 @@ public class CommonProxy {
     }
 
     private void init() {
+        RemoveRecipe.init();
         GTBSSCreativeModeTab.init();
         GTBSSBlocks.init();
         GTBSSItems.init();
         GTBSSEntityTypes.init();
         GTBSSEnchantments.init();
+        VanillaRecipeType.init();
     }
 
     private void onCommonSetup(@NotNull FMLCommonSetupEvent event) {
         NetworkHandler.register();
         event.enqueueWork(GTBSSMagicModuleCombo::init);
+        event.enqueueWork(this::setupCustomMenuMusic);
     }
 
     private void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
@@ -79,8 +89,22 @@ public class CommonProxy {
         GTBSSWorldGenLayers.init();
     }
 
+    public void setupCustomMenuMusic() {
+        ResourceLocation musicId = GTBSS.id("menu_music");
+        ResourceKey<SoundEvent> key = ResourceKey.create(BuiltInRegistries.SOUND_EVENT.key(), musicId);
+        BuiltInRegistries.SOUND_EVENT.getHolder(key).ifPresentOrElse(holder -> {
+            Music customMusic = new Music(holder, 20, 600, true);
+            MusicsAccessor.setMenu(customMusic);
+        }, () -> GTBSS.LOGGER.error("Custom menu music '{}' not found in registry. Using vanilla.", musicId));
+    }
+
     @SubscribeEvent
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
         GTBSSCapability.register(event);
+    }
+
+    @SubscribeEvent
+    public void onMaterialEvent(MaterialEvent event) {
+        GTBSSMaterials.init();
     }
 }

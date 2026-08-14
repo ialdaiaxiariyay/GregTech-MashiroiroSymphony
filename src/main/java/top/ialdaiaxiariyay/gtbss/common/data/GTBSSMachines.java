@@ -25,7 +25,7 @@ import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.capability.recipe.IO.IN;
 import static com.gregtechceu.gtceu.api.capability.recipe.IO.OUT;
 import static com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties.*;
-import static top.ialdaiaxiariyay.gtbss.utils.GTBSSMachineUtils.*;
+import static top.ialdaiaxiariyay.gtbss.utils.GTBSSMachineUtil.*;
 
 public class GTBSSMachines {
 
@@ -128,7 +128,7 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.input.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_input_hatch"))
                     .register(),
-            GTValues.tiersBetween(LV,MAX));
+            GTValues.tiersBetween(LV, MAX));
 
     public static final MachineDefinition[] WIRELESS_ENERGY_OUTPUT_HATCH = registerTieredMachines(
             "wireless_energy_output_hatch",
@@ -168,7 +168,7 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.input_hi_amp.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_input_hatch_4a"))
                     .register(),
-            GTValues.tiersBetween(EV,MAX));
+            GTValues.tiersBetween(EV, MAX));
 
     public static final MachineDefinition[] WIRELESS_ENERGY_OUTPUT_HATCH_4A = registerTieredMachines(
             "wireless_energy_output_hatch_4a",
@@ -188,7 +188,7 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.output_hi_amp.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_output_hatch_4a"))
                     .register(),
-            GTValues.tiersBetween(EV,MAX));
+            GTValues.tiersBetween(EV, MAX));
 
     public static final MachineDefinition[] WIRELESS_ENERGY_INPUT_HATCH_16A = registerTieredMachines(
             "wireless_energy_input_hatch_16a",
@@ -208,7 +208,7 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.input_hi_amp.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_input_hatch_16a"))
                     .register(),
-            GTValues.tiersBetween(EV,MAX));
+            GTValues.tiersBetween(EV, MAX));
 
     public static final MachineDefinition[] WIRELESS_ENERGY_OUTPUT_HATCH_16A = registerTieredMachines(
             "wireless_energy_output_hatch_16a",
@@ -228,7 +228,7 @@ public class GTBSSMachines {
                             Component.translatable("gtceu.machine.energy_hatch.output_hi_amp.tooltip"))
                     .overlayTieredHullModel(GTCEu.id("block/machine/part/energy_output_hatch_16a"))
                     .register(),
-            GTValues.tiersBetween(EV,MAX));
+            GTValues.tiersBetween(EV, MAX));
 
     public static final MachineDefinition[] WIRELESS_LASER_INPUT_HATCH_256 = registerWirelessLaserHatch(IN, 256,
             PartAbility.INPUT_LASER);

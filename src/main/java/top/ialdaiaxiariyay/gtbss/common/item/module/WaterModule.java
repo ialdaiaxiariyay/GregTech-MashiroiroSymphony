@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import top.ialdaiaxiariyay.gtbss.api.item.MagicModuleItem;
-import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtils;
+import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtil;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -37,7 +37,7 @@ public class WaterModule extends MagicModuleItem {
             SCHEDULER.schedule(() -> {
                 server.getServer().execute(() -> {
                     if (server.getServer().isRunning()) {
-                        GTBSSDamageUtils.splitHeal(level, center, radius, healPerSecond,
+                        GTBSSDamageUtil.splitHeal(level, center, radius, healPerSecond,
                                 e -> e != null && e.isAlive() && (e == player || e.isAlliedTo(player)));
                         for (int i = 0; i < 20; i++) {
                             double x = center.x + (level.random.nextDouble() - 0.5) * radius * 2;

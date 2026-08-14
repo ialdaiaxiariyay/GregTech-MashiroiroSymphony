@@ -44,7 +44,7 @@ import static com.gregtechceu.gtceu.utils.FormattingUtil.toEnglishName;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class GTBSSMachineUtils {
+public class GTBSSMachineUtil {
 
     public static final int[] Luv2Max_TIERS = GTValues.tiersBetween(LuV, MAX);
 

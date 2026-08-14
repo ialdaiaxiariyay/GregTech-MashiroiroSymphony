@@ -16,8 +16,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import top.ialdaiaxiariyay.gtbss.GTBSS;
 import top.ialdaiaxiariyay.gtbss.api.item.MagicModuleItem;
-import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtils;
-import top.ialdaiaxiariyay.gtbss.utils.GTBSSUtils;
+import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtil;
+import top.ialdaiaxiariyay.gtbss.utils.GTBSSUtil;
 
 import java.util.function.Predicate;
 
@@ -38,7 +38,7 @@ public class AutumnModule extends MagicModuleItem {
         Predicate<LivingEntity> filter = e -> e.isAlive() && !e.isInvulnerable() && e != player &&
                 e.getType().getCategory() == MobCategory.MONSTER;
 
-        int hitCount = GTBSSDamageUtils.splitDamage(level, center, radius, totalDamage, filter, null);
+        int hitCount = GTBSSDamageUtil.splitDamage(level, center, radius, totalDamage, filter, null);
 
         if (hitCount > 0) {
 
@@ -72,7 +72,7 @@ public class AutumnModule extends MagicModuleItem {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player,
                                                            @NotNull InteractionHand hand) {
         if (level.isClientSide) {
-            GTBSSUtils.openMarkdownViewScreenGui(GTBSS.id("docs/readme.md"));
+            GTBSSUtil.openMarkdownViewScreenGui(GTBSS.id("docs/readme.md"));
             return InteractionResultHolder.success(player.getItemInHand(hand));
         }
         return super.use(level, player, hand);

@@ -2,7 +2,7 @@ package top.ialdaiaxiariyay.gtbss.utils;
 
 import java.math.BigInteger;
 
-public class BigIntegerUtils {
+public class BigIntegerUtil {
 
     public static final BigInteger BIG_INTEGER_MAX_LONG = BigInteger.valueOf(Long.MAX_VALUE);
 

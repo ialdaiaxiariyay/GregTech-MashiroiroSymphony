@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
 import top.ialdaiaxiariyay.gtbss.api.item.MagicModuleItem;
-import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtils;
+import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtil;
 
 public class EarthModule extends MagicModuleItem {
 
@@ -26,7 +26,7 @@ public class EarthModule extends MagicModuleItem {
         float totalDamage = 12 + chargeTime * 10;
         Vec3 center = player.position();
 
-        GTBSSDamageUtils.splitDamage(level, center, radius, totalDamage,
+        GTBSSDamageUtil.splitDamage(level, center, radius, totalDamage,
                 e -> e instanceof LivingEntity && e != player && !e.isAlliedTo(player) && e.isAlive());
 
         if (level instanceof ServerLevel server) {

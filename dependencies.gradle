@@ -38,7 +38,8 @@ dependencies {
     // ftb
     modImplementation(forge.ftblibrary)
     modImplementation(forge.ftbteams)
-    modRuntimeOnly(forge.ftbultimine)
+    modImplementation(forge.ftbultimine)
+    modImplementation(forge.ftbquests)
     modRuntimeOnly(forge.ftbchunks)
 
     modImplementation(forge.bundles.cc.t)

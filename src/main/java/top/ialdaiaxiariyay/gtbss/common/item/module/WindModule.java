@@ -12,7 +12,7 @@ import net.minecraft.world.phys.Vec3;
 
 import org.jetbrains.annotations.NotNull;
 import top.ialdaiaxiariyay.gtbss.api.item.MagicModuleItem;
-import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtils;
+import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,13 +36,13 @@ public class WindModule extends MagicModuleItem {
 
         Predicate<LivingEntity> filter = e -> e.isAlive() && !e.isInvulnerable() && e != player;
 
-        LivingEntity first = GTBSSDamageUtils.findNearest(level, origin, range, filter, Collections.emptySet());
+        LivingEntity first = GTBSSDamageUtil.findNearest(level, origin, range, filter, Collections.emptySet());
         if (first != null) {
             Vec3 knockDir = origin.subtract(first.position()).normalize();
             first.knockback(0.5 + chargeTime, knockDir.x, knockDir.z);
         }
 
-        List<LivingEntity> hitList = GTBSSDamageUtils.bounceDamageWithList(level, origin, first,
+        List<LivingEntity> hitList = GTBSSDamageUtil.bounceDamageWithList(level, origin, first,
                 baseDamage, maxBounces, decayRate, range, filter,
                 (entity, damage) -> {
                     if (level instanceof ServerLevel serverLevel) {

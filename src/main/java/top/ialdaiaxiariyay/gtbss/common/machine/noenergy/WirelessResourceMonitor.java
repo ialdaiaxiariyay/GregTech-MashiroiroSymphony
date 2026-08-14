@@ -28,7 +28,7 @@ import brachy.modularui.widgets.TextWidget;
 import brachy.modularui.widgets.layout.Flow;
 import org.jetbrains.annotations.Nullable;
 import top.ialdaiaxiariyay.gtbss.api.wireless.*;
-import top.ialdaiaxiariyay.gtbss.utils.BigIntegerUtils;
+import top.ialdaiaxiariyay.gtbss.utils.BigIntegerUtil;
 import top.ialdaiaxiariyay.gtbss.utils.TeamUtil;
 
 import java.math.BigDecimal;
@@ -372,8 +372,8 @@ public class WirelessResourceMonitor extends MetaMachine implements IMuiMachine,
     }
 
     private Component getTimeText(BigInteger ticks) {
-        if (ticks.compareTo(BigIntegerUtils.BIG_INTEGER_MAX_LONG) > 0)
-            ticks = BigIntegerUtils.BIG_INTEGER_MAX_LONG;
+        if (ticks.compareTo(BigIntegerUtil.BIG_INTEGER_MAX_LONG) > 0)
+            ticks = BigIntegerUtil.BIG_INTEGER_MAX_LONG;
         long seconds = ticks.longValue() / 20;
         Duration duration = Duration.ofSeconds(seconds);
         long value;

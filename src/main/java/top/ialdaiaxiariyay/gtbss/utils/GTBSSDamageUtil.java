@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
-public class GTBSSDamageUtils {
+public class GTBSSDamageUtil {
 
     /**
      * Splits total damage equally among all entities within the spherical range.

@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3;
 
 import org.jetbrains.annotations.NotNull;
 import top.ialdaiaxiariyay.gtbss.api.item.MagicModuleItem;
-import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtils;
+import top.ialdaiaxiariyay.gtbss.utils.GTBSSDamageUtil;
 
 import java.util.function.Predicate;
 
@@ -36,7 +36,7 @@ public class ManaModule extends MagicModuleItem {
         Predicate<LivingEntity> filter = e -> e.isAlive() && !e.isInvulnerable() && e != player &&
                 e.getType().getCategory() == MobCategory.MONSTER;
 
-        int hitCount = GTBSSDamageUtils.splitDamage(level, center, radius, totalDamage, filter, null);
+        int hitCount = GTBSSDamageUtil.splitDamage(level, center, radius, totalDamage, filter, null);
 
         if (hitCount > 0) {
             int absorptionAmount = (int) (totalDamage * 0.3f);

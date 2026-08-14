@@ -10,10 +10,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -53,16 +53,13 @@ public class ClientEvents {
     @Mod.EventBusSubscriber(modid = GTBSS.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class ForgeEvents {
 
+        @SuppressWarnings("InstantiationOfUtilityClass")
         @SubscribeEvent
-        public static void registerKeys(RegisterKeyMappingsEvent event) {
-            event.register(RECALL_SPEAR_KEY);
-        }
-
-        @SubscribeEvent
-        public static void onKeyInput(InputEvent.Key event) {
-            if (RECALL_SPEAR_KEY.consumeClick()) {
-                // noinspection InstantiationOfUtilityClass
-                NetworkHandler.sendToServer(new SpearRecallPacket());
+        public static void onClientTick(TickEvent.ClientTickEvent event) {
+            if (event.phase == TickEvent.Phase.END) {
+                while (RECALL_SPEAR_KEY.consumeClick()) {
+                    NetworkHandler.sendToServer(new SpearRecallPacket());
+                }
             }
         }
 
@@ -140,6 +137,11 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(GTBSSEntityTypes.SPEAR.get(), SpearRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerKeys(RegisterKeyMappingsEvent event) {
+            event.register(RECALL_SPEAR_KEY);
         }
     }
 }

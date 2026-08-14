@@ -30,6 +30,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.network.PacketDistributor;
 
+import lombok.Setter;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -60,7 +61,7 @@ public class SpunTimeAnchorMachine extends WorkableMultiblockMachine {
 
     public SpunTimeAnchorMachine(BlockEntityCreationInfo info) {
         super(info, new SpunTimeAnchorRecipeLogic());
-        if (getRecipeLogic() instanceof CustomRecipeLogic custom) {
+        if (getRecipeLogic() instanceof SpunTimeAnchorRecipeLogic custom) {
             custom.setRecipeSupplier(this::getGTRecipe);
         }
         this.inventory = createInventory();
@@ -84,6 +85,7 @@ public class SpunTimeAnchorMachine extends WorkableMultiblockMachine {
             super();
         }
 
+        @Setter
         private Supplier<GTRecipe> recipeSupplier;
 
         @Override

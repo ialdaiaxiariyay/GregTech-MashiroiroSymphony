@@ -1,6 +1,6 @@
 package top.ialdaiaxiariyay.gtbss.api.pattern;
 
-import com.gregtechceu.gtceu.api.multiblock.PatternPredicate;
+import com.gregtechceu.gtceu.api.multiblock.MultiPredicate;
 import com.gregtechceu.gtceu.api.multiblock.pattern.IBlockPattern;
 import com.gregtechceu.gtceu.api.multiblock.pattern.MultiblockPatternBuilder;
 import com.gregtechceu.gtceu.api.multiblock.util.RelativeDirection;
@@ -44,12 +44,12 @@ public class PatternBuilderLoader {
         builder.sliceRepeatable(minRepeat, maxRepeat, slice);
     }
 
-    public PatternBuilderLoader where(char symbol, PatternPredicate predicate) {
+    public PatternBuilderLoader where(char symbol, MultiPredicate predicate) {
         builder.where(symbol, predicate);
         return this;
     }
 
-    public PatternBuilderLoader where(String symbol, PatternPredicate predicate) {
+    public PatternBuilderLoader where(String symbol, MultiPredicate predicate) {
         return where(symbol.charAt(0), predicate);
     }
 

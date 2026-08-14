@@ -52,7 +52,7 @@ public class ManaContainerList implements IManaContainer {
                 highestOutput = outSize;
             }
         }
-        // 统计最高输入容器数量
+
         for (IManaContainer container : containers) {
             if (container.getInputPacketSize() == highestInput) {
                 numHighestInput++;

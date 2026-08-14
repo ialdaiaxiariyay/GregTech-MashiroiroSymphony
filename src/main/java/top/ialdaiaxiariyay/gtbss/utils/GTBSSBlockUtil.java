@@ -12,7 +12,7 @@ import top.ialdaiaxiariyay.gtbss.api.registrate.GTBSSRegistrate;
 
 import java.util.function.Function;
 
-public class GTBSSBlockUtils {
+public class GTBSSBlockUtil {
 
     public static <T extends Block> @NotNull BlockEntry<T> createNonModelsBlock(String name,
                                                                                 @NotNull Function<BlockBehaviour.Properties, T> factory) {

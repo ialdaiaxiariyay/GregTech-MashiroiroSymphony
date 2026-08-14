@@ -13,7 +13,7 @@ import top.ialdaiaxiariyay.gtbss.common.item.MagicModularWandItem;
 
 import java.util.Arrays;
 
-public class GTBSSItemUtils {
+public class GTBSSItemUtil {
 
     public static <T extends MagicModuleItem> ItemEntry<T> magicModular(NonNullFunction<Item.Properties, T> factory,
                                                                         String name, Component... components) {
@@ -22,6 +22,13 @@ public class GTBSSItemUtils {
                 .defaultModel()
                 .properties(properties -> properties.stacksTo(1))
                 .onRegister(t -> t.setTooltips(Arrays.asList(components)))
+                .register();
+    }
+
+    public static ItemEntry<Item> item(String name) {
+        return GTBSSRegistrate.REGISTRATION
+                .item(name, Item::new)
+                .defaultModel()
                 .register();
     }
 

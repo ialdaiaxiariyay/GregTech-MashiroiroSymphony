@@ -1,4 +1,4 @@
-package top.ialdaiaxiariyay.gtbss.api.block;
+package top.ialdaiaxiariyay.gtbss.client.renderer.block;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
