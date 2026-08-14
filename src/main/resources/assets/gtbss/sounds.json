@@ -1,0 +1,58 @@
+{
+  "mouse_hover_1": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:mouse_hover_1"
+      }
+    ]
+  },
+  "mouse_click_1": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:mouse_click_1"
+      }
+    ]
+  },
+  "menu_1": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:menu_1"
+      }
+    ]
+  },
+  "menu_2": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:menu_2"
+      }
+    ]
+  },
+  "menu_3": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:menu_3"
+      }
+    ]
+  },
+  "menu_4": {
+    "sounds": [
+      {
+        "type": "file",
+        "name": "gtbss:menu_4"
+      }
+    ]
+  },
+  "menu_music": {
+    "sounds": [
+      { "name": "gtbss:menu_1", "weight": 1 },
+      { "name": "gtbss:menu_2", "weight": 1 },
+      { "name": "gtbss:menu_3", "weight": 1 },
+      { "name": "gtbss:menu_4", "weight": 1 }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "top.ialdaiaxiariyay.gtbss.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "gtbss.refmap.json",
+  "mixins": [
+    "botania.common.block.entity.flower.PureDaisyBlockEntityMixin",
+    "gtceu.api.recipe.gui.GTRecipeViewerWidgetMixin",
+    "gtceu.integration.jade.provider.MixinRecipeLogicProvider",
+    "mc.sounds.MusicsAccessor",
+    "mc.stats.RecipeBookMixin",
+    "mc.stats.ServerRecipeBookMixin",
+    "mc.world.item.CreativeModeTabMixin",
+    "mc.world.item.RecipeManagerMixin"
+  ],
+  "client": [
+    "forge.client.ForgeHooksClientMixin",
+    "forge.client.gui.TitleScreenModUpdateIndicatorMixin",
+    "mc.client.ClientRecipeBookMixin",
+    "mc.client.components.AbstractButtonMixin",
+    "mc.client.gui.screens.TitleScreenMixin",
+    "mc.client.gui.screens.WorldSelectionListMixin"
+  ]
+}

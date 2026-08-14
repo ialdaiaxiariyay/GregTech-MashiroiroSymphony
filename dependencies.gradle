@@ -3,7 +3,7 @@ dependencies {
 
     //gtceu
     modImplementation(forge.gtceu)
-    modImplementation(forge.ldlib)
+    modImplementation(forge.mui)
     modImplementation(forge.registrate)
     modImplementation(forge.configuration)
     modImplementation(forge.bettergtae)
@@ -16,6 +16,8 @@ dependencies {
     //jei
     modImplementation(forge.bundles.jei)
     modImplementation(forge.emi)
+    modRuntimeOnly(forge.emi.accelerator)
+    modRuntimeOnly(forge.jech)
 
     modImplementation(forge.jade)
 
@@ -27,7 +29,7 @@ dependencies {
 
     modImplementation(forge.embeddium)
 
-    modRuntimeOnly(forge.jech)
+
 
     modImplementation(forge.curios)
     modImplementation(forge.patchouli)
@@ -36,6 +38,9 @@ dependencies {
     // ftb
     modImplementation(forge.ftblibrary)
     modImplementation(forge.ftbteams)
-    modRuntimeOnly(forge.ftbultimine)
+    modImplementation(forge.ftbultimine)
+    modImplementation(forge.ftbquests)
     modRuntimeOnly(forge.ftbchunks)
+
+    modImplementation(forge.bundles.cc.t)
 }
